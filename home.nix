@@ -11,6 +11,7 @@
   home.stateVersion = "25.05"; # Please read the comment before changing.
 
   imports = [
+    ./home/desktop.nix
     ./home/git.nix
     ./home/kitty.nix
     ./home/neovim.nix
