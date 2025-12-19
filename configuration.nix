@@ -103,11 +103,11 @@
     group = "misha";
     subGidRanges = [{
         count = 65536;
-        startGid = 1000;
+        startGid = 100000;
     }];
     subUidRanges = [{
         count = 65536;
-        startUid = 1000;
+        startUid = 100000;
     }];
   };
   users.groups.misha = {
