@@ -18,6 +18,10 @@
   virtualisation.virtualbox.guest.dragAndDrop = true;
   virtualisation.virtualbox.guest.use3rdPartyModules = true;
 
+  virtualisation.podman = {
+    enable = true;
+  };
+
   fonts.packages = with pkgs; [
     nerd-fonts.fira-code
     nerd-fonts.jetbrains-mono
@@ -93,6 +97,14 @@
     ];
     uid = 1000;
     group = "misha";
+    subGidRanges = [{
+        count = 65536;
+        startGid = 1000;
+    }];
+    subUidRanges = [{
+        count = 65536;
+        startGid = 1000;
+    }];
   };
   users.groups.misha = {
     gid = 1000;
@@ -107,6 +119,7 @@
     wget
     neovim
     killall
+    distrobox
   ];
   environment.variables.EDITOR = "nvim";
 
