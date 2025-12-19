@@ -39,6 +39,7 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
+
     (pkgs.writeShellScriptBin "hm" ''
     home-manager --flake /home/misha/nix "$@"
     '')
