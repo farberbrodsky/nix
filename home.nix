@@ -12,8 +12,10 @@
 
   imports = [
     ./home/git.nix
+    ./home/kitty.nix
     ./home/neovim.nix
     ./home/shell.nix
+    ./home/sway.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should manage.
@@ -40,17 +42,13 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
 
-    (pkgs.writeShellScriptBin "hm" ''
-    home-manager --flake /home/misha/nix "$@"
+    (pkgs.writeShellScriptBin "M-hm" ''
+    exec home-manager --flake /home/misha/nix "$@"
+    '')
+    (pkgs.writeShellScriptBin "M-nixos-rebuild" ''
+    exec sudo nixos-rebuild --flake /home/misha/nix "$@"
     '')
   ];
-
-  wayland.windowManager.sway = {
-    enable = true;
-    config = rec {
-      modifier = "Mod4";
-    };
-  };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.

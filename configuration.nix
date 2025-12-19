@@ -5,6 +5,7 @@
 { config, lib, pkgs, ... }:
 
 {
+  nixpkgs.config.allowUnfree = true;
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -13,6 +14,15 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   virtualisation.virtualbox.guest.enable = true;
+  virtualisation.virtualbox.guest.clipboard = true;
+  virtualisation.virtualbox.guest.dragAndDrop = true;
+  virtualisation.virtualbox.guest.use3rdPartyModules = true;
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.comic-shanns-mono
+  ];
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
@@ -64,8 +74,8 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway";
-	user = "greeter";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd sway";
+        user = "greeter";
       };
     };
   };
