@@ -82,26 +82,6 @@ local function for_hjkl(f)
     end
 end
 
-local function add_plugin(s, extra)
-    if extra == nil then
-        vim.cmd('Plug \'' .. s .. '\'')
-    else
-        vim.cmd('Plug \'' .. s .. '\', ' .. extra)
-    end
-end
-
--- List of plugins
---add_plugin 'roryokane/detectindent'                    -- Detect indentation
---add_plugin 'ryanoasis/vim-devicons'                    -- Icons for NERDTree and airline
---add_plugin 'windwp/nvim-autopairs'                     -- Autopairs with treesitter
---add_plugin 'scrooloose/nerdtree'                       -- The tree file viewer sidebar
---add_plugin 'tpope/vim-obsession'                       -- Save session automatically by using :Obsess - then, nvim -S Session.vim
---add_plugin 'tommcdo/vim-lion'                          -- lion.vim - align text by some character
---add_plugin 'tomtom/tcomment_vim'                       -- tcomment - comment stuff out
---add_plugin 'fannheyward/telescope-coc.nvim'            -- telescope + CoC
-
---vim.call('plug#end')
-
 -- Add treesitter packages (which I forced into being 'optional') in the correct order
 vim.cmd.packadd("nvim-treesitter-textobjects")
 
@@ -376,7 +356,9 @@ vim.keymap.set("n", COC_SWITCH_SOURCE_HEADER, function() vim.api.nvim_command('C
 
 
 -- Treesitter
-require'nvim-treesitter.configs'.setup {
+require'nvim-treesitter'.setup {
+  parser_install_dir = vim.fn.stdpath("data") .. "/lazy/nvim-treesitter/",
+
   ensure_installed = { "c", "cpp", "python", "bash", "lua", "javascript", "latex", "markdown",
                        "json", "ini", "yaml", "cmake", "make", "vim", "help", "query" },
 
@@ -444,10 +426,10 @@ require'nvim-treesitter.configs'.setup {
 vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
 vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
 -- Keep f,F,t,T repeatable
-vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
-vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
-vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
-vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
+vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f_expr, { expr = true })
+vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F_expr, { expr = true })
+vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t_expr, { expr = true })
+vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = true })
 
 -- Append Argument - go to the end of the argument, insert a comma in insert mode
 vim.keymap.set('n', APPEND_NEXT_ARGUMENT, 'via<Esc>a, ', { remap = true, silent = true })

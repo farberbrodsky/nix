@@ -15,20 +15,20 @@
       enable = true;
       settings = {
         "coc.preferences.formatOnSaveFiletypes" = [ "rust" ];
-	"coc.preferences.hoverTarget" = "preview";
-	"eslint.autoFixOnSave" = true;
-	"languageserver" = {
-	  "nix" = {
-	    "command" = "nil";
-	    "filetypes" = [ "nix" ];
-	    "rootPatterns" = [ "flake.nix" ];
-	  };
-	};
+        "coc.preferences.hoverTarget" = "preview";
+        "eslint.autoFixOnSave" = true;
+        "languageserver" = {
+          "nix" = {
+            "command" = "nil";
+            "filetypes" = [ "nix" ];
+            "rootPatterns" = [ "flake.nix" ];
+          };
+        };
       };
     };
 
     plugins =
-      with pkgs.vimExtraPlugins;
+      with pkgs.vimPlugins;
       let nvim-treesitter-textobjects = pkgs.vimUtils.buildVimPlugin {
         pname = "nvim-treesitter-textobjects";
         version = "misha-main";
@@ -39,19 +39,26 @@
       };
       in
       [
-        catppuccin
-        vim-airline
-        nvim-surround
-        indent-blankline-nvim
-        vim-fugitive
-        gitsigns-nvim
-        hop-nvim
-        telescope-nvim
-        plenary-nvim
-        nvim-treesitter
-        # nvim-treesitter-textobjects
+        pkgs.vimExtraPlugins.catppuccin
+        pkgs.vimExtraPlugins.vim-airline
+        pkgs.vimExtraPlugins.nvim-surround
+        pkgs.vimExtraPlugins.indent-blankline-nvim
+        pkgs.vimExtraPlugins.vim-fugitive
+        pkgs.vimExtraPlugins.gitsigns-nvim
+        pkgs.vimExtraPlugins.hop-nvim
+        pkgs.vimExtraPlugins.telescope-nvim
+        pkgs.vimExtraPlugins.plenary-nvim
+        pkgs.vimExtraPlugins.nvim-treesitter
+        pkgs.vimExtraPlugins.nvim-autopairs
         { plugin = nvim-treesitter-textobjects; optional = true; }
         rainbow-delimiters-nvim
+        nerdtree
+        vim-devicons
+        vim-lion
+        tcomment_vim
+        telescope-coc-nvim
+        vim-obsession
+        nvim-autopairs
       ];
   };
 }
