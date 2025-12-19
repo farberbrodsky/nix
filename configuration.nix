@@ -91,6 +91,11 @@
     packages = with pkgs; [
       tree
     ];
+    uid = 1000;
+    group = "misha";
+  };
+  users.groups.misha = {
+    gid = 1000;
   };
 
   programs.firefox.enable = true;
