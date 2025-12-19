@@ -107,7 +107,7 @@
     }];
     subUidRanges = [{
         count = 65536;
-        startGid = 1000;
+        startUid = 1000;
     }];
   };
   users.groups.misha = {
