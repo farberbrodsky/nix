@@ -22,6 +22,40 @@ in
         { command = "${pkgs.way-displays}/bin/way-displays > /tmp/way-displays.\${XDG_VTNR}.\${USER}.log 2>&1 &"; always = false; }
         { command = "${pkgs.mako}/bin/mako"; always = false; }
       ];
+      fonts = {
+        names = ["JetBrainsMono Nerd Font"];
+        size = 10.0;
+      };
+      colors = let C = import ./colors.nix; in {
+        focused = {
+          border = C.blue;
+          background = C.blue;
+          text = C.darkgray;
+          indicator = C.purple;
+          childBorder = C.darkgray;
+        };
+        focusedInactive = {
+          border = C.darkgray;
+          background = C.darkgray;
+          text = C.yellow;
+          indicator = C.purple;
+          childBorder = C.darkgray;
+        };
+        unfocused = {
+          border = C.darkgray;
+          background = C.darkgray;
+          text = C.yellow;
+          indicator = C.purple;
+          childBorder = C.darkgray;
+        };
+        urgent = {
+          border = C.red;
+          background = C.red;
+          text = "#ffffff";
+          indicator = C.red;
+          childBorder = C.red;
+        };
+      };
       keybindings = lib.attrsets.mergeAttrsList [
         # workspace list
         (lib.attrsets.mergeAttrsList (map (ws: {
