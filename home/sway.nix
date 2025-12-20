@@ -10,8 +10,8 @@ in
     systemd.enable = true;
     wrapperFeatures.gtk = true;
     config = rec {
-      terminal = "${pkgs.foot}/bin/foot";
-      menu = "${pkgs.wofi}/bin/wofi";
+      terminal = "${pkgs.kitty}/bin/kitty";
+      menu = "${pkgs.wofi}/bin/wofi --show drun";
       modifier = "Mod4";
       bars = [{ command = "waybar"; }];
       keybindings = lib.attrsets.mergeAttrsList [

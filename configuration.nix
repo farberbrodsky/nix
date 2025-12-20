@@ -11,12 +11,15 @@
       ./hardware-configuration.nix
     ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  # auto clean root
+  boot.initrd.postDeviceCommands = lib.mkAfter ''
+    mkdir /mnt
+    mount -t btrfs /dev/mapper/enc /mnt
+    btrfs subvolume delete /mnt/root
+    btrfs subvolume snapshot /mnt/root-blank /mnt/root
+  '';
 
-  virtualisation.virtualbox.guest.enable = true;
-  virtualisation.virtualbox.guest.clipboard = true;
-  virtualisation.virtualbox.guest.dragAndDrop = true;
-  virtualisation.virtualbox.guest.use3rdPartyModules = true;
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   virtualisation.podman = {
     enable = true;
@@ -32,15 +35,6 @@
     nerd-fonts.comic-shanns-mono
   ];
 
-  # Use the GRUB 2 boot loader.
-  boot.loader.grub.enable = true;
-  # boot.loader.grub.efiSupport = true;
-  # boot.loader.grub.efiInstallAsRemovable = true;
-  # boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  # Define on which hard drive you want to install Grub.
-  boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
-
-  networking.hostName = "nixos";
   networking.networkmanager.enable = true;
 
   # Set your time zone.
@@ -93,6 +87,7 @@
   services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.mutableUsers = false;
   users.users.misha = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
@@ -109,10 +104,12 @@
         count = 65536;
         startUid = 100000;
     }];
+    passwordFile = "/persist/passwords/misha";
   };
   users.groups.misha = {
     gid = 1000;
   };
+  users.users.root.password = "root";
 
   programs.firefox.enable = true;
 

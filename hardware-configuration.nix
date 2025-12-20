@@ -4,29 +4,86 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports = [ ];
+  imports = [];
 
-  boot.initrd.availableKernelModules = [ "ata_piix" "ohci_pci" "ehci_pci" "ahci" "sd_mod" "sr_mod" ];
+  networking.hostName = "misha-gram";
+
+  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  # Use the GRUB 2 boot loader.
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "nodev";
+  boot.loader.grub.efiSupport = true;
+  boot.loader.grub.useOSProber = true;
+  boot.loader.grub.enableCryptodisk = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot";
+
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      vpl-gpu-rt
+    ];
+  };
+  environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
+  hardware.enableRedistributableFirmware = true;
+  boot.kernelParams = [ "i915.enable_guc=3" ];
+
+  boot.initrd.luks.devices."enc".device = "/dev/disk/by-uuid/a5184e28-50a0-4b34-9b80-730f97ee1bb0";
+  boot.supportedFilesystems = [ "btrfs" ];
+
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/676ada26-9c35-4426-8b10-1e05e477e44e";
-      fsType = "ext4";
+    { device = "/dev/mapper/enc";
+      fsType = "btrfs";
+      options = [ "subvol=root" "compress=zstd" "noatime" ];
     };
 
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/cb589af5-1bee-4fd4-806b-fbdbc96f0f4e"; }
-    ];
+  fileSystems."/home" =
+    { device = "/dev/mapper/enc";
+      fsType = "btrfs";
+      options = [ "subvol=home" "compress=zstd" "noatime" ];
+    };
 
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp0s3.useDHCP = lib.mkDefault true;
+  fileSystems."/nix" =
+    { device = "/dev/mapper/enc";
+      fsType = "btrfs";
+      options = [ "subvol=nix" "compress=zstd" "noatime" ];
+    };
+
+  fileSystems."/persist" =
+    { device = "/dev/mapper/enc";
+      fsType = "btrfs";
+      options = [ "subvol=persist" "compress=zstd" "noatime" ];
+      # password management
+      neededForBoot = true;
+    };
+
+  fileSystems."/var/log" =
+    { device = "/dev/mapper/enc";
+      fsType = "btrfs";
+      options = [ "subvol=log" "compress=zstd" "noatime" ];
+      # to have a correct log order
+      neededForBoot = true;
+    };
+
+  fileSystems."/swap" =
+    { device = "/dev/mapper/enc";
+      fsType = "btrfs";
+      options = [ "subvol=swap" "noatime" ];
+    };
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/9040-FC5F";
+      fsType = "vfat";
+      options = [ "fmask=0022" "dmask=0022" ];
+    };
+
+  swapDevices = [ { device = "/swap/swapfile"; } ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  virtualisation.virtualbox.guest.enable = true;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

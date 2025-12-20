@@ -11,8 +11,7 @@
 
   outputs = inputs@{ self, nixpkgs, home-manager, ... }: {
     nixosConfigurations = {
-      # NOTE: 'nixos' is the default hostname
-      nixos = nixpkgs.lib.nixosSystem {
+      misha-gram = nixpkgs.lib.nixosSystem {
         modules = [ ./configuration.nix ];
       };
     };

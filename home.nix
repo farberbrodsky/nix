@@ -44,10 +44,10 @@
     # '')
 
     (pkgs.writeShellScriptBin "M-hm" ''
-    exec home-manager --flake /home/misha/nix "$@"
+    exec home-manager --flake /persist/nix "$@"
     '')
     (pkgs.writeShellScriptBin "M-nixos-rebuild" ''
-    exec sudo nixos-rebuild --flake /home/misha/nix "$@"
+    exec sudo nixos-rebuild --flake /persist/nix "$@"
     '')
   ];
 
