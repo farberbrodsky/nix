@@ -97,7 +97,7 @@
         count = 65536;
         startUid = 100000;
     }];
-    passwordFile = "/persist/passwords/misha";
+    hashedPasswordFile = "/persist/passwords/misha";
   };
   users.groups.misha = {
     gid = 1000;

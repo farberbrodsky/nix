@@ -10,7 +10,7 @@
     impermanence.url = "github:nix-community/impermanence";
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, ... }: {
+  outputs = inputs@{ self, nixpkgs, home-manager, impermanence, ... }: {
     nixosConfigurations = {
       misha-gram = nixpkgs.lib.nixosSystem {
         modules = [

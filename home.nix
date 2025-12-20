@@ -17,8 +17,11 @@
     ./home/neovim.nix
     ./home/shell.nix
     ./home/sway.nix
+    ./home/syncthing.nix
     ./home/wayland.nix
   ];
+
+  misha.syncthing.enable = true;
 
   # Home Manager needs a bit of information about you and the paths it should manage.
   home.username = (import ./home/identity.nix).username;

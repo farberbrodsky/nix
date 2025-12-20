@@ -28,7 +28,7 @@
   '';
 
   # stuff to keep
-  environment.persistence."/persist".persist = {
+  environment.persistence."/persist" = {
     enable = true;
     hideMounts = true;  # sets x-gvfs-hide
     directories = [
