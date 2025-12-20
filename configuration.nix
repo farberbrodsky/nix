@@ -9,15 +9,8 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./system/btrfs-impermanence.nix
     ];
-
-  # auto clean root
-  boot.initrd.postDeviceCommands = lib.mkAfter ''
-    mkdir /mnt
-    mount -t btrfs /dev/mapper/enc /mnt
-    btrfs subvolume delete /mnt/root
-    btrfs subvolume snapshot /mnt/root-blank /mnt/root
-  '';
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 

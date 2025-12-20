@@ -6,13 +6,17 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixneovimplugins.url = github:NixNeovim/NixNeovimPlugins;
+    nixneovimplugins.url = "github:NixNeovim/NixNeovimPlugins";
+    impermanence.url = "github:nix-community/impermanence";
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, ... }: {
     nixosConfigurations = {
       misha-gram = nixpkgs.lib.nixosSystem {
-        modules = [ ./configuration.nix ];
+        modules = [
+          impermanence.nixosModules.impermanence
+          ./configuration.nix
+        ];
       };
     };
     homeConfigurations = {
@@ -21,9 +25,9 @@
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
 
         modules = [
-	  ./home.nix
+          ./home.nix
           { nixpkgs.overlays = [ inputs.nixneovimplugins.overlays.default ]; }
-	];
+        ];
       };
     };
   };

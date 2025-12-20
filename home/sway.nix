@@ -54,6 +54,9 @@ in
           "${modifier}+Shift+greater" = "move workspace to output right";
           "${modifier}+Shift+less" = "move workspace to output left";
 
+          "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl s -- \"-5%\"";
+          "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl s -- \"+5%\"";
+
           # volume control: ...
           # spotify: ...
 

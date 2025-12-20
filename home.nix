@@ -17,6 +17,7 @@
     ./home/neovim.nix
     ./home/shell.nix
     ./home/sway.nix
+    ./home/wayland.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should manage.
