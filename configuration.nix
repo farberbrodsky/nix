@@ -114,6 +114,7 @@
     neovim
     killall
     distrobox
+    htop
   ];
   environment.variables.EDITOR = "nvim";
 

@@ -5,6 +5,8 @@ let
     workspace_buttons = ["1" "2" "3" "4" "5" "6" "7" "8" "9" "0"];
 in
 {
+  home.packages = with pkgs; [ way-displays ];
+
   wayland.windowManager.sway = {
     enable = true;
     systemd.enable = true;
@@ -14,6 +16,11 @@ in
       menu = "${pkgs.wofi}/bin/wofi --show drun";
       modifier = "Mod4";
       bars = [{ command = "waybar"; }];
+      modes = {};
+      startup = [
+        { command = "${pkgs.way-displays}/bin/way-displays > /tmp/way-displays.\${XDG_VTNR}.\${USER}.log 2>&1 &"; always = false; }
+        { command = "${pkgs.mako}/bin/mako"; always = false; }
+      ];
       keybindings = lib.attrsets.mergeAttrsList [
         # workspace list
         (lib.attrsets.mergeAttrsList (map (ws: {
@@ -24,6 +31,7 @@ in
         (lib.attrsets.concatMapAttrs (key: direction: {
             "${modifier}+${key}" = "focus ${direction}";
             "${modifier}+Shift+${key}" = "move ${direction}";
+            "${modifier}+Ctrl+${key}" = "resize shrink width 10px or 10 ppt";
           }) {
             h = "left";
             j = "down";
@@ -61,8 +69,10 @@ in
           # spotify: ...
 
           "${modifier}+Shift+r" = "reload";
-          "${modifier}+Shift+e" = "swaynag -t warning -m 'Do you want to exit sway?' -b 'Yes' 'swaymsg exit'";
+          "${modifier}+Shift+e" = "exec swaynag -t warning -m 'Do you want to exit sway?' -b 'Yes' 'swaymsg exit'";
         }
+
+        (lib.attrsets.mapAttrs (k: v: "exec ${v}") config.misha.desktop.keyboardShortcuts)
       ];
     };
   };

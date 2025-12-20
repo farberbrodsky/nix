@@ -2,7 +2,7 @@
 
 {
   # nix language server
-  home.packages = [ pkgs.nil ];
+  home.packages = [ pkgs.nixd ];
 
   programs.neovim = {
     enable = true;
@@ -19,7 +19,7 @@
         "eslint.autoFixOnSave" = true;
         "languageserver" = {
           "nix" = {
-            "command" = "nil";
+            "command" = "nixd";
             "filetypes" = [ "nix" ];
             "rootPatterns" = [ "flake.nix" ];
           };
