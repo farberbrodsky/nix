@@ -54,6 +54,19 @@
         "type": "github"
       }
     },
+    "my-sync": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1766247246,
+        "narHash": "sha256-GiJRu49TlzbRhfYBlDJpsI7wf8uK6Cfp1QutIEdgdHs=",
+        "path": "/home/misha/Sync/sync.nix",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/misha/Sync/sync.nix",
+        "type": "path"
+      }
+    },
     "nix-github-actions": {
       "inputs": {
         "nixpkgs": [
@@ -158,6 +171,7 @@
       "inputs": {
         "home-manager": "home-manager",
         "impermanence": "impermanence",
+        "my-sync": "my-sync",
         "nixneovimplugins": "nixneovimplugins",
         "nixpkgs": "nixpkgs_2"
       }

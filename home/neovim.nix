@@ -59,6 +59,7 @@
         telescope-coc-nvim
         vim-obsession
         nvim-autopairs
+        vim-nix
       ];
   };
 }

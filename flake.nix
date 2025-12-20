@@ -8,6 +8,8 @@
     };
     nixneovimplugins.url = "github:NixNeovim/NixNeovimPlugins";
     impermanence.url = "github:nix-community/impermanence";
+    my-sync.url = "path:/home/misha/Sync/sync.nix";
+    my-sync.flake = false;
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, impermanence, ... }: {
@@ -28,6 +30,7 @@
           ./home.nix
           { nixpkgs.overlays = [ inputs.nixneovimplugins.overlays.default ]; }
         ];
+        extraSpecialArgs = { inherit inputs; };
       };
     };
   };

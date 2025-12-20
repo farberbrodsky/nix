@@ -1,11 +1,14 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, inputs, lib, ... }:
 
+let myOptions = import inputs.my-sync.syncthing; in
 {
-  options.misha.syncthing.enable = lib.mkEnableOption "misha syncthing";
-
-  config = {
-    services.syncthing = lib.mkIf config.misha.syncthing.enable {
-      enable = true;
+  services.syncthing = lib.mkIf config.misha.syncthing.enable {
+    enable = true;
+    settings.options = {
+      relaysEnabled = true;
+      urAccepted = 1;  # accept usage reporting
     };
+    settings.devices = myOptions.devices;
+    settings.folders = myOptions.folders;
   };
 }
