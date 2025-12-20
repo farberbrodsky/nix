@@ -11,7 +11,7 @@ in
     enable = true;
     systemd.enable = true;
     wrapperFeatures.gtk = true;
-    # extraConfig = "seat seat0 xcursor_theme quintom-cursor-theme 36";
+    extraConfig = "seat seat0 xcursor_theme Quintom_Ink 24";
     config = rec {
       terminal = "${pkgs.kitty}/bin/kitty";
       menu = "${pkgs.wofi}/bin/wofi --show drun -t ${pkgs.kitty}/bin/kitty";

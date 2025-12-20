@@ -48,6 +48,7 @@
     enable = true;
     extraPortals = with pkgs; [
       xdg-desktop-portal-wlr
+      xdg-desktop-portal-gtk
     ];
     config = {
       sway = {
@@ -75,10 +76,9 @@
     libnotify  # notify-send, probably used by way-displays
     # theme
     (gruvbox-kvantum.override { variant = "Gruvbox_Light_Blue"; })
-    gruvbox-plus-icons
+    # gruvbox-plus-icons doesn't work for light theme; TODO open a pr about it
     libsForQt5.qtstyleplugin-kvantum
     qt6Packages.qtstyleplugin-kvantum
-    papirus-icon-theme
   ];
 
   misha.desktop.keyboardShortcuts = {

@@ -33,6 +33,7 @@
 
   # for desktop
   programs.dconf.enable = true;
+  services.dbus.enable = true;
 
   networking.networkmanager.enable = true;
 
