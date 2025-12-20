@@ -57,8 +57,8 @@
     "my-sync": {
       "flake": false,
       "locked": {
-        "lastModified": 1766247246,
-        "narHash": "sha256-GiJRu49TlzbRhfYBlDJpsI7wf8uK6Cfp1QutIEdgdHs=",
+        "lastModified": 1766248212,
+        "narHash": "sha256-zpFBKs7FcwrgiQ+sDilystCEbx95Uap9O5uQrlfXdUI=",
         "path": "/home/misha/Sync/sync.nix",
         "type": "path"
       },
