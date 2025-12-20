@@ -31,7 +31,12 @@ in
         (lib.attrsets.concatMapAttrs (key: direction: {
             "${modifier}+${key}" = "focus ${direction}";
             "${modifier}+Shift+${key}" = "move ${direction}";
-            "${modifier}+Ctrl+${key}" = "resize shrink width 10px or 10 ppt";
+            "${modifier}+Ctrl+${key}" = let resizes = {
+              left = "shrink width";
+              down = "grow height";
+              up = "shrink height";
+              right = "grow width";
+            }; in "resize ${resizes.${direction}} 10px or 10 ppt";
           }) {
             h = "left";
             j = "down";
