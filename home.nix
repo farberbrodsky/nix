@@ -19,9 +19,11 @@
     ./home/shell.nix
     ./home/sway.nix
     ./home/syncthing.nix
+    ./home/vscode.nix
     ./home/wayland.nix
   ];
 
+  nixpkgs.config.allowUnfree = true;
   misha.syncthing.enable = true;
 
   # Home Manager needs a bit of information about you and the paths it should manage.
