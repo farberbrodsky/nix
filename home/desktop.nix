@@ -27,21 +27,23 @@
 
   home.file.".config/qt5ct/style-colors.conf".source = dotfiles/gruvbox_light.conf;
   home.file.".config/qt6ct/style-colors.conf".source = dotfiles/gruvbox_light.conf;
-  qt = {
+  qt = rec {
     enable = true;
     platformTheme.name = "qtct";
-    # qt5ctSettings = {
-    #   Appearance = {
-    #     style = "kvantum";
-    #     icon_theme = config.gtk.iconTheme.name;
-    #     standar_dialogs = "xdgdesktopportal";
-    #   };
-    #   Fonts = {
-    #     fixed = "\"ComicShannsMono Nerd Font,12,-1,5,50,0,0,0,0,0\"";
-    #     general = "\"Calibri,12,-1,5,50,0,0,0,0,0\"";
-    #   };
-    # };
-    # qt6ctSettings = qt5ctSettings;
+    qt5ctSettings = {
+      Appearance = {
+        color_scheme_path = builtins.toString dotfiles/gruvbox_light.conf;
+        custom_palette = "true";
+        style = "kvantum";
+        icon_theme = config.gtk.iconTheme.name;
+        standar_dialogs = "xdgdesktopportal";
+      };
+      Fonts = {
+        fixed = "\"ComicShannsMono Nerd Font,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Regular\"";
+        general = "\"Roboto,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Regular\"";
+      };
+    };
+    qt6ctSettings = qt5ctSettings;
   };
 
   xdg.portal = {
