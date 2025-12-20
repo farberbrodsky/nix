@@ -26,7 +26,13 @@
     nerd-fonts.fira-code
     nerd-fonts.jetbrains-mono
     nerd-fonts.comic-shanns-mono
+    corefonts  # microsoft
+    vista-fonts  # microsoft
+    google-fonts
   ];
+
+  # for desktop
+  programs.dconf.enable = true;
 
   networking.networkmanager.enable = true;
 

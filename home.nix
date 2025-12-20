@@ -20,7 +20,6 @@
     ./home/sway.nix
     ./home/syncthing.nix
     ./home/vscode.nix
-    ./home/wayland.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

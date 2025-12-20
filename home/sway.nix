@@ -11,9 +11,10 @@ in
     enable = true;
     systemd.enable = true;
     wrapperFeatures.gtk = true;
+    # extraConfig = "seat seat0 xcursor_theme quintom-cursor-theme 36";
     config = rec {
       terminal = "${pkgs.kitty}/bin/kitty";
-      menu = "${pkgs.wofi}/bin/wofi --show drun";
+      menu = "${pkgs.wofi}/bin/wofi --show drun -t ${pkgs.kitty}/bin/kitty";
       modifier = "Mod4";
       bars = [{ command = "waybar"; }];
       modes = {};
