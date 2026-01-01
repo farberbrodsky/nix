@@ -1,6 +1,8 @@
 { config, pkgs, lib, ... }:
 
 {
+  services.blueman-applet.enable = true;
+
   gtk = {
     enable = true;
     theme = {
@@ -75,6 +77,7 @@
     apostrophe
     slurp  # select a region in wayland
     brightnessctl
+    pavucontrol
     libnotify  # notify-send, probably used by way-displays
     # theme
     (gruvbox-kvantum.override { variant = "Gruvbox_Light_Blue"; })

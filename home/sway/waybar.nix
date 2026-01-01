@@ -5,7 +5,6 @@
     "sway/workspaces"
     "sway/mode"
     "sway/scratchpad"
-    "custom/media"
   ];
   modules-center = [
     "sway/window"
@@ -117,16 +116,11 @@
     tooltip = false;
   };
   memory = {
-    format = "{}% ";
+    format = "{}% 󰍛";
   };
   temperature = {
     critical-threshold = 80;
-    format = "{temperatureC}°C {icon}";
-    format-icons = [
-      ""
-      ""
-      ""
-    ];
+    format = "{temperatureC}°C";
   };
   backlight = {
     format = "{percent}% {icon}";
@@ -187,7 +181,7 @@
     format-bluetooth = "{volume}% {icon} {format_source}";
     format-bluetooth-muted = " {icon} {format_source}";
     format-muted = " {format_source}";
-    format-source = "{volume}% ";
+    format-source = "";
     format-source-muted = "";
     format-icons = {
       headphone = "";
@@ -204,22 +198,22 @@
     };
     on-click = "pavucontrol";
   };
-  "custom/media" = {
-    format = "{icon} {text}";
-    return-type = "json";
-    max-length = 40;
-    format-icons = {
-      spotify = "";
-      default = "🎜";
-    };
-    escape = true;
-    exec = "$HOME/.config/waybar/mediaplayer.py 2> /dev/null";
-  };
+  # "custom/media" = {
+  #   format = "{icon} {text}";
+  #   return-type = "json";
+  #   max-length = 40;
+  #   format-icons = {
+  #     spotify = "";
+  #     default = "🎜";
+  #   };
+  #   escape = true;
+  #   exec = "$HOME/.config/waybar/mediaplayer.py 2> /dev/null";
+  # };
   "custom/power" = {
     format = "⏻ ";
     tooltip = false;
     menu = "on-click";
-    menu-file = "$HOME/.config/waybar/power_menu.xml";
+    menu-file = "$HOME/.config/waybar/waybar_power_menu.xml";
     menu-actions = {
       shutdown = "shutdown";
       reboot = "reboot";

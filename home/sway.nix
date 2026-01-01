@@ -120,6 +120,7 @@ in
   programs.waybar.enable = true;
   programs.waybar.settings = { mainBar = (import ./sway/waybar.nix); };
   programs.waybar.style = lib.fileContents ./sway/waybar.css;
+  xdg.configFile."waybar/waybar_power_menu.xml".source = ./sway/waybar_power_menu.xml;
 
   programs.wofi = {
     enable = true;

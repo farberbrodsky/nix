@@ -22,6 +22,9 @@
   container_additional_volumes="/nix/store:/nix/store:ro /etc/profiles/per-user:/etc/profiles/per-user:ro /etc/static/profiles/per-user:/etc/static/profiles/per-user:ro"
   '';
 
+  # literally magic
+  programs.steam.enable = true;
+
   fonts.packages = with pkgs; [
     nerd-fonts.fira-code
     nerd-fonts.jetbrains-mono
@@ -34,6 +37,15 @@
   # for desktop
   programs.dconf.enable = true;
   services.dbus.enable = true;
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      vpl-gpu-rt  # newer GPUs on NixOS>24.05
+      # intel-media-sdk - for older GPUs
+    ];
+  };
 
   networking.networkmanager.enable = true;
 
