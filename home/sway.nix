@@ -105,7 +105,10 @@ in
           "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl s -- \"-5%\"";
           "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl s -- \"+5%\"";
 
-          # volume control: ...
+          # not sure wireplumber is the best for this but eh
+          "XF86AudioLowerVolume" = "exec --no-startup-id ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
+          "XF86AudioRaiseVolume" = "exec --no-startup-id ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
+
           # spotify: ...
 
           "${modifier}+Shift+r" = "reload";
