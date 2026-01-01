@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   # This value determines the Home Manager release that your configuration is
@@ -20,6 +20,8 @@
     ./home/sway.nix
     ./home/syncthing.nix
     ./home/vscode.nix
+    inputs.nix-flatpak.homeManagerModules.nix-flatpak
+    ./home/flatpak.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

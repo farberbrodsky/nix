@@ -8,6 +8,7 @@
     };
     nixneovimplugins.url = "github:NixNeovim/NixNeovimPlugins";
     impermanence.url = "github:nix-community/impermanence";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
     my-sync.url = "path:/home/misha/Sync/sync.nix";
     my-sync.flake = false;
   };

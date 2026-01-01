@@ -141,9 +141,10 @@
       warning = 30;
       critical = 15;
     };
+    interval = 5;
     format = "{capacity}% {icon}";
     format-full = "{capacity}% {icon}";
-    format-charging = "{capacity}% ";
+    format-charging = "{capacity}% 󰂄";
     format-plugged = "{capacity}% ";
     format-alt = "{time} {icon}";
     format-icons = [

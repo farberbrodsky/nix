@@ -37,6 +37,9 @@
       "/var/lib/systemd/coredump"
       "/var/lib/systemd/timers"
       "/etc/NetworkManager/system-connections"
+      "/var/lib/containers"
+      "/var/lib/cni"
+      "/var/lib/flatpak"
     ];
     files = [
       "/etc/machine-id"

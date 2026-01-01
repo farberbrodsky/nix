@@ -89,6 +89,8 @@
     inkscape
   ];
 
+  services.flatpak.enable = true;
+
   misha.desktop.keyboardShortcuts = {
     "Mod4+z" = "${pkgs.kdePackages.dolphin}/bin/dolphin";
     "Mod4+b" = "${pkgs.firefox}/bin/firefox";
