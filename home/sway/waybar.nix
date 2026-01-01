@@ -102,7 +102,7 @@
     icon-size = 21;
     spacing = 10;
     icons = {
-      blueman = "bluetooth";
+      blueman = ./bluetooth-active.png;
       TelegramDesktop = "$HOME/.local/share/icons/hicolor/16x16/apps/telegram.png";
     };
   };

@@ -73,7 +73,6 @@
 
   home.packages = with pkgs; [
     kdePackages.dolphin
-    keepassxc
     apostrophe
     slurp  # select a region in wayland
     brightnessctl
@@ -84,6 +83,10 @@
     # gruvbox-plus-icons doesn't work for light theme; TODO open a pr about it
     libsForQt5.qtstyleplugin-kvantum
     qt6Packages.qtstyleplugin-kvantum
+
+    # random desktop apps
+    keepassxc
+    inkscape
   ];
 
   misha.desktop.keyboardShortcuts = {
