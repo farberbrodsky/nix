@@ -116,7 +116,7 @@
     tooltip = false;
   };
   memory = {
-    format = "{}% 󰍛";
+    format = "{}% ";
   };
   temperature = {
     critical-threshold = 80;

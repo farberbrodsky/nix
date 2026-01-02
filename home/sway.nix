@@ -110,8 +110,8 @@ in
           "${modifier}+Shift+greater" = "move workspace to output right";
           "${modifier}+Shift+less" = "move workspace to output left";
 
-          "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl s -- \"-5%\"";
-          "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl s -- \"+5%\"";
+          "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl -n1 s -- \"-5%\"";
+          "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl -n1 s -- \"+5%\"";
 
           # not sure wireplumber is the best for this but eh
           "XF86AudioLowerVolume" = "${ex volumeDown}";
@@ -127,13 +127,19 @@ in
           "${modifier}+bracketleft" = "${ex mediaPrev}";
           "${modifier}+bracketright" = "${ex mediaNext}";
 
-          # spotify: ...
+          "${modifier}+shift+m" = "[class=\"Spotify\"] scratchpad show";
 
           "${modifier}+Shift+r" = "reload";
           "${modifier}+Shift+e" = "exec swaynag -t warning -m 'Do you want to exit sway?' -b 'Yes' 'swaymsg exit'";
         }
 
         (lib.attrsets.mapAttrs (k: v: "exec ${v}") config.misha.desktop.keyboardShortcuts)
+      ];
+      window.commands = [
+        {
+          command = "move scratchpad";
+          criteria.class = "Spotify";
+        }
       ];
     };
   };
