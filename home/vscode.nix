@@ -1,7 +1,7 @@
 { config, pkgs, inputs, lib, ... }:
 
 {
-  programs.vscode = {
+  programs.vscode = (lib.mkIf config.misha.desktop.enable {
     enable = true;
     profiles.default = {
       enableExtensionUpdateCheck = false;
@@ -17,5 +17,5 @@
         "[nix].editor.tabSize" = 2;
       };
     };
-  };
+  });
 }

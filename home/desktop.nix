@@ -1,6 +1,6 @@
-{ config, pkgs, lib, ... }:
+{ config, utils, pkgs, lib, ... }:
 
-{
+(lib.mkIf config.misha.desktop.enable {
   services.blueman-applet.enable = true;
 
   gtk = {
@@ -71,6 +71,12 @@
     chooser_cmd=slurp -f %o -or
   '';
 
+  xdg.mimeApps.enable = true;
+  xdg.mimeApps.defaultApplications =
+    utils.repeatedAttribute [
+      "text/html" "application/x-web-browser" "text/html" "x-scheme-handler/http" "x-scheme-handler/https" "x-scheme-handler/about" "x-scheme-handler/unknown"
+    ] config.misha.desktop.default.browser;
+
   home.packages = with pkgs; [
     kdePackages.dolphin
     apostrophe
@@ -95,4 +101,4 @@
     "Mod4+z" = "${pkgs.kdePackages.dolphin}/bin/dolphin";
     "Mod4+b" = "${pkgs.firefox}/bin/firefox";
   };
-}
+})

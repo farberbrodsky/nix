@@ -1,10 +1,18 @@
 { config, pkgs, lib, ... }:
 
 let
-    workspace_names = ["1" "2" "3" "4" "5" "6" "7" "8" "9" "10"];
-    workspace_buttons = ["1" "2" "3" "4" "5" "6" "7" "8" "9" "0"];
+    workspaceNames = ["1" "2" "3" "4" "5" "6" "7" "8" "9" "10"];
+    workspaceButtons = ["1" "2" "3" "4" "5" "6" "7" "8" "9" "0"];
+    volumeDown = "${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
+    volumeUp = "${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
+    mediaNext = "${pkgs.playerctl}/bin/playerctl next";
+    mediaPrev = "${pkgs.playerctl}/bin/playerctl previous";
+    mediaPlay = "${pkgs.playerctl}/bin/playerctl play";
+    mediaPause = "${pkgs.playerctl}/bin/playerctl pause";
+    mediaPlayPause = "${pkgs.playerctl}/bin/playerctl play-pause";
+    ex = c: "exec --no-startup-id ${c}";
 in
-{
+(lib.mkIf config.misha.desktop.enable {
   home.packages = with pkgs; [ way-displays ];
 
   wayland.windowManager.sway = {
@@ -61,7 +69,7 @@ in
         (lib.attrsets.mergeAttrsList (map (ws: {
           "${modifier}+${ws.fst}" = "workspace ${ws.snd}";
           "${modifier}+Shift+${ws.fst}" = "move container to workspace ${ws.snd}";
-        }) (lib.lists.zipLists workspace_buttons workspace_names)))
+        }) (lib.lists.zipLists workspaceButtons workspaceNames)))
 
         (lib.attrsets.concatMapAttrs (key: direction: {
             "${modifier}+${key}" = "focus ${direction}";
@@ -106,8 +114,18 @@ in
           "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl s -- \"+5%\"";
 
           # not sure wireplumber is the best for this but eh
-          "XF86AudioLowerVolume" = "exec --no-startup-id ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
-          "XF86AudioRaiseVolume" = "exec --no-startup-id ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
+          "XF86AudioLowerVolume" = "${ex volumeDown}";
+          "XF86AudioRaiseVolume" = "${ex volumeUp}";
+          "${modifier}+n" = "${ex volumeDown}";
+          "${modifier}+m" = "${ex volumeUp}";
+
+          "XF86AudioNext" = "${ex mediaNext}";
+          "XF86AudioPrev" = "${ex mediaPrev}";
+          "XF86AudioPlay" = "${ex mediaPlay}";
+          "XF86AudioPause" = "${ex mediaPause}";
+          "${modifier}+p" = "${ex mediaPlayPause}";
+          "${modifier}+bracketleft" = "${ex mediaPrev}";
+          "${modifier}+bracketright" = "${ex mediaNext}";
 
           # spotify: ...
 
@@ -176,4 +194,4 @@ in
       }
     '';
   };
-}
+})

@@ -11,12 +11,14 @@
   home.stateVersion = "25.05"; # Please read the comment before changing.
 
   imports = [
+    ./home/chromium.nix
     ./home/options.nix
     ./home/desktop.nix
     ./home/git.nix
     ./home/kitty.nix
     ./home/neovim.nix
     ./home/shell.nix
+    ./home/spotify.nix
     ./home/sway.nix
     ./home/syncthing.nix
     ./home/vscode.nix
@@ -25,7 +27,8 @@
   ];
 
   nixpkgs.config.allowUnfree = true;
-  misha.syncthing.enable = true;
+  misha.desktop.enable = true;
+  misha.desktop.personal.enable = true;
 
   # Home Manager needs a bit of information about you and the paths it should manage.
   home.username = (import ./home/identity.nix).username;
