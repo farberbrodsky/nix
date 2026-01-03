@@ -1,8 +1,11 @@
 { nixpkgs, ... }:
 
-let lib = nixpkgs.lib; in
+let
+  lib = nixpkgs.lib;
+in
 {
-  mkDefaultEnableOption = default: name:
+  mkDefaultEnableOption =
+    default: name:
     lib.mkOption {
       inherit default;
       example = true;
@@ -10,6 +13,6 @@ let lib = nixpkgs.lib; in
       type = lib.types.bool;
     };
 
-  repeatedAttribute = names: value:
-    builtins.listToAttrs (builtins.map (name: { inherit name value; }) names);
+  repeatedAttribute =
+    names: value: builtins.listToAttrs (builtins.map (name: { inherit name value; }) names);
 }

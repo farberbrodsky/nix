@@ -2,24 +2,33 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{
+  inputs,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   nixpkgs.config.allowUnfree = true;
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./system/btrfs-impermanence.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ./system/btrfs-impermanence.nix
+    inputs.impermanence.nixosModules.impermanence
+  ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   virtualisation.podman = {
     enable = true;
   };
   # for distrobox, hopefully
   environment.etc."distrobox/distrobox.conf".text = ''
-  container_additional_volumes="/nix/store:/nix/store:ro /etc/profiles/per-user:/etc/profiles/per-user:ro /etc/static/profiles/per-user:/etc/static/profiles/per-user:ro"
+    container_additional_volumes="/nix/store:/nix/store:ro /etc/profiles/per-user:/etc/profiles/per-user:ro /etc/static/profiles/per-user:/etc/static/profiles/per-user:ro"
   '';
 
   # literally magic
@@ -29,8 +38,8 @@
     nerd-fonts.fira-code
     nerd-fonts.jetbrains-mono
     nerd-fonts.comic-shanns-mono
-    corefonts  # microsoft
-    vista-fonts  # microsoft
+    corefonts # microsoft
+    vista-fonts # microsoft
     google-fonts
   ];
 
@@ -42,7 +51,7 @@
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
-      vpl-gpu-rt  # newer GPUs on NixOS>24.05
+      vpl-gpu-rt # newer GPUs on NixOS>24.05
       # intel-media-sdk - for older GPUs
     ];
   };
@@ -62,9 +71,6 @@
 
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
-
-
-  
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -93,7 +99,7 @@
       };
     };
   };
-  users.users.greeter = {};
+  users.users.greeter = { };
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
@@ -108,14 +114,18 @@
     ];
     uid = 1000;
     group = "misha";
-    subGidRanges = [{
+    subGidRanges = [
+      {
         count = 65536;
         startGid = 100000;
-    }];
-    subUidRanges = [{
+      }
+    ];
+    subUidRanges = [
+      {
         count = 65536;
         startUid = 100000;
-    }];
+      }
+    ];
     hashedPasswordFile = "/persist/passwords/misha";
   };
   users.groups.misha = {
@@ -181,4 +191,3 @@
   system.stateVersion = "25.05"; # Did you read the comment?
 
 }
-

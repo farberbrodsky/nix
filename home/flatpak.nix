@@ -1,4 +1,10 @@
-{ config, pkgs, inputs, lib, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  lib,
+  ...
+}:
 
 (lib.mkIf config.misha.desktop.enable {
   services.flatpak = {

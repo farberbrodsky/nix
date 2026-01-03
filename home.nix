@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   # This value determines the Home Manager release that your configuration is
@@ -55,10 +60,10 @@
     # '')
 
     (pkgs.writeShellScriptBin "M-hm" ''
-    exec home-manager --flake /persist/nix "$@"
+      exec home-manager --flake /persist/nix "$@"
     '')
     (pkgs.writeShellScriptBin "M-nixos-rebuild" ''
-    exec sudo nixos-rebuild --flake /persist/nix "$@"
+      exec sudo nixos-rebuild --flake /persist/nix "$@"
     '')
   ];
 

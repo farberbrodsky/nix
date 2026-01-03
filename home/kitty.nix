@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 (lib.mkIf config.misha.desktop.enable {
   home.packages = [ pkgs.kitty ];

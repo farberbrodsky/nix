@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   # nix language server
@@ -29,14 +34,15 @@
 
     plugins =
       with pkgs.vimPlugins;
-      let nvim-treesitter-textobjects = pkgs.vimUtils.buildVimPlugin {
-        pname = "nvim-treesitter-textobjects";
-        version = "misha-main";
-        src = pkgs.fetchurl {
-          url = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects/archive/0d7c800fadcfe2d33089f5726cb8907fc846eece.tar.gz";
-          sha256 = "80b64ce89d9deb30f416c2a4e20ab98ce2d6328d1aef6a7205d8a3788c745412";
+      let
+        nvim-treesitter-textobjects = pkgs.vimUtils.buildVimPlugin {
+          pname = "nvim-treesitter-textobjects";
+          version = "misha-main";
+          src = pkgs.fetchurl {
+            url = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects/archive/0d7c800fadcfe2d33089f5726cb8907fc846eece.tar.gz";
+            sha256 = "80b64ce89d9deb30f416c2a4e20ab98ce2d6328d1aef6a7205d8a3788c745412";
+          };
         };
-      };
       in
       [
         pkgs.vimExtraPlugins.catppuccin
@@ -50,7 +56,10 @@
         pkgs.vimExtraPlugins.plenary-nvim
         pkgs.vimExtraPlugins.nvim-treesitter
         pkgs.vimExtraPlugins.nvim-autopairs
-        { plugin = nvim-treesitter-textobjects; optional = true; }
+        {
+          plugin = nvim-treesitter-textobjects;
+          optional = true;
+        }
         rainbow-delimiters-nvim
         nerdtree
         vim-devicons

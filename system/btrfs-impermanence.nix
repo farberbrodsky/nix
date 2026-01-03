@@ -1,4 +1,10 @@
-{ config, lib, pkgs, types, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  types,
+  ...
+}:
 
 {
   # Automatically deletes root snapshosts older than 30 days
@@ -30,7 +36,7 @@
   # stuff to keep
   environment.persistence."/persist" = {
     enable = true;
-    hideMounts = true;  # sets x-gvfs-hide
+    hideMounts = true; # sets x-gvfs-hide
     directories = [
       "/var/lib/bluetooth"
       "/var/lib/nixos"

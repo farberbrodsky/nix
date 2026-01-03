@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 (lib.mkIf config.misha.desktopApps.spotify.enable {
   # services.librespot = {

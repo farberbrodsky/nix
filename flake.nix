@@ -13,18 +13,34 @@
     my-sync.flake = false;
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, impermanence, ... }:
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      home-manager,
+      ...
+    }:
     let
       utils = (import ./utils inputs);
-    in {
+      systems = [
+        "aarch64-linux"
+        "i686-linux"
+        "x86_64-linux"
+      ];
+      forAllSystems = nixpkgs.lib.genAttrs systems;
+    in
+    {
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
+
       nixosConfigurations = {
         misha-gram = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs; };
           modules = [
-            impermanence.nixosModules.impermanence
             ./configuration.nix
           ];
         };
       };
+
       homeConfigurations = {
         "misha@misha-gram" = home-manager.lib.homeManagerConfiguration {
           # TODO improve
@@ -34,9 +50,12 @@
             ./home.nix
             { nixpkgs.overlays = [ inputs.nixneovimplugins.overlays.default ]; }
           ];
-          extraSpecialArgs = { inherit inputs; inherit utils; hostname = "misha-gram"; };
+          extraSpecialArgs = {
+            inherit inputs;
+            inherit utils;
+            hostname = "misha-gram";
+          };
         };
       };
     };
 }
-

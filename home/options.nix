@@ -1,10 +1,18 @@
-{ config, utils, lib, ... }:
+{
+  config,
+  utils,
+  lib,
+  ...
+}:
 
 {
-  options.misha = with lib; let
-    desktopDefault = utils.mkDefaultEnableOption config.misha.desktop.enable;
-    desktopPersonalDefault = utils.mkDefaultEnableOption config.misha.desktop.personal.enable;
-  in {
+  options.misha =
+    with lib;
+    let
+      desktopDefault = utils.mkDefaultEnableOption config.misha.desktop.enable;
+      desktopPersonalDefault = utils.mkDefaultEnableOption config.misha.desktop.personal.enable;
+    in
+    {
       # Normal desktop stuff
       desktop.enable = mkEnableOption "desktop";
 
@@ -13,8 +21,8 @@
 
       # To add keyboard shortcuts to sway
       desktop.keyboardShortcuts = mkOption {
-        type = lib.types.attrsOf(lib.types.str);
-        default = {};
+        type = lib.types.attrsOf (lib.types.str);
+        default = { };
       };
 
       desktop.default.browser = mkOption {

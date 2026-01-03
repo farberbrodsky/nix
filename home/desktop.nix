@@ -1,4 +1,10 @@
-{ config, utils, pkgs, lib, ... }:
+{
+  config,
+  utils,
+  pkgs,
+  lib,
+  ...
+}:
 
 (lib.mkIf config.misha.desktop.enable {
   services.blueman-applet.enable = true;
@@ -72,18 +78,23 @@
   '';
 
   xdg.mimeApps.enable = true;
-  xdg.mimeApps.defaultApplications =
-    utils.repeatedAttribute [
-      "text/html" "application/x-web-browser" "text/html" "x-scheme-handler/http" "x-scheme-handler/https" "x-scheme-handler/about" "x-scheme-handler/unknown"
-    ] config.misha.desktop.default.browser;
+  xdg.mimeApps.defaultApplications = utils.repeatedAttribute [
+    "text/html"
+    "application/x-web-browser"
+    "text/html"
+    "x-scheme-handler/http"
+    "x-scheme-handler/https"
+    "x-scheme-handler/about"
+    "x-scheme-handler/unknown"
+  ] config.misha.desktop.default.browser;
 
   home.packages = with pkgs; [
     kdePackages.dolphin
     apostrophe
-    slurp  # select a region in wayland
+    slurp # select a region in wayland
     brightnessctl
     pavucontrol
-    libnotify  # notify-send, probably used by way-displays
+    libnotify # notify-send, probably used by way-displays
     # theme
     (gruvbox-kvantum.override { variant = "Gruvbox_Light_Blue"; })
     # gruvbox-plus-icons doesn't work for light theme; TODO open a pr about it
