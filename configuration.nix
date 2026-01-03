@@ -11,12 +11,19 @@
 }:
 
 {
-  nixpkgs.config.allowUnfree = true;
   imports = [
-    ./hardware-configuration.nix
+    ./system/hardware-configuration.nix
     ./system/btrfs-impermanence.nix
     inputs.impermanence.nixosModules.impermanence
   ];
+
+  nixpkgs = {
+    overlays = [
+      inputs.self.overlays.additions
+      inputs.self.overlays.modifications
+    ];
+    config.allowUnfree = true;
+  };
 
   nix.settings.experimental-features = [
     "nix-command"

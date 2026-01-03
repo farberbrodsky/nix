@@ -6,15 +6,6 @@
 }:
 
 {
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "25.05"; # Please read the comment before changing.
-
   imports = [
     ./home/chromium.nix
     ./home/options.nix
@@ -27,11 +18,28 @@
     ./home/sway.nix
     ./home/syncthing.nix
     ./home/vscode.nix
-    inputs.nix-flatpak.homeManagerModules.nix-flatpak
     ./home/flatpak.nix
+    inputs.nix-flatpak.homeManagerModules.nix-flatpak
   ];
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    # You can add overlays here
+    overlays = [
+      inputs.self.overlays.additions
+      inputs.self.overlays.modifications
+      # You can also add overlays exported from other flakes:
+      inputs.nixneovimplugins.overlays.default
+      # Or define it inline, for example:
+      # (final: prev: {
+      #   hi = final.hello.overrideAttrs (oldAttrs: {
+      #     patches = [ ./change-hello-to-hi.patch ];
+      #   });
+      # })
+    ];
+
+    config.allowUnfree = true;
+  };
+
   misha.desktop.enable = true;
   misha.desktop.personal.enable = true;
 
@@ -104,4 +112,6 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  home.stateVersion = "25.05";
 }

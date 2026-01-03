@@ -22,6 +22,7 @@
     }:
     let
       utils = (import ./utils inputs);
+      hosts = (import ./hosts);
       systems = [
         "aarch64-linux"
         "i686-linux"
@@ -30,32 +31,53 @@
       forAllSystems = nixpkgs.lib.genAttrs systems;
     in
     {
+      # Your custom packages
+      # Accessible through 'nix build', 'nix shell', etc
+      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+
+      # available through 'nix fmt'
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
 
-      nixosConfigurations = {
-        misha-gram = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs; };
-          modules = [
-            ./configuration.nix
-          ];
-        };
-      };
+      # Custom packages and modifications, exported as overlays
+      # Each overlay needs to be individually imported in configuration.nix and home.nix
+      overlays = import ./overlays { inherit inputs; };
 
-      homeConfigurations = {
-        "misha@misha-gram" = home-manager.lib.homeManagerConfiguration {
-          # TODO improve
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      # Stuff you would upstream into nixpkgs
+      nixosModules = import ./modules/nixos;
+      # Stuff you would upstream into home-manager
+      homeManagerModules = import ./modules/home-manager;
 
-          modules = [
-            ./home.nix
-            { nixpkgs.overlays = [ inputs.nixneovimplugins.overlays.default ]; }
-          ];
-          extraSpecialArgs = {
-            inherit inputs;
-            inherit utils;
-            hostname = "misha-gram";
-          };
-        };
-      };
+      nixosConfigurations = (
+        nixpkgs.lib.mapAttrs (
+          host: hostConfig:
+          nixpkgs.lib.nixosSystem {
+            specialArgs = { inherit inputs; };
+            modules = [
+              hostConfig.system
+              ./configuration.nix
+            ];
+          }
+        ) hosts
+      );
+
+      homeConfigurations = nixpkgs.lib.mapAttrs' (
+        host: hostConfig:
+        nixpkgs.lib.nameValuePair "misha@${host}" (
+          home-manager.lib.homeManagerConfiguration {
+            # TODO improve
+            pkgs = nixpkgs.legacyPackages.x86_64-linux;
+
+            modules = [
+              hostConfig.home
+              ./home.nix
+            ];
+            extraSpecialArgs = {
+              inherit inputs;
+              inherit utils;
+              hostname = "misha-gram";
+            };
+          }
+        )
+      ) hosts;
     };
 }
