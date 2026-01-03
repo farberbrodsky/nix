@@ -4,7 +4,10 @@
       home.username = "misha";
       home.homeDirectory = "/home/misha";
     };
-    system = { };
+    system = {
+      imports = [ ./hardware-configuration/misha-gram.nix ];
+      networking.hostName = "misha-gram";
+    };
     # From: options.nix
     misha = {
       desktop.enable = true;

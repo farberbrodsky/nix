@@ -18,7 +18,6 @@
     ./system/desktop.nix
     ./system/fonts.nix
     ./system/gaming.nix
-    ./system/hardware-configuration.nix
     inputs.impermanence.nixosModules.impermanence
   ];
 
@@ -45,15 +44,6 @@
   ];
 
   environment.variables.EDITOR = "nvim";
-
-  hardware.bluetooth.enable = true;
-  hardware.graphics = {
-    enable = true;
-    extraPackages = with pkgs; [
-      vpl-gpu-rt # newer GPUs on NixOS>24.05
-      # intel-media-sdk - for older GPUs
-    ];
-  };
 
   networking.networkmanager.enable = true;
 
@@ -148,5 +138,4 @@
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "25.05"; # Did you read the comment?
-
 }

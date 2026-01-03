@@ -12,8 +12,6 @@
 {
   imports = [ ];
 
-  networking.hostName = "misha-gram";
-
   boot.initrd.availableKernelModules = [
     "xhci_pci"
     "thunderbolt"
@@ -41,6 +39,9 @@
       vpl-gpu-rt
     ];
   };
+
+  hardware.bluetooth.enable = true;
+
   environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
   hardware.enableRedistributableFirmware = true;
   boot.kernelParams = [ "i915.enable_guc=3" ];
