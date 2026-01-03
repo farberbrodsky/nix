@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-    workspaceNames = ["1" "2" "3" "4" "5" "6" "7" "8" "9" "10"];
+    workspaceNumbers = ["1" "2" "3" "4" "5" "6" "7" "8" "9" "10"];
     workspaceButtons = ["1" "2" "3" "4" "5" "6" "7" "8" "9" "0"];
     volumeDown = "${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
     volumeUp = "${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
@@ -67,9 +67,9 @@ in
       keybindings = lib.attrsets.mergeAttrsList [
         # workspace list
         (lib.attrsets.mergeAttrsList (map (ws: {
-          "${modifier}+${ws.fst}" = "workspace ${ws.snd}";
-          "${modifier}+Shift+${ws.fst}" = "move container to workspace ${ws.snd}";
-        }) (lib.lists.zipLists workspaceButtons workspaceNames)))
+          "${modifier}+${ws.fst}" = "workspace number ${ws.snd}";
+          "${modifier}+Shift+${ws.fst}" = "move container to workspace number ${ws.snd}";
+        }) (lib.lists.zipLists workspaceButtons workspaceNumbers)))
 
         (lib.attrsets.concatMapAttrs (key: direction: {
             "${modifier}+${key}" = "focus ${direction}";
