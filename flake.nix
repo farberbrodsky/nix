@@ -53,7 +53,7 @@
           nixpkgs.lib.nixosSystem {
             specialArgs = { inherit inputs; };
             modules = [
-              hostConfig.system
+              (hostConfig.system // { misha = hostConfig.misha; })
               ./configuration.nix
             ];
           }
@@ -68,7 +68,7 @@
             pkgs = nixpkgs.legacyPackages.x86_64-linux;
 
             modules = [
-              hostConfig.home
+              (hostConfig.home // { misha = hostConfig.misha; })
               ./home.nix
             ];
             extraSpecialArgs = {

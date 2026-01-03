@@ -19,6 +19,9 @@
       # Things that require personal credentials
       desktop.personal.enable = mkEnableOption "desktop";
 
+      # Gamer moment
+      desktop.gaming.enable = mkEnableOption "gaming";
+
       # To add keyboard shortcuts to sway
       desktop.keyboardShortcuts = mkOption {
         type = lib.types.attrsOf (lib.types.str);

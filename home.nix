@@ -7,8 +7,8 @@
 
 {
   imports = [
+    ./options.nix
     ./home/chromium.nix
-    ./home/options.nix
     ./home/desktop.nix
     ./home/git.nix
     ./home/kitty.nix

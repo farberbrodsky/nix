@@ -3,9 +3,13 @@
     home = {
       home.username = "misha";
       home.homeDirectory = "/home/misha";
-      misha.desktop.enable = true;
-      misha.desktop.personal.enable = true;
     };
     system = { };
+    # From: options.nix
+    misha = {
+      desktop.enable = true;
+      desktop.personal.enable = true;
+      desktop.gaming.enable = true;
+    };
   };
 }

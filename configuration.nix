@@ -12,8 +12,13 @@
 
 {
   imports = [
-    ./system/hardware-configuration.nix
+    ./options.nix
     ./system/btrfs-impermanence.nix
+    ./system/containers.nix
+    ./system/desktop.nix
+    ./system/fonts.nix
+    ./system/gaming.nix
+    ./system/hardware-configuration.nix
     inputs.impermanence.nixosModules.impermanence
   ];
 
@@ -30,31 +35,18 @@
     "flakes"
   ];
 
-  virtualisation.podman = {
-    enable = true;
-  };
-  # for distrobox, hopefully
-  environment.etc."distrobox/distrobox.conf".text = ''
-    container_additional_volumes="/nix/store:/nix/store:ro /etc/profiles/per-user:/etc/profiles/per-user:ro /etc/static/profiles/per-user:/etc/static/profiles/per-user:ro"
-  '';
-
-  # literally magic
-  programs.steam.enable = true;
-
-  fonts.packages = with pkgs; [
-    nerd-fonts.fira-code
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.comic-shanns-mono
-    corefonts # microsoft
-    vista-fonts # microsoft
-    google-fonts
+  environment.systemPackages = with pkgs; [
+    vim
+    neovim
+    wget
+    killall
+    distrobox
+    htop
   ];
 
-  # for desktop
-  programs.dconf.enable = true;
-  services.dbus.enable = true;
+  environment.variables.EDITOR = "nvim";
+
   hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
@@ -70,55 +62,14 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-  # };
 
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
-
-  # Configure keymap in X11
-  # services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "eurosign:e,caps:escape";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound.
-  # services.pulseaudio.enable = true;
-  # OR
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
-  };
-
-  # For desktop stuff
-  security.polkit.enable = true;
-
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd sway";
-        user = "greeter";
-      };
-    };
-  };
-  users.users.greeter = { };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.mutableUsers = false;
   users.users.misha = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [
-      tree
-    ];
+    # packages = with pkgs; [
+    #   tree
+    # ];
     uid = 1000;
     group = "misha";
     subGidRanges = [
@@ -138,21 +89,22 @@
   users.groups.misha = {
     gid = 1000;
   };
-  users.users.root.password = "root";
 
-  programs.firefox.enable = true;
+  # console = {
+  #   font = "Lat2-Terminus16";
+  #   keyMap = "us";
+  #   useXkbConfig = true; # use xkb.options in tty.
+  # };
 
-  # List packages installed in system profile.
-  # You can use https://search.nixos.org/ to find more packages (and options).
-  environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    neovim
-    killall
-    distrobox
-    htop
-  ];
-  environment.variables.EDITOR = "nvim";
+  # Enable the X11 windowing system.
+  # services.xserver.enable = true;
+
+  # Configure keymap in X11
+  # services.xserver.xkb.layout = "us";
+  # services.xserver.xkb.options = "eurosign:e,caps:escape";
+
+  # Enable CUPS to print documents.
+  # services.printing.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -165,10 +117,10 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  # services.openssh.enable = true;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 22 ];
+  # networking.firewall.allowedTCPPorts = [ 22 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;

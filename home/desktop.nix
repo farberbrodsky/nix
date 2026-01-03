@@ -9,6 +9,8 @@
 (lib.mkIf config.misha.desktop.enable {
   services.blueman-applet.enable = true;
 
+  programs.firefox.enable = true;
+
   gtk = {
     enable = true;
     theme = {
