@@ -42,6 +42,7 @@
       "/var/lib/nixos"
       "/var/lib/systemd/coredump"
       "/var/lib/systemd/timers"
+      "/var/lib/systemd/backlight"
       "/etc/NetworkManager/system-connections"
       "/var/lib/containers"
       "/var/lib/cni"
