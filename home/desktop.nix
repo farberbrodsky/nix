@@ -1,6 +1,6 @@
 {
   config,
-  utils,
+  my-utils,
   pkgs,
   lib,
   ...
@@ -80,7 +80,7 @@
   '';
 
   xdg.mimeApps.enable = true;
-  xdg.mimeApps.defaultApplications = utils.repeatedAttribute [
+  xdg.mimeApps.defaultApplications = my-utils.repeatedAttribute [
     "text/html"
     "application/x-web-browser"
     "text/html"

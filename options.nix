@@ -1,6 +1,6 @@
 {
   config,
-  utils,
+  my-utils,
   lib,
   ...
 }:
@@ -9,8 +9,8 @@
   options.misha =
     with lib;
     let
-      desktopDefault = utils.mkDefaultEnableOption config.misha.desktop.enable;
-      desktopPersonalDefault = utils.mkDefaultEnableOption config.misha.desktop.personal.enable;
+      desktopDefault = my-utils.mkDefaultEnableOption config.misha.desktop.enable;
+      desktopPersonalDefault = my-utils.mkDefaultEnableOption config.misha.desktop.personal.enable;
     in
     {
       # Normal desktop stuff

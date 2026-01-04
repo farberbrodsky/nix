@@ -7,7 +7,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixneovimplugins.url = "github:NixNeovim/NixNeovimPlugins";
-    impermanence.url = "github:nix-community/impermanence";
+    impermanence.url = "github:nix-community/impermanence";  # has no inputs
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
     my-sync.url = "path:/home/misha/Sync/sync.nix";
     my-sync.flake = false;
@@ -21,7 +21,7 @@
       ...
     }:
     let
-      utils = (import ./utils inputs);
+      my-utils = (import ./utils inputs);
       hosts = (import ./hosts);
       systems = [
         "aarch64-linux"
@@ -53,7 +53,7 @@
           nixpkgs.lib.nixosSystem {
             specialArgs = {
               inherit inputs;
-              inherit utils;
+              inherit my-utils;
             };
             modules = [
               (hostConfig.system // { misha = hostConfig.misha; })
@@ -76,8 +76,8 @@
             ];
             extraSpecialArgs = {
               inherit inputs;
-              inherit utils;
-              hostname = host;
+              inherit my-utils;
+              hostname = "misha-gram";
             };
           }
         )
