@@ -198,6 +198,29 @@ in
   programs.waybar.style = lib.fileContents ./sway/waybar.css;
   xdg.configFile."waybar/waybar_power_menu.xml".source = ./sway/waybar_power_menu.xml;
 
+  programs.workstyle = {
+    enable = true;
+    settings = {
+      kitty = "";
+      firefox = "";
+      chrome = "";
+      chromium = "";
+      dolphin = "";
+      keepassxc = "";
+      code = "";
+      steam = "";
+      heroic = " ";
+      spotify = "";
+      other = {
+        fallback_icon = "";
+        deduplicate_icons = false;
+        separator = ": ";
+      };
+    };
+    systemd.enable = true;
+    systemd.target = "sway-session.target";
+  };
+
   programs.wofi = {
     enable = true;
     settings = {

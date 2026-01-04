@@ -28,20 +28,7 @@
     "custom/power"
   ];
   "sway/workspaces" = {
-    disable-scroll = true;
-    all-outputs = true;
-    warp-on-scroll = false;
-    format = "{name}: {icon}";
-    format-icons = {
-      "1" = "";
-      "2" = "";
-      "3" = "";
-      "4" = "";
-      "5" = "";
-      urgent = "";
-      focused = "";
-      default = "";
-    };
+    format = "{icon}";
   };
   keyboard-state = {
     numlock = true;

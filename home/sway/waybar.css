@@ -47,6 +47,10 @@ window#waybar {
     border-bottom: 3px solid @blue;
 }
 
+#workspaces button.urgent {
+    background: @yellow;
+}
+
 #mode, #clock, #battery {
     padding: 0 10px;
     margin: 0 5px;

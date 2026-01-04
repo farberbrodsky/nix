@@ -20,6 +20,7 @@
     ./home/vscode.nix
     ./home/flatpak.nix
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
+    inputs.self.homeManagerModules.workstyle
   ];
 
   nixpkgs = {
