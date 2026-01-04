@@ -28,4 +28,10 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
+
+  security.pam.services = (
+    lib.mkIf config.misha.desktop.swaylock.enable {
+      swaylock = { };
+    }
+  );
 })

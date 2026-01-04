@@ -51,7 +51,10 @@
         nixpkgs.lib.mapAttrs (
           host: hostConfig:
           nixpkgs.lib.nixosSystem {
-            specialArgs = { inherit inputs; };
+            specialArgs = {
+              inherit inputs;
+              inherit utils;
+            };
             modules = [
               (hostConfig.system // { misha = hostConfig.misha; })
               ./configuration.nix
@@ -74,7 +77,7 @@
             extraSpecialArgs = {
               inherit inputs;
               inherit utils;
-              hostname = "misha-gram";
+              hostname = host;
             };
           }
         )

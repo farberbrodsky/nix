@@ -35,6 +35,8 @@
         type = lib.types.str;
       };
 
+      desktop.swaylock.enable = desktopDefault "swaylock";
+
       desktopApps.chromium.enable = desktopDefault "chromium";
       desktopApps.spotify.enable = desktopPersonalDefault "spotify";
 
