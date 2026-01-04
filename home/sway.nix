@@ -59,7 +59,7 @@ in
           always = false;
         }
         {
-          command = "${pkgs.mako}/bin/mako";
+          command = "mako";
           always = false;
         }
       ];
@@ -70,35 +70,37 @@ in
       colors =
         let
           C = import ./colors.nix;
+          B = C.darkBackground;
+          D = C.darkMuted;
         in
         {
           focused = {
-            border = C.blue;
-            background = C.blue;
-            text = C.darkgray;
-            indicator = C.purple;
-            childBorder = C.darkgray;
+            border = D.blue;
+            background = D.blue;
+            text = builtins.elemAt B 0;
+            indicator = D.purple;
+            childBorder = builtins.elemAt B 0;
           };
           focusedInactive = {
-            border = C.darkgray;
-            background = C.darkgray;
-            text = C.yellow;
-            indicator = C.purple;
-            childBorder = C.darkgray;
+            border = builtins.elemAt B 0;
+            background = builtins.elemAt B 0;
+            text = D.yellow;
+            indicator = D.purple;
+            childBorder = builtins.elemAt B 0;
           };
           unfocused = {
-            border = C.darkgray;
-            background = C.darkgray;
-            text = C.yellow;
-            indicator = C.purple;
-            childBorder = C.darkgray;
+            border = builtins.elemAt B 0;
+            background = builtins.elemAt B 0;
+            text = D.yellow;
+            indicator = D.purple;
+            childBorder = builtins.elemAt B 0;
           };
           urgent = {
-            border = C.red;
-            background = C.red;
+            border = D.red;
+            background = D.red;
             text = "#ffffff";
-            indicator = C.red;
-            childBorder = C.red;
+            indicator = D.red;
+            childBorder = D.red;
           };
         };
       keybindings = lib.attrsets.mergeAttrsList [
@@ -189,6 +191,32 @@ in
         }
       ];
     };
+  };
+
+  services.mako = let C = import ./colors.nix; in {
+    enable = true;
+    settings = {
+      actions = 1;
+      history = 1;
+      max-history = 5;
+      on-button-left = "invoke-default-action";
+      on-button-middle = "dismiss-group";
+      on-button-right = "dismiss";
+      on-touch = "invoke-default-action";
+      font = "JetBrainsMono Nerd Font 10";
+
+      anchor = "top-right";
+      background-color = builtins.elemAt C.lightBackground 3;
+      text-color = builtins.elemAt C.lightForeground 3;
+      border-color = builtins.elemAt C.lightBackground 5;
+      progress-color = "over ${C.lightStrong.aqua}";
+      border-radius = 8;
+    };
+    extraConfig = ''
+      [app-name="Spotify"]
+      default-timeout=4000
+      ignore-timeout=1
+    '';
   };
 
   programs.waybar.enable = true;
