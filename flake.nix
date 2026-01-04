@@ -7,7 +7,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixneovimplugins.url = "github:NixNeovim/NixNeovimPlugins";
-    impermanence.url = "github:nix-community/impermanence";  # has no inputs
+    impermanence.url = "github:nix-community/impermanence"; # has no inputs
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
     my-sync.url = "path:/home/misha/Sync/sync.nix";
     my-sync.flake = false;

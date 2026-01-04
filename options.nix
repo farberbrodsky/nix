@@ -15,6 +15,7 @@
     {
       # Normal desktop stuff
       desktop.enable = mkEnableOption "desktop";
+      desktop.laptop.enable = mkEnableOption "laptop";
 
       # Things that require personal credentials
       desktop.personal.enable = mkEnableOption "desktop";

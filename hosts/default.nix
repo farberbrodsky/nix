@@ -11,6 +11,7 @@
     # From: options.nix
     misha = {
       desktop.enable = true;
+      desktop.laptop.enable = true;
       desktop.personal.enable = true;
       desktop.gaming.enable = true;
     };
