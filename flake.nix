@@ -11,7 +11,7 @@
     nix-flatpak.url = "github:farberbrodsky/nix-flatpak/fix-doc-error";
     optnix = {
       url = "sourcehut:~watersucks/optnix";
-      inputs.nixpkgs.follows = "nixpkgs";  # not sure bout this
+      inputs.nixpkgs.follows = "nixpkgs"; # not sure bout this
     };
     my-sync.url = "path:/home/misha/Sync/sync.nix";
     my-sync.flake = false;
