@@ -42,5 +42,7 @@
       desktopApps.spotify.enable = desktopPersonalDefault "spotify";
 
       syncthing.enable = desktopPersonalDefault "syncthing";
+
+      system.btrfsImpermanence.enable = mkEnableOption "btrfs impermanence";
     };
 }

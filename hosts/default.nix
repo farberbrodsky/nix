@@ -14,6 +14,7 @@
       desktop.laptop.enable = true;
       desktop.personal.enable = true;
       desktop.gaming.enable = true;
+      system.btrfsImpermanence.enable = true;
     };
   };
 }
