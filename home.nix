@@ -76,6 +76,12 @@
     (pkgs.writeShellScriptBin "M-nixos-rebuild" ''
       exec sudo nixos-rebuild --flake /persist/nix "$@"
     '')
+    (pkgs.writeShellScriptBin "M-optnix-hm" ''
+      exec optnix -s home-manager "$@"
+    '')
+    (pkgs.writeShellScriptBin "M-optnix-nixos" ''
+      exec optnix -s nixos "$@"
+    '')
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
