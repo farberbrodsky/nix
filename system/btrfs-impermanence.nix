@@ -6,6 +6,13 @@
 }:
 
 (lib.mkIf config.misha.system.btrfsImpermanence.enable {
+  assertions = [
+    {
+      assertion = !builtins.isNull config.misha.system.btrfsImpermanence.mainUser.hashedPasswordFile;
+      message = "password for main user must exist";
+    }
+  ];
+
   # Automatically deletes root snapshosts older than 30 days
   boot.initrd.postResumeCommands = lib.mkAfter ''
     mkdir /btrfs_tmp

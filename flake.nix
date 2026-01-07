@@ -25,7 +25,7 @@
       ...
     }:
     let
-      my-utils = (import ./utils inputs);
+      my-utils = import ./utils inputs;
       hosts = (import ./hosts);
       systems = [
         "aarch64-linux"

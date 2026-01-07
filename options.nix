@@ -44,5 +44,9 @@
       syncthing.enable = desktopPersonalDefault "syncthing";
 
       system.btrfsImpermanence.enable = mkEnableOption "btrfs impermanence";
+      system.btrfsImpermanence.mainUser.hashedPasswordFile = mkOption {
+        default = null;
+        type = lib.types.str;
+      };
     };
 }

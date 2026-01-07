@@ -53,7 +53,6 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
-  users.mutableUsers = false;
   users.users.misha = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
@@ -74,8 +73,13 @@
         startUid = 100000;
       }
     ];
-    hashedPasswordFile = "/persist/passwords/misha";
+    # impermanence support
+    # file exists: assertion in btrfs-impermanence.nix
+    hashedPasswordFile = lib.mkIf (config.misha.system.btrfsImpermanence.enable) config.misha.system.btrfsImpermanence.mainUser.hashedPasswordFile;
   };
+  # impermanence support
+  users.mutableUsers = !config.misha.system.btrfsImpermanence.enable;
+
   users.groups.misha = {
     gid = 1000;
   };

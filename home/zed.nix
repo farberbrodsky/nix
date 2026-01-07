@@ -11,6 +11,7 @@
     lib.mkIf config.misha.desktop.enable {
       enable = true;
       extensions = [ "nix" ];
+      extraPackages = with pkgs; [ nixd ];
       userSettings = {
         telemetry = {
           diagnostics = false;
