@@ -10,6 +10,7 @@
     ./options.nix
     ./home/chromium.nix
     ./home/desktop.nix
+    ./home/flatpak.nix
     ./home/git.nix
     ./home/kitty.nix
     ./home/neovim.nix
@@ -19,7 +20,7 @@
     ./home/sway.nix
     ./home/syncthing.nix
     ./home/vscode.nix
-    ./home/flatpak.nix
+    ./home/zed.nix
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
     inputs.self.homeManagerModules.workstyle
   ];
