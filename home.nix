@@ -13,6 +13,7 @@
     ./home/git.nix
     ./home/kitty.nix
     ./home/neovim.nix
+    ./home/optnix.nix
     ./home/shell.nix
     ./home/spotify.nix
     ./home/sway.nix

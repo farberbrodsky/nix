@@ -8,7 +8,11 @@
     };
     nixneovimplugins.url = "github:NixNeovim/NixNeovimPlugins";
     impermanence.url = "github:nix-community/impermanence"; # has no inputs
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+    nix-flatpak.url = "github:farberbrodsky/nix-flatpak/fix-doc-error";
+    optnix = {
+      url = "sourcehut:~watersucks/optnix";
+      inputs.nixpkgs.follows = "nixpkgs";  # not sure bout this
+    };
     my-sync.url = "path:/home/misha/Sync/sync.nix";
     my-sync.flake = false;
   };

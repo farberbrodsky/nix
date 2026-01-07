@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1747046372,
+        "narHash": "sha256-CIVLLkVgvHYbgI2UpXvIIBJ12HWgX+fjA8Xf8PUmqCY=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "9100a0f413b0c601e0533d1d94ffd501ce2e7885",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -94,16 +110,16 @@
     },
     "nix-flatpak": {
       "locked": {
-        "lastModified": 1739444422,
-        "narHash": "sha256-iAVVHi7X3kWORftY+LVbRiStRnQEob2TULWyjMS6dWg=",
-        "owner": "gmodena",
+        "lastModified": 1767797183,
+        "narHash": "sha256-7ZCulYUD9RmJIDULTRkGLSW1faMpDlPKcbWJLYHoXcs=",
+        "owner": "farberbrodsky",
         "repo": "nix-flatpak",
-        "rev": "5e54c3ca05a7c7d968ae1ddeabe01d2a9bc1e177",
+        "rev": "457b89717b1979cd4e9537c1878e61f63260d0c0",
         "type": "github"
       },
       "original": {
-        "owner": "gmodena",
-        "ref": "latest",
+        "owner": "farberbrodsky",
+        "ref": "fix-doc-error",
         "repo": "nix-flatpak",
         "type": "github"
       }
@@ -198,6 +214,27 @@
         "type": "github"
       }
     },
+    "optnix": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1765418479,
+        "narHash": "sha256-33VCCXiEnEL9N2wVxo9FHLwL8KWH6qk+MNRcSThOPWs=",
+        "owner": "~watersucks",
+        "repo": "optnix",
+        "rev": "01facc3de860bf479723bf19535586564e59fe73",
+        "type": "sourcehut"
+      },
+      "original": {
+        "owner": "~watersucks",
+        "repo": "optnix",
+        "type": "sourcehut"
+      }
+    },
     "poetry2nix": {
       "inputs": {
         "flake-utils": [
@@ -231,7 +268,8 @@
         "my-sync": "my-sync",
         "nix-flatpak": "nix-flatpak",
         "nixneovimplugins": "nixneovimplugins",
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_3",
+        "optnix": "optnix"
       }
     },
     "systems": {
