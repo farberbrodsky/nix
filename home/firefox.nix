@@ -97,7 +97,7 @@
           };
 
           "noogle-dev-search" = {
-            urls = [ { template = "https://noogle.dev/?term=%22{searchTerms}%22"; } ];
+            urls = [ { template = "https://noogle.dev/q?q={searchTerms}"; } ];
             icon = "https://noogle.dev/favicon.png";
             updateInterval = 24 * 60 * 60 * 1000; # every day
             definedAliases = [
