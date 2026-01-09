@@ -13,6 +13,10 @@
       url = "sourcehut:~watersucks/optnix";
       inputs.nixpkgs.follows = "nixpkgs"; # not sure bout this
     };
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs"; # not sure bout this
+    };
     my-sync.url = "path:/home/misha/Sync/sync.nix";
     my-sync.flake = false;
   };
@@ -22,25 +26,35 @@
       self,
       nixpkgs,
       home-manager,
+      treefmt-nix,
       ...
     }:
     let
       my-utils = import ./utils inputs;
-      hosts = (import ./hosts);
+      hosts = import ./hosts;
+
       systems = [
         "aarch64-linux"
         "i686-linux"
         "x86_64-linux"
       ];
-      forAllSystems = nixpkgs.lib.genAttrs systems;
+
+      eachSystem = f: nixpkgs.lib.genAttrs systems (system: f nixpkgs.legacyPackages.${system});
+
+      # Eval the treefmt modules from ./treefmt.nix
+      treefmtEval = eachSystem (pkgs: treefmt-nix.lib.evalModule pkgs ./treefmt.nix);
     in
     {
       # Your custom packages
       # Accessible through 'nix build', 'nix shell', etc
-      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+      packages = eachSystem (pkgs: import ./pkgs pkgs);
 
-      # available through 'nix fmt'
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
+      # for `nix fmt`
+      formatter = eachSystem (pkgs: treefmtEval.${pkgs.system}.config.build.wrapper);
+      # for `nix flake check`
+      checks = eachSystem (pkgs: {
+        formatting = treefmtEval.${pkgs.system}.config.build.check self;
+      });
 
       # Custom packages and modifications, exported as overlays
       # Each overlay needs to be individually imported in configuration.nix and home.nix
@@ -51,21 +65,19 @@
       # Stuff you would upstream into home-manager
       homeManagerModules = import ./modules/home-manager;
 
-      nixosConfigurations = (
-        nixpkgs.lib.mapAttrs (
-          host: hostConfig:
-          nixpkgs.lib.nixosSystem {
-            specialArgs = {
-              inherit inputs;
-              inherit my-utils;
-            };
-            modules = [
-              (hostConfig.system // { misha = hostConfig.misha; })
-              ./configuration.nix
-            ];
-          }
-        ) hosts
-      );
+      nixosConfigurations = nixpkgs.lib.mapAttrs (
+        _host: hostConfig:
+        nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+            inherit my-utils;
+          };
+          modules = [
+            (hostConfig.system // { inherit (hostConfig) misha; })
+            ./configuration.nix
+          ];
+        }
+      ) hosts;
 
       homeConfigurations = nixpkgs.lib.mapAttrs' (
         host: hostConfig:
@@ -75,7 +87,7 @@
             pkgs = nixpkgs.legacyPackages.x86_64-linux;
 
             modules = [
-              (hostConfig.home // { misha = hostConfig.misha; })
+              (hostConfig.home // { inherit (hostConfig) misha; })
               ./home.nix
             ];
             extraSpecialArgs = {

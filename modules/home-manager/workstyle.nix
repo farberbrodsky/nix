@@ -43,7 +43,7 @@ in
     };
 
     settings = lib.mkOption {
-      type = tomlFormat.type;
+      inherit (tomlFormat) type;
       default = { };
       description = "Configuration for workstyle";
       example = literalExpression ''
@@ -68,15 +68,11 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     {
-      assertions = [
-        (lib.hm.assertions.assertPlatform "programs.workstyle" pkgs lib.platforms.linux)
-      ];
+      assertions = [ (lib.hm.assertions.assertPlatform "programs.workstyle" pkgs lib.platforms.linux) ];
 
       home.packages = [ cfg.package ];
     }
-    (mkIf (cfg.settings != { }) {
-      xdg.configFile."workstyle/config.toml".source = configFile;
-    })
+    (mkIf (cfg.settings != { }) { xdg.configFile."workstyle/config.toml".source = configFile; })
     (mkIf cfg.systemd.enable {
       # See upstream: https://raw.githubusercontent.com/pierrechevalier83/workstyle/refs/heads/main/workstyle.service
       systemd.user.services.workstyle = {
@@ -91,7 +87,7 @@ in
           ExecStart = "${cfg.package}/bin/workstyle";
           Restart = "always";
           RestartSec = 3;
-          Environment = mkIf (cfg.systemd.debug) "RUST_LOG=debug";
+          Environment = mkIf cfg.systemd.debug "RUST_LOG=debug";
         };
         Install.WantedBy = [ cfg.systemd.target ];
       };

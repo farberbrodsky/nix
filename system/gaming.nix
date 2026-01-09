@@ -1,8 +1,4 @@
-{
-  config,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 
 (lib.mkIf config.misha.desktop.gaming.enable {
   # literally magic

@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  inputs,
-  ...
-}:
+{ config, lib, ... }:
 
 (lib.mkIf config.misha.system.btrfsImpermanence.enable {
   assertions = [
@@ -54,8 +49,6 @@
       "/var/lib/cni"
       "/var/lib/flatpak"
     ];
-    files = [
-      "/etc/machine-id"
-    ];
+    files = [ "/etc/machine-id" ];
   };
 })

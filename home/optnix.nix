@@ -1,8 +1,5 @@
 {
-  options,
   config,
-  pkgs,
-  lib,
   inputs,
   hostname,
   ...

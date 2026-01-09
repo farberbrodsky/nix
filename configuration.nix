@@ -75,7 +75,7 @@
     ];
     # impermanence support
     # file exists: assertion in btrfs-impermanence.nix
-    hashedPasswordFile = lib.mkIf (config.misha.system.btrfsImpermanence.enable) config.misha.system.btrfsImpermanence.mainUser.hashedPasswordFile;
+    hashedPasswordFile = lib.mkIf config.misha.system.btrfsImpermanence.enable config.misha.system.btrfsImpermanence.mainUser.hashedPasswordFile;
   };
   # impermanence support
   users.mutableUsers = !config.misha.system.btrfsImpermanence.enable;

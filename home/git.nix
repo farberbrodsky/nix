@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+_:
 
 let
   identity = import ./identity.nix;
@@ -9,6 +9,7 @@ in
     settings = {
       user.name = identity.fullName;
       user.email = identity.email;
+      diff.tool = "nvimdiff";
     };
   };
 }

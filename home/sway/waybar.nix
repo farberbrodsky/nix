@@ -6,9 +6,7 @@
     "sway/mode"
     "sway/scratchpad"
   ];
-  modules-center = [
-    "sway/window"
-  ];
+  modules-center = [ "sway/window" ];
   modules-right = [
     "mpd"
     "idle_inhibitor"

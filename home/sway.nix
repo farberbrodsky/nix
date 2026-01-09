@@ -41,272 +41,270 @@ let
 in
 {
   imports = [ ./sway/swaylock.nix ];
-  config = (
-    lib.mkIf config.misha.desktop.enable {
-      home.packages = with pkgs; [ way-displays ];
+  config = lib.mkIf config.misha.desktop.enable {
+    home.packages = with pkgs; [ way-displays ];
 
-      wayland.windowManager.sway = {
-        enable = true;
-        systemd.enable = true;
-        wrapperFeatures.gtk = true;
-        extraConfig = "seat seat0 xcursor_theme Quintom_Ink 24";
-        config = rec {
-          terminal = "${pkgs.kitty}/bin/kitty";
-          menu = "${pkgs.wofi}/bin/wofi --show drun -t ${pkgs.kitty}/bin/kitty";
-          modifier = "Mod4";
-          bars = [ { command = "waybar"; } ];
-          modes = { };
-          startup = [
-            {
-              command = "${pkgs.way-displays}/bin/way-displays > /tmp/way-displays.\${XDG_VTNR}.\${USER}.log 2>&1 &";
-              always = false;
-            }
-            {
-              command = "mako";
-              always = false;
-            }
-          ];
-          fonts = {
-            names = [ "JetBrainsMono Nerd Font" ];
-            size = 10.0;
-          };
-          colors =
-            let
-              C = import ./colors.nix;
-              B = C.darkBackground;
-              D = C.darkMuted;
-            in
-            {
-              focused = {
-                border = D.blue;
-                background = D.blue;
-                text = builtins.elemAt B 0;
-                indicator = D.purple;
-                childBorder = builtins.elemAt B 0;
-              };
-              focusedInactive = {
-                border = builtins.elemAt B 0;
-                background = builtins.elemAt B 0;
-                text = D.yellow;
-                indicator = D.purple;
-                childBorder = builtins.elemAt B 0;
-              };
-              unfocused = {
-                border = builtins.elemAt B 0;
-                background = builtins.elemAt B 0;
-                text = D.yellow;
-                indicator = D.purple;
-                childBorder = builtins.elemAt B 0;
-              };
-              urgent = {
-                border = D.red;
-                background = D.red;
-                text = "#ffffff";
-                indicator = D.red;
-                childBorder = D.red;
-              };
+    wayland.windowManager.sway = {
+      enable = true;
+      systemd.enable = true;
+      wrapperFeatures.gtk = true;
+      extraConfig = "seat seat0 xcursor_theme Quintom_Ink 24";
+      config = rec {
+        terminal = "${pkgs.kitty}/bin/kitty";
+        menu = "${pkgs.wofi}/bin/wofi --show drun -t ${pkgs.kitty}/bin/kitty";
+        modifier = "Mod4";
+        bars = [ { command = "waybar"; } ];
+        modes = { };
+        startup = [
+          {
+            command = "${pkgs.way-displays}/bin/way-displays > /tmp/way-displays.\${XDG_VTNR}.\${USER}.log 2>&1 &";
+            always = false;
+          }
+          {
+            command = "mako";
+            always = false;
+          }
+        ];
+        fonts = {
+          names = [ "JetBrainsMono Nerd Font" ];
+          size = 10.0;
+        };
+        colors =
+          let
+            C = import ./colors.nix;
+            B = C.darkBackground;
+            D = C.darkMuted;
+          in
+          {
+            focused = {
+              border = D.blue;
+              background = D.blue;
+              text = builtins.elemAt B 0;
+              indicator = D.purple;
+              childBorder = builtins.elemAt B 0;
             };
-          keybindings = lib.attrsets.mergeAttrsList [
-            # workspace list
-            (lib.attrsets.mergeAttrsList (
-              map (ws: {
-                "${modifier}+${ws.fst}" = "workspace number ${ws.snd}";
-                "${modifier}+Shift+${ws.fst}" = "move container to workspace number ${ws.snd}";
-              }) (lib.lists.zipLists workspaceButtons workspaceNumbers)
-            ))
-
-            (lib.attrsets.concatMapAttrs
-              (key: direction: {
-                "${modifier}+${key}" = "focus ${direction}";
-                "${modifier}+Shift+${key}" = "move ${direction}";
-                "${modifier}+Ctrl+${key}" =
-                  let
-                    resizes = {
-                      left = "shrink width";
-                      down = "grow height";
-                      up = "shrink height";
-                      right = "grow width";
-                    };
-                  in
-                  "resize ${resizes.${direction}} 10px or 10 ppt";
-              })
-              {
-                h = "left";
-                j = "down";
-                k = "up";
-                l = "right";
-                Left = "left";
-                Down = "down";
-                Up = "up";
-                Right = "right";
-              }
-            )
-
-            {
-              "${modifier}+Return" = "exec ${terminal}";
-              "${modifier}+Shift+c" = "kill";
-              "${modifier}+d" = "exec ${menu}";
-
-              "${modifier}+v" = "split h";
-              "${modifier}+s" = "split v";
-              "${modifier}+f" = "fullscreen toggle";
-              "${modifier}+w" = "layout tabbed";
-              "${modifier}+e" = "layout toggle split";
-              "${modifier}+Shift+space" = "floating toggle";
-              "${modifier}+space" = "focus mode_toggle";
-              "${modifier}+Shift+minus" = "move scratchpad";
-              "${modifier}+minus" = "scratchpad show";
-              "${modifier}+a" = "focus parent";
-
-              "${modifier}+Shift+greater" = "move workspace to output right";
-              "${modifier}+Shift+less" = "move workspace to output left";
-
-              "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl -n1 s -- \"-5%\"";
-              "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl -n1 s -- \"+5%\"";
-
-              # not sure wireplumber is the best for this but eh
-              "XF86AudioLowerVolume" = "${ex volumeDown}";
-              "XF86AudioRaiseVolume" = "${ex volumeUp}";
-              "${modifier}+n" = "${ex volumeDown}";
-              "${modifier}+m" = "${ex volumeUp}";
-
-              "XF86AudioNext" = "${ex mediaNext}";
-              "XF86AudioPrev" = "${ex mediaPrev}";
-              "XF86AudioPlay" = "${ex mediaPlay}";
-              "XF86AudioPause" = "${ex mediaPause}";
-              "${modifier}+p" = "${ex mediaPlayPause}";
-              "${modifier}+bracketleft" = "${ex mediaPrev}";
-              "${modifier}+bracketright" = "${ex mediaNext}";
-
-              "${modifier}+shift+m" = "[class=\"Spotify\"] scratchpad show";
-
-              "${modifier}+Shift+r" = "reload";
-              "${modifier}+Shift+e" =
-                "exec swaynag -t warning -m 'Do you want to exit sway?' -b 'Yes' 'swaymsg exit'";
-            }
-
-            (lib.attrsets.mapAttrs (k: v: "exec ${v}") config.misha.desktop.keyboardShortcuts)
-          ];
-          window.commands = [
-            {
-              command = "move scratchpad";
-              criteria.class = "Spotify";
-            }
-          ];
-        };
-      };
-
-      services.mako =
-        let
-          C = import ./colors.nix;
-        in
-        {
-          enable = true;
-          settings = {
-            actions = 1;
-            history = 1;
-            max-history = 5;
-            on-button-left = "invoke-default-action";
-            on-button-middle = "dismiss-group";
-            on-button-right = "dismiss";
-            on-touch = "invoke-default-action";
-            font = "JetBrainsMono Nerd Font 10";
-
-            anchor = "top-right";
-            background-color = builtins.elemAt C.lightBackground 3;
-            text-color = builtins.elemAt C.lightForeground 3;
-            border-color = builtins.elemAt C.lightBackground 5;
-            progress-color = "over ${C.lightStrong.aqua}";
-            border-radius = 8;
+            focusedInactive = {
+              border = builtins.elemAt B 0;
+              background = builtins.elemAt B 0;
+              text = D.yellow;
+              indicator = D.purple;
+              childBorder = builtins.elemAt B 0;
+            };
+            unfocused = {
+              border = builtins.elemAt B 0;
+              background = builtins.elemAt B 0;
+              text = D.yellow;
+              indicator = D.purple;
+              childBorder = builtins.elemAt B 0;
+            };
+            urgent = {
+              border = D.red;
+              background = D.red;
+              text = "#ffffff";
+              indicator = D.red;
+              childBorder = D.red;
+            };
           };
-          extraConfig = ''
-            [app-name="Spotify"]
-            default-timeout=4000
-            ignore-timeout=1
-          '';
-        };
+        keybindings = lib.attrsets.mergeAttrsList [
+          # workspace list
+          (lib.attrsets.mergeAttrsList (
+            map (ws: {
+              "${modifier}+${ws.fst}" = "workspace number ${ws.snd}";
+              "${modifier}+Shift+${ws.fst}" = "move container to workspace number ${ws.snd}";
+            }) (lib.lists.zipLists workspaceButtons workspaceNumbers)
+          ))
 
-      programs.waybar.enable = true;
-      programs.waybar.settings = {
-        mainBar = (import ./sway/waybar.nix);
+          (lib.attrsets.concatMapAttrs
+            (key: direction: {
+              "${modifier}+${key}" = "focus ${direction}";
+              "${modifier}+Shift+${key}" = "move ${direction}";
+              "${modifier}+Ctrl+${key}" =
+                let
+                  resizes = {
+                    left = "shrink width";
+                    down = "grow height";
+                    up = "shrink height";
+                    right = "grow width";
+                  };
+                in
+                "resize ${resizes.${direction}} 10px or 10 ppt";
+            })
+            {
+              h = "left";
+              j = "down";
+              k = "up";
+              l = "right";
+              Left = "left";
+              Down = "down";
+              Up = "up";
+              Right = "right";
+            }
+          )
+
+          {
+            "${modifier}+Return" = "exec ${terminal}";
+            "${modifier}+Shift+c" = "kill";
+            "${modifier}+d" = "exec ${menu}";
+
+            "${modifier}+v" = "split h";
+            "${modifier}+s" = "split v";
+            "${modifier}+f" = "fullscreen toggle";
+            "${modifier}+w" = "layout tabbed";
+            "${modifier}+e" = "layout toggle split";
+            "${modifier}+Shift+space" = "floating toggle";
+            "${modifier}+space" = "focus mode_toggle";
+            "${modifier}+Shift+minus" = "move scratchpad";
+            "${modifier}+minus" = "scratchpad show";
+            "${modifier}+a" = "focus parent";
+
+            "${modifier}+Shift+greater" = "move workspace to output right";
+            "${modifier}+Shift+less" = "move workspace to output left";
+
+            "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl -n1 s -- \"-5%\"";
+            "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl -n1 s -- \"+5%\"";
+
+            # not sure wireplumber is the best for this but eh
+            "XF86AudioLowerVolume" = "${ex volumeDown}";
+            "XF86AudioRaiseVolume" = "${ex volumeUp}";
+            "${modifier}+n" = "${ex volumeDown}";
+            "${modifier}+m" = "${ex volumeUp}";
+
+            "XF86AudioNext" = "${ex mediaNext}";
+            "XF86AudioPrev" = "${ex mediaPrev}";
+            "XF86AudioPlay" = "${ex mediaPlay}";
+            "XF86AudioPause" = "${ex mediaPause}";
+            "${modifier}+p" = "${ex mediaPlayPause}";
+            "${modifier}+bracketleft" = "${ex mediaPrev}";
+            "${modifier}+bracketright" = "${ex mediaNext}";
+
+            "${modifier}+shift+m" = "[class=\"Spotify\"] scratchpad show";
+
+            "${modifier}+Shift+r" = "reload";
+            "${modifier}+Shift+e" =
+              "exec swaynag -t warning -m 'Do you want to exit sway?' -b 'Yes' 'swaymsg exit'";
+          }
+
+          (lib.attrsets.mapAttrs (_k: v: "exec ${v}") config.misha.desktop.keyboardShortcuts)
+        ];
+        window.commands = [
+          {
+            command = "move scratchpad";
+            criteria.class = "Spotify";
+          }
+        ];
       };
-      programs.waybar.style = lib.fileContents ./sway/waybar.css;
-      xdg.configFile."waybar/waybar_power_menu.xml".source = ./sway/waybar_power_menu.xml;
+    };
 
-      programs.workstyle = {
+    services.mako =
+      let
+        C = import ./colors.nix;
+      in
+      {
         enable = true;
         settings = {
-          kitty = "";
-          firefox = "";
-          chrome = "";
-          chromium = "";
-          dolphin = "";
-          keepassxc = "";
-          code = "";
-          steam = "";
-          heroic = " ";
-          spotify = "";
-          other = {
-            fallback_icon = "";
-            deduplicate_icons = false;
-            separator = ": ";
-          };
+          actions = 1;
+          history = 1;
+          max-history = 5;
+          on-button-left = "invoke-default-action";
+          on-button-middle = "dismiss-group";
+          on-button-right = "dismiss";
+          on-touch = "invoke-default-action";
+          font = "JetBrainsMono Nerd Font 10";
+
+          anchor = "top-right";
+          background-color = builtins.elemAt C.lightBackground 3;
+          text-color = builtins.elemAt C.lightForeground 3;
+          border-color = builtins.elemAt C.lightBackground 5;
+          progress-color = "over ${C.lightStrong.aqua}";
+          border-radius = 8;
         };
-        systemd.enable = true;
-        systemd.target = "sway-session.target";
-      };
-
-      programs.wofi = {
-        enable = true;
-        settings = {
-          width = 600;
-          height = 500;
-          location = "center";
-          allow_images = "true";
-          image_size = 40;
-        };
-        style = ''
-          window {
-          margin: 0px;
-          border: 1px solid #928374;
-          background-color: #282828;
-          }
-
-          #input {
-          margin: 5px;
-          border: none;
-          color: #ebdbb2;
-          background-color: #1d2021;
-          }
-
-          #inner-box {
-          margin: 5px;
-          border: none;
-          background-color: #282828;
-          }
-
-          #outer-box {
-          margin: 5px;
-          border: none;
-          background-color: #282828;
-          }
-
-          #scroll {
-          margin: 0px;
-          border: none;
-          }
-
-          #text {
-          margin: 5px;
-          border: none;
-          color: #ebdbb2;
-          }
-
-          #entry:selected {
-          background-color: #1d2021;
-          }
+        extraConfig = ''
+          [app-name="Spotify"]
+          default-timeout=4000
+          ignore-timeout=1
         '';
       };
-    }
-  );
+
+    programs.waybar.enable = true;
+    programs.waybar.settings = {
+      mainBar = import ./sway/waybar.nix;
+    };
+    programs.waybar.style = lib.fileContents ./sway/waybar.css;
+    xdg.configFile."waybar/waybar_power_menu.xml".source = ./sway/waybar_power_menu.xml;
+
+    programs.workstyle = {
+      enable = true;
+      settings = {
+        kitty = "";
+        firefox = "";
+        chrome = "";
+        chromium = "";
+        dolphin = "";
+        keepassxc = "";
+        code = "";
+        steam = "";
+        heroic = " ";
+        spotify = "";
+        other = {
+          fallback_icon = "";
+          deduplicate_icons = false;
+          separator = ": ";
+        };
+      };
+      systemd.enable = true;
+      systemd.target = "sway-session.target";
+    };
+
+    programs.wofi = {
+      enable = true;
+      settings = {
+        width = 600;
+        height = 500;
+        location = "center";
+        allow_images = "true";
+        image_size = 40;
+      };
+      style = ''
+        window {
+        margin: 0px;
+        border: 1px solid #928374;
+        background-color: #282828;
+        }
+
+        #input {
+        margin: 5px;
+        border: none;
+        color: #ebdbb2;
+        background-color: #1d2021;
+        }
+
+        #inner-box {
+        margin: 5px;
+        border: none;
+        background-color: #282828;
+        }
+
+        #outer-box {
+        margin: 5px;
+        border: none;
+        background-color: #282828;
+        }
+
+        #scroll {
+        margin: 0px;
+        border: none;
+        }
+
+        #text {
+        margin: 5px;
+        border: none;
+        color: #ebdbb2;
+        }
+
+        #entry:selected {
+        background-color: #1d2021;
+        }
+      '';
+    };
+  };
 }

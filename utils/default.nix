@@ -1,7 +1,7 @@
 { nixpkgs, ... }:
 
 let
-  lib = nixpkgs.lib;
+  inherit (nixpkgs) lib;
 in
 {
   mkDefaultEnableOption =

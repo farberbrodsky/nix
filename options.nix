@@ -25,7 +25,7 @@
 
       # To add keyboard shortcuts to sway
       desktop.keyboardShortcuts = mkOption {
-        type = lib.types.attrsOf (lib.types.str);
+        type = lib.types.attrsOf lib.types.str;
         default = { };
       };
 
