@@ -40,6 +40,8 @@
 
       desktopApps.chromium.enable = desktopDefault "chromium";
       desktopApps.spotify.enable = desktopPersonalDefault "spotify";
+      desktopApps.inkscape.enable = desktopPersonalDefault "inkscape";
+      desktopApps.keepassxc.enable = desktopPersonalDefault "keepassxc";
 
       syncthing.enable = desktopPersonalDefault "syncthing";
 

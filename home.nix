@@ -5,6 +5,7 @@
     ./options.nix
     ./home/chromium.nix
     ./home/desktop.nix
+    ./home/firefox.nix
     ./home/flatpak.nix
     ./home/git.nix
     ./home/kitty.nix
@@ -25,6 +26,7 @@
     overlays = [
       inputs.self.overlays.additions
       inputs.self.overlays.modifications
+      inputs.self.overlays.nur
       # You can also add overlays exported from other flakes:
       inputs.nixneovimplugins.overlays.default
       # Or define it inline, for example:
@@ -47,7 +49,7 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
+  home.packages = with pkgs; [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -65,18 +67,21 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
 
-    (pkgs.writeShellScriptBin "M-hm" ''
+    (writeShellScriptBin "M-hm" ''
       exec home-manager --flake /persist/nix "$@"
     '')
-    (pkgs.writeShellScriptBin "M-nixos-rebuild" ''
+    (writeShellScriptBin "M-nixos-rebuild" ''
       exec sudo nixos-rebuild --flake /persist/nix "$@"
     '')
-    (pkgs.writeShellScriptBin "M-optnix-hm" ''
+    (writeShellScriptBin "M-optnix-hm" ''
       exec optnix -s home-manager "$@"
     '')
-    (pkgs.writeShellScriptBin "M-optnix-nixos" ''
+    (writeShellScriptBin "M-optnix-nixos" ''
       exec optnix -s nixos "$@"
     '')
+
+    python3
+    jq
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

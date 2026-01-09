@@ -17,6 +17,10 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs"; # not sure bout this
     };
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     my-sync.url = "path:/home/misha/Sync/sync.nix";
     my-sync.flake = false;
   };
@@ -50,10 +54,10 @@
       packages = eachSystem (pkgs: import ./pkgs pkgs);
 
       # for `nix fmt`
-      formatter = eachSystem (pkgs: treefmtEval.${pkgs.system}.config.build.wrapper);
+      formatter = eachSystem (pkgs: treefmtEval.${pkgs.stdenv.hostPlatform.system}.config.build.wrapper);
       # for `nix flake check`
       checks = eachSystem (pkgs: {
-        formatting = treefmtEval.${pkgs.system}.config.build.check self;
+        formatting = treefmtEval.${pkgs.stdenv.hostPlatform.system}.config.build.check self;
       });
 
       # Custom packages and modifications, exported as overlays

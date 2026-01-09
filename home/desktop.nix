@@ -9,8 +9,6 @@
 (lib.mkIf config.misha.desktop.enable {
   services.blueman-applet.enable = true;
 
-  programs.firefox.enable = true;
-
   gtk = {
     enable = true;
     theme = {
@@ -90,23 +88,23 @@
     "x-scheme-handler/unknown"
   ] config.misha.desktop.default.browser;
 
-  home.packages = with pkgs; [
-    kdePackages.dolphin
-    apostrophe
-    slurp # select a region in wayland
-    brightnessctl
-    pavucontrol
-    libnotify # notify-send, probably used by way-displays
-    # theme
-    (gruvbox-kvantum.override { variant = "Gruvbox_Light_Blue"; })
-    # gruvbox-plus-icons doesn't work for light theme; TODO open a pr about it
-    libsForQt5.qtstyleplugin-kvantum
-    qt6Packages.qtstyleplugin-kvantum
-
-    # random desktop apps
-    keepassxc
-    inkscape
-  ];
+  home.packages =
+    with pkgs;
+    [
+      kdePackages.dolphin
+      apostrophe
+      slurp # select a region in wayland
+      brightnessctl
+      pavucontrol
+      libnotify # notify-send, probably used by way-displays
+      # theme
+      (gruvbox-kvantum.override { variant = "Gruvbox_Light_Blue"; })
+      # gruvbox-plus-icons doesn't work for light theme; TODO open a pr about it
+      libsForQt5.qtstyleplugin-kvantum
+      qt6Packages.qtstyleplugin-kvantum
+    ]
+    ++ lib.lists.optional config.misha.desktopApps.keepassxc.enable pkgs.keepassxc
+    ++ lib.lists.optional config.misha.desktopApps.inkscape.enable pkgs.inkscape;
 
   services.flatpak.enable = true;
 

@@ -1,5 +1,6 @@
 # See: https://nixos.wiki/wiki/Overlays
-_: {
+{ inputs, ... }:
+{
   # This one brings our custom packages from the 'pkgs' directory
   additions = final: _prev: import ../pkgs final.pkgs;
 
@@ -9,6 +10,14 @@ _: {
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
+  };
+
+  nur = _final: prev: {
+    nur = import inputs.nur {
+      nurpkgs = prev;
+      pkgs = prev;
+      # repoOverrides
+    };
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
