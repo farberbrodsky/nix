@@ -31,6 +31,9 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
 
+  # IMPORTANT!!!
+  boot.loader.grub.configurationLimit = 5;
+
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
