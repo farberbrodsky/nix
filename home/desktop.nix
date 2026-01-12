@@ -16,8 +16,8 @@
       name = "gruvbox-gtk-theme";
     };
     iconTheme = {
-      package = pkgs.gruvbox-plus-icons;
-      name = "gruvbox-plus-icons";
+      package = pkgs.gruvbox-plus-icons-with-light;
+      name = "Gruvbox-Plus-Light";
     };
     font.package = pkgs.google-fonts;
     font.name = "Roboto";
@@ -99,7 +99,7 @@
       libnotify # notify-send, probably used by way-displays
       # theme
       (gruvbox-kvantum.override { variant = "Gruvbox_Light_Blue"; })
-      # gruvbox-plus-icons doesn't work for light theme; TODO open a pr about it
+      gruvbox-plus-icons-with-light
       libsForQt5.qtstyleplugin-kvantum
       qt6Packages.qtstyleplugin-kvantum
     ]

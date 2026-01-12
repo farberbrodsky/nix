@@ -1,5 +1,6 @@
 # Custom packages, that can be defined similarly to ones from nixpkgs
 # You can build them using 'nix build .#example'
-_pkgs: {
+pkgs: {
   # example = pkgs.callPackage ./example { };
+  gruvbox-plus-icons-with-light = pkgs.callPackage ./gruvbox-plus-icons.nix { };
 }
