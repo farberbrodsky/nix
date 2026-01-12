@@ -5,6 +5,9 @@
     file
     unzip
     ripgrep
+    gh
+    python3
+    jq
   ];
   programs.bash.enable = true;
   programs.bash.shellAliases."cfg" = "cd /persist/nix/";

@@ -79,9 +79,6 @@
     (writeShellScriptBin "M-optnix-nixos" ''
       exec optnix -s nixos "$@"
     '')
-
-    python3
-    jq
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
