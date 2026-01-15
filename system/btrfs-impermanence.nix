@@ -44,6 +44,7 @@
       "/var/lib/systemd/coredump"
       "/var/lib/systemd/timers"
       "/var/lib/systemd/backlight"
+      "/var/lib/systemd/rfkill"
       "/etc/NetworkManager/system-connections"
       "/var/lib/containers"
       "/var/lib/cni"

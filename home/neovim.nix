@@ -40,17 +40,17 @@
         };
       in
       [
-        pkgs.vimExtraPlugins.catppuccin
-        pkgs.vimExtraPlugins.vim-airline
-        pkgs.vimExtraPlugins.nvim-surround
-        pkgs.vimExtraPlugins.indent-blankline-nvim
-        pkgs.vimExtraPlugins.vim-fugitive
-        pkgs.vimExtraPlugins.gitsigns-nvim
-        pkgs.vimExtraPlugins.hop-nvim
-        pkgs.vimExtraPlugins.telescope-nvim
-        pkgs.vimExtraPlugins.plenary-nvim
-        pkgs.vimExtraPlugins.nvim-treesitter
-        pkgs.vimExtraPlugins.nvim-autopairs
+        pkgs.vimExtraPlugins.catppuccin-catppuccin
+        pkgs.vimExtraPlugins.vim-airline-vim-airline
+        pkgs.vimExtraPlugins.nvim-surround-kylechui
+        pkgs.vimExtraPlugins.indent-blankline-nvim-lukas-reineke
+        pkgs.vimExtraPlugins.vim-fugitive-tpope
+        pkgs.vimExtraPlugins.gitsigns-nvim-lewis6991
+        pkgs.vimExtraPlugins.hop-nvim-smoka7
+        pkgs.vimExtraPlugins.telescope-nvim-nvim-telescope
+        pkgs.vimExtraPlugins.plenary-nvim-nvim-lua
+        pkgs.vimExtraPlugins.nvim-treesitter-nvim-treesitter
+        pkgs.vimExtraPlugins.nvim-autopairs-windwp
         {
           plugin = nvim-treesitter-textobjects;
           optional = true;
