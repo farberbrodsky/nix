@@ -80,8 +80,8 @@
       exec optnix -s nixos "$@"
     '')
     (writeShellScriptBin "M-up" ''
-      cd /home/misha/code/updog
-      exec nix develop /home/misha/code/nix-my-devshells/ --profile /home/misha/code/nix-my-devshells/path --command uv run updog group nix-complete-no-commit -f updates.toml
+      nix build /home/misha/code/updog
+      exec /home/misha/code/updog/result/bin/updog group nix-complete-no-commit -f /home/misha/code/updog/updates.toml
     '')
   ];
 
