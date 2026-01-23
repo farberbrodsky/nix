@@ -43,6 +43,13 @@
     htop
   ];
 
+  programs.git = {
+    enable = true;
+    config = {
+      safe.directory = "/persist/nix";
+    };
+  };
+
   environment.variables.EDITOR = "nvim";
 
   networking.networkmanager.enable = true;
