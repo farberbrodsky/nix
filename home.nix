@@ -79,6 +79,10 @@
     (writeShellScriptBin "M-optnix-nixos" ''
       exec optnix -s nixos "$@"
     '')
+    (writeShellScriptBin "M-up" ''
+      cd /home/misha/code/updog
+      exec nix develop /home/misha/code/nix-my-devshells/ --profile /home/misha/code/nix-my-devshells/path --command uv run updog group nix-complete-no-commit -f updates.toml
+    '')
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
