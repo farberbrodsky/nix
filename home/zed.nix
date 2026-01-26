@@ -8,7 +8,7 @@
 {
   programs.zed-editor = lib.mkIf config.misha.desktop.enable {
     enable = true;
-    extensions = [ "nix" ];
+    extensions = [ "nix" "zig" ];
     extraPackages = with pkgs; [
       nixd
       (python3.withPackages (p: with p; [ basedpyright ruff ]))

@@ -10,6 +10,7 @@ in
       user.name = identity.fullName;
       user.email = identity.email;
       diff.tool = "nvimdiff";
+      init.defaultBranch = "main";
     };
   };
 }

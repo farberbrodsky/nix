@@ -15,4 +15,5 @@
   programs.bash.initExtra = builtins.readFile ./dotfiles/bashprompt.sh;
   home.file.".gitstatus.sh".source = ./dotfiles/gitstatus.sh;
   services.ssh-agent.enable = true;
+  programs.direnv.enable = true;
 }
