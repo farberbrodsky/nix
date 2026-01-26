@@ -50,6 +50,12 @@ in
       wrapperFeatures.gtk = true;
       extraConfig = "seat seat0 xcursor_theme Quintom_Ink 24";
       config = rec {
+        input = {
+          "*" = {
+            xkb_layout = "us,il";
+            xkb_options = "grp:alt_shift_toggle";
+          };
+        };
         terminal = "${pkgs.kitty}/bin/kitty";
         menu = "${pkgs.wofi}/bin/wofi --show drun -t ${pkgs.kitty}/bin/kitty";
         modifier = "Mod4";
