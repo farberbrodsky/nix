@@ -88,10 +88,15 @@
     "x-scheme-handler/unknown"
   ] config.misha.desktop.default.browser;
 
+  xdg.mimeApps.defaultApplicationPackages = with pkgs; [
+    kdePackages.ark
+  ];
+
   home.packages =
     with pkgs;
     [
       kdePackages.dolphin
+      kdePackages.ark
       apostrophe
       slurp # select a region in wayland
       brightnessctl
