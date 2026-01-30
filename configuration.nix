@@ -41,6 +41,8 @@
     killall
     distrobox
     htop
+    man-pages
+    man-pages-posix
   ];
 
   programs.git = {
@@ -49,6 +51,8 @@
       safe.directory = "/persist/nix";
     };
   };
+
+  documentation.dev.enable = true;
 
   environment.variables.EDITOR = "nvim";
 
