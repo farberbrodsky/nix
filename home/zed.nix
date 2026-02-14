@@ -8,10 +8,18 @@
 {
   programs.zed-editor = lib.mkIf config.misha.desktop.enable {
     enable = true;
-    extensions = [ "nix" "zig" ];
+    extensions = [
+      "nix"
+      "zig"
+    ];
     extraPackages = with pkgs; [
       nixd
-      (python3.withPackages (p: with p; [ basedpyright ruff ]))
+      (python3.withPackages (
+        p: with p; [
+          basedpyright
+          ruff
+        ]
+      ))
     ];
     userSettings = {
       telemetry = {
