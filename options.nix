@@ -24,6 +24,10 @@
       desktop.gaming.enable = mkEnableOption "gaming";
 
       # To add keyboard shortcuts to sway
+      desktop.keyboardShortcutsMod = mkOption {
+        type = lib.types.str;
+        default = "";
+      };
       desktop.keyboardShortcuts = mkOption {
         type = lib.types.attrsOf lib.types.str;
         default = { };

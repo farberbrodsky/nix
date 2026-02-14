@@ -43,6 +43,7 @@ in
   imports = [ ./sway/swaylock.nix ];
   config = lib.mkIf config.misha.desktop.enable {
     home.packages = with pkgs; [ way-displays ];
+    misha.desktop.keyboardShortcutsMod = "Mod4";
 
     wayland.windowManager.sway = {
       enable = true;
@@ -53,12 +54,12 @@ in
         input = {
           "*" = {
             xkb_layout = "us,il";
-            xkb_options = "grp:alt_shift_toggle";
+            xkb_options = "grp:win_space_toggle";
           };
         };
         terminal = "${pkgs.kitty}/bin/kitty";
         menu = "${pkgs.wofi}/bin/wofi --show drun -t ${pkgs.kitty}/bin/kitty";
-        modifier = "Mod4";
+        modifier = config.misha.desktop.keyboardShortcutsMod;
         bars = [ { command = "waybar"; } ];
         modes = { };
         startup = [
@@ -111,6 +112,7 @@ in
               childBorder = D.red;
             };
           };
+        bindkeysToCode = true;
         keybindings = lib.attrsets.mergeAttrsList [
           # workspace list
           (lib.attrsets.mergeAttrsList (
@@ -163,8 +165,9 @@ in
             "${modifier}+minus" = "scratchpad show";
             "${modifier}+a" = "focus parent";
 
-            "${modifier}+Shift+greater" = "move workspace to output right";
-            "${modifier}+Shift+less" = "move workspace to output left";
+            # through keycodes:
+            # "${modifier}+Shift+greater" = "move workspace to output right";
+            # "${modifier}+Shift+less" = "move workspace to output left";
 
             "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl -n1 s -- \"-5%\"";
             "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl -n1 s -- \"+5%\"";
@@ -192,6 +195,10 @@ in
 
           (lib.attrsets.mapAttrs (_k: v: "exec ${v}") config.misha.desktop.keyboardShortcuts)
         ];
+        keycodebindings = {
+          "${modifier}+Shift+60" = "move workspace to output right";
+          "${modifier}+Shift+59" = "move workspace to output right";
+        };
         window.commands = [
           {
             command = "move scratchpad";
