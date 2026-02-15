@@ -23,6 +23,11 @@
             "filetypes" = [ "nix" ];
             "rootPatterns" = [ "flake.nix" ];
           };
+          "zig" = {
+            "command" = "zls";
+            "filetypes" = [ "zig" ];
+            "rootPatterns" = [ "build.zig" ];
+          };
         };
       };
     };
