@@ -69,6 +69,7 @@
         vim-obsession
         nvim-autopairs
         vim-nix
+        gruvbox-nvim
       ];
   };
 }
