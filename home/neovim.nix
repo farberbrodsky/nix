@@ -47,6 +47,7 @@
       [
         pkgs.vimExtraPlugins.catppuccin-catppuccin
         pkgs.vimExtraPlugins.vim-airline-vim-airline
+        pkgs.vimExtraPlugins.vim-airline-themes-vim-airline
         pkgs.vimExtraPlugins.nvim-surround-kylechui
         pkgs.vimExtraPlugins.indent-blankline-nvim-lukas-reineke
         pkgs.vimExtraPlugins.vim-fugitive-tpope

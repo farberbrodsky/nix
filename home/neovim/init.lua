@@ -321,11 +321,6 @@ vim.api.nvim_create_user_command("Fold", "call CocAction('fold', <f-args>)", {na
 -- Add `:OR` command for organize imports of the current buffer
 vim.api.nvim_create_user_command("OR", "call CocActionAsync('runCommand', 'editor.action.organizeImport')", {})
 
--- Add airline support
-vim.g["airline#extensions#coc#enabled"] = 1
-vim.g["airline#extensions#coc#show_coc_status"] = 1
-vim.g["airline_theme"] = "catppuccin"
-
 -- Mappings for CoCList
 -- code actions and coc stuff
 ---@diagnostic disable-next-line: redefined-local
@@ -447,9 +442,9 @@ require('nvim-autopairs').setup({
 })
 
 
--- Atom One Light theme
+-- Gruvbox theme
 vim.o.background = 'light'
-vim.cmd 'colorscheme catppuccin-latte'
+vim.cmd 'colorscheme gruvbox'
 
 -- rainbow
 require('rainbow-delimiters.setup').setup {
@@ -458,6 +453,10 @@ require('rainbow-delimiters.setup').setup {
 -- Airline
 vim.g.airline_powerline_fonts = 1
 vim.g.airline_section_z = '%4l'
+vim.g["airline#extensions#coc#enabled"] = 1
+vim.g["airline#extensions#coc#show_coc_status"] = 1
+vim.g["airline_theme"] = "base16_gruvbox_light_medium"
+
 
 -- hop.nvim
 vim.api.nvim_set_keymap('n', ' ', '<cmd>lua require\'hop\'.hint_words()<cr>', {})
