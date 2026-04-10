@@ -83,6 +83,8 @@ _chpwd() {
 cd() { builtin cd "$@" && _chpwd; }
 pushd() { builtin pushd "$@" && _chpwd; }
 popd() { builtin popd "$@" && _chpwd; }
+\builtin unalias z &>/dev/null || \builtin true
+z() { __zoxide_z "$@" && _chpwd; }
 _chpwd
 
 # Git module
