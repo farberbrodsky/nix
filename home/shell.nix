@@ -17,4 +17,8 @@
   home.file.".gitstatus.sh".source = ./dotfiles/gitstatus.sh;
   services.ssh-agent.enable = true;
   programs.direnv.enable = true;
+  programs.zoxide = {
+    enable = true;
+    enableBashIntegration = true;
+  };
 }
