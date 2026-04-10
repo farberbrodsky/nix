@@ -100,6 +100,7 @@
       brightnessctl
       pavucontrol
       libnotify # notify-send, probably used by way-displays
+      vlc
       # theme
       (gruvbox-kvantum.override { variant = "Gruvbox_Light_Blue"; })
       gruvbox-plus-icons-with-light
