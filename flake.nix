@@ -97,7 +97,7 @@
             extraSpecialArgs = {
               inherit inputs;
               inherit my-utils;
-              hostname = "misha-gram";
+              hostname = host;
             };
           }
         )
