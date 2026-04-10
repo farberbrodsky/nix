@@ -9,6 +9,7 @@
     python3
     jq
     tmux
+    nodejs
   ];
   programs.bash.enable = true;
   programs.bash.shellAliases."cfg" = "cd /persist/nix/";
