@@ -276,6 +276,7 @@ in
         location = "center";
         allow_images = "true";
         image_size = 40;
+        insensitive = true;
       };
       style = ''
         window {
