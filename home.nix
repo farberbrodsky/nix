@@ -17,6 +17,7 @@
     ./home/syncthing.nix
     ./home/vscode.nix
     ./home/zed.nix
+    ./home/llm.nix
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
     inputs.self.homeManagerModules.workstyle
   ];
