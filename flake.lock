@@ -174,11 +174,11 @@
         "poetry2nix": "poetry2nix"
       },
       "locked": {
-        "lastModified": 1775749586,
-        "narHash": "sha256-GVai4d9yt9xdw9CUUYDydC+Z7PgskBnnBG8q0EaXUXY=",
+        "lastModified": 1776354644,
+        "narHash": "sha256-sU759vj/FWksZgPr+HnYtV8wzTjMrGFSTz6FftcL8jk=",
         "owner": "NixNeovim",
         "repo": "NixNeovimPlugins",
-        "rev": "e024ac4129b9f2ea63a5aabaa2d72f382fde0582",
+        "rev": "f2070b55be0b41ba0cef2f262ddf02cecaa934b0",
         "type": "github"
       },
       "original": {
@@ -221,11 +221,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1775595990,
-        "narHash": "sha256-OEf7YqhF9IjJFYZJyuhAypgU+VsRB5lD4DuiMws5Ltc=",
+        "lastModified": 1776434932,
+        "narHash": "sha256-gyqXNMgk3sh+ogY5svd2eNLJ6oEwzbAeaoBrrxD0lKk=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "4e92bbcdb030f3b4782be4751dc08e6b6cb6ccf2",
+        "rev": "c7f47036d3df2add644c46d712d14262b7d86c0c",
         "type": "github"
       },
       "original": {
@@ -243,11 +243,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1775808066,
-        "narHash": "sha256-POYuFgXWjl9IgVuGrU5zS2A8abH1OEnaRkvooDwNv94=",
+        "lastModified": 1776518415,
+        "narHash": "sha256-nrFXL2KbylCcO66dezpJVmRVGTl5/kmRfMTKP4Ma9LI=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "f5a3a545ce04f89fe209858f47a40dfd284e526b",
+        "rev": "1c525826d4294a6157d23892491184c929fca48e",
         "type": "github"
       },
       "original": {
@@ -264,11 +264,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1774559664,
-        "narHash": "sha256-a8FWQZgqaS7o484iH7dFK+F9t7oMahKbcH2piIwUwFc=",
+        "lastModified": 1776468647,
+        "narHash": "sha256-zx5O1RyRl6Fq+mvMh+JdS18aXR8644bcN9MKh2fN19M=",
         "owner": "~watersucks",
         "repo": "optnix",
-        "rev": "853323ece22fb1ffed19cea4ae22804032034a8e",
+        "rev": "c320dc5494c0caaca9ee4341367618c06a957709",
         "type": "sourcehut"
       },
       "original": {
