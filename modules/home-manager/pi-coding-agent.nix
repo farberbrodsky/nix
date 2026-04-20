@@ -70,7 +70,7 @@ in
     };
 
     skills = lib.mkOption {
-      type = lib.types.either (lib.types.attrsOf (lib.types.either lib.types.lines lib.types.path)) lib.types.path;
+      type = lib.types.either (lib.types.attrsOf (lib.types.either lib.types.lines (lib.types.either (lib.types.submodule { options.source = lib.mkOption { type = lib.types.str; }; }) lib.types.path))) lib.types.path;
       default = { };
       example = lib.literalExpression ''
         {
@@ -161,9 +161,14 @@ in
           else
             lib.mapAttrs' (
               n: v:
-              if lib.isPath v && lib.pathIsDirectory v then
+              if (lib.isPath v && lib.pathIsDirectory v) then
                 lib.nameValuePair ".pi/agent/skills/${n}" {
                   source = v;
+                  recursive = true;
+                }
+              else if (lib.isAttrs v && lib.hasAttr "source" v) then
+                lib.nameValuePair ".pi/agent/skills/${n}" {
+                  inherit (v) source;
                   recursive = true;
                 }
               else
