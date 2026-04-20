@@ -11,6 +11,7 @@
     tmux
     nodejs
     zoxide
+    nurl
   ];
   programs.bash.enable = true;
   programs.bash.shellAliases."cfg" = "cd /persist/nix/";
