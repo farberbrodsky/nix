@@ -29,7 +29,11 @@ in
 
     npmCommand = lib.mkOption {
       type = lib.types.nullOr (lib.types.listOf lib.types.str);
-      default = [ "npm" "--prefix" "${config.home.homeDirectory}/.pi/npm/" ];
+      default = [
+        "npm"
+        "--prefix"
+        "${config.home.homeDirectory}/.pi/npm/"
+      ];
       description = ''
         Override for the npm command used by pi.
         Defaults to settings the global prefix to `~/.pi/npm/`, to solve pi's usage of `npm install -g`.
@@ -64,12 +68,12 @@ in
     ]
     ++ lib.optional (cfg.package != null) cfg.package;
 
-    home.sessionVariables = lib.mkIf cfg.offline {
-      PI_OFFLINE = "1";
-    };
+    home.sessionVariables = lib.mkIf cfg.offline { PI_OFFLINE = "1"; };
 
     home.file.".pi/agent/settings.json" = lib.mkIf (cfg.settings != { }) {
-      source = jsonFormat.generate "pi-settings" (cfg.settings // (lib.optionalAttrs (cfg.npmCommand != null) { inherit (cfg) npmCommand; }));
+      source = jsonFormat.generate "pi-settings" (
+        cfg.settings // (lib.optionalAttrs (cfg.npmCommand != null) { inherit (cfg) npmCommand; })
+      );
     };
   };
 }

@@ -27,9 +27,7 @@ buildNpmPackage (finalAttrs: {
   # Skip native module rebuild for unneeded workspaces (e.g. canvas from web-ui)
   npmRebuildFlags = [ "--ignore-scripts" ];
 
-  nativeBuildInputs = [
-    makeBinaryWrapper
-  ];
+  nativeBuildInputs = [ makeBinaryWrapper ];
 
   # Build workspace dependencies in order, then the coding-agent.
   # We invoke tsgo directly for workspace deps to skip pi-ai's
@@ -90,4 +88,3 @@ buildNpmPackage (finalAttrs: {
     mainProgram = "pi";
   };
 })
-

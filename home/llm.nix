@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+_:
 
 {
   programs.pi-coding-agent = {
@@ -8,7 +8,10 @@
       defaultProvider = "google-antigravity";
       defaultModel = "gemini-3-flash";
       defaultThinkingLevel = "medium";
-      packages = ["npm:pi-subagents" "npm:pi-mcp-adapter"];
+      packages = [
+        "npm:pi-subagents"
+        "npm:pi-mcp-adapter"
+      ];
     };
   };
 }
