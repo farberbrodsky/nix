@@ -21,6 +21,7 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    skills.url = ./home/skills;
     my-sync.url = "path:/home/misha/Sync/sync.nix";
     my-sync.flake = false;
   };

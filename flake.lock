@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "anthropic": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1776366777,
+        "narHash": "sha256-BMgH43diojdUrGC6ivk87eEm2W1yWNuh2fpR9JpbUnE=",
+        "owner": "anthropics",
+        "repo": "skills",
+        "rev": "2c7ec5e78b8e5d43ea02e90bb8826f6b9f147b0c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anthropics",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -243,11 +259,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1776688645,
-        "narHash": "sha256-XfbYnIAUL/zt+Pol9UePQIQQsvizFeuPa0h0D3yOTuA=",
+        "lastModified": 1776717731,
+        "narHash": "sha256-SD29I+SY3QqI1/HI0mxWy8WzO4BKlEnx7vnV0gEWkwA=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "bc5612dff1cd16bd790374d608b4d932bbe03f9d",
+        "rev": "40962d1cd6293971aa83d712680cac440ff4ab3e",
         "type": "github"
       },
       "original": {
@@ -313,8 +329,23 @@
         "nixpkgs": "nixpkgs_3",
         "nur": "nur",
         "optnix": "optnix",
+        "skills": "skills",
         "treefmt-nix": "treefmt-nix"
       }
+    },
+    "skills": {
+      "inputs": {
+        "anthropic": "anthropic"
+      },
+      "locked": {
+        "path": "home/skills",
+        "type": "path"
+      },
+      "original": {
+        "path": "home/skills",
+        "type": "path"
+      },
+      "parent": []
     },
     "systems": {
       "locked": {
