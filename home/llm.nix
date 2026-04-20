@@ -1,5 +1,9 @@
-_:
+{ pkgs, ... }:
 
+let
+  jsonFormat = pkgs.formats.json { };
+
+in
 {
   programs.pi-coding-agent = {
     enable = true;
@@ -12,6 +16,20 @@ _:
         "npm:pi-subagents"
         "npm:pi-mcp-adapter"
       ];
+    };
+  };
+  home.file.".pi/agent/mcp.json".source = jsonFormat.generate "pi-mcp" {
+    mcpServers = {
+      chrome-devtools = {
+        command = "npx";
+        args = [
+          "-y"
+          "chrome-devtools-mcp@latest"
+          "--no-usage-statistics"
+          "--executable-path"
+          "${pkgs.chromium}/bin/chromium"
+        ];
+      };
     };
   };
 }
