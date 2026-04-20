@@ -27,6 +27,16 @@ in
       '';
     };
 
+    skipVersionCheck = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = ''
+        Skips the version check on startup.
+        Otherwise, "Update Available" is always shown.
+        Corresponds to {env}`PI_SKIP_VERSION_CHECK`.
+      '';
+    };
+
     npmCommand = lib.mkOption {
       type = lib.types.nullOr (lib.types.listOf lib.types.str);
       default = [
@@ -68,7 +78,14 @@ in
     ]
     ++ lib.optional (cfg.package != null) cfg.package;
 
-    home.sessionVariables = lib.mkIf cfg.offline { PI_OFFLINE = "1"; };
+    home.sessionVariables = lib.mkMerge [
+      (lib.mkIf cfg.offline {
+        PI_OFFLINE = "1";
+      })
+      (lib.mkIf cfg.skipVersionCheck {
+        PI_SKIP_VERSION_CHECK = "1";
+      })
+    ];
 
     home.file.".pi/agent/settings.json" = lib.mkIf (cfg.settings != { }) {
       source = jsonFormat.generate "pi-settings" (
