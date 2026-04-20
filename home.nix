@@ -20,6 +20,7 @@
     ./home/llm.nix
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
     inputs.self.homeManagerModules.workstyle
+    inputs.self.homeManagerModules.pi-coding-agent
   ];
 
   nixpkgs = {
