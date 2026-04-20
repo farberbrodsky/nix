@@ -1,7 +1,8 @@
-{ inputs, pkgs, ... }:
+{ pkgs, ... }:
 
 let
   jsonFormat = pkgs.formats.json { };
+
 in
 {
   programs.pi-coding-agent = {
@@ -16,7 +17,6 @@ in
         "npm:pi-mcp-adapter"
       ];
     };
-    skills = inputs.skills.anthropic;
   };
   home.file.".pi/agent/mcp.json".source = jsonFormat.generate "pi-mcp" {
     mcpServers = {
