@@ -14,12 +14,6 @@ let
     rev = "e8cc5baf9329ccb491bfa200e82eacbac83b1ead";
     hash = "sha256-ahuJDSIpUW2Zl5SbhyWXwMLFCYIjPygQPSfFeISXdHc=";
   };
-  trailofbits-skills-curated = pkgs.fetchFromGitHub {
-    owner = "trailofbits";
-    repo = "skills-curated";
-    rev = "022fa0948818c9f2f738a428f4546cc65c427767";
-    hash = "sha256-pI+ioqHG0LASL8VZiZoO9T0SoKFXDYub++eZrN5e208=";
-  };
 in
 {
   programs.pi-coding-agent = {
@@ -44,10 +38,8 @@ in
   home.file.".pi/agent/mcp.json".source = jsonFormat.generate "pi-mcp" {
     mcpServers = {
       chrome-devtools = {
-        command = "npx";
+        command = "${pkgs.extra-node.chrome-devtools-mcp}/bin/chrome-devtools-mcp";
         args = [
-          "-y"
-          "chrome-devtools-mcp@latest"
           "--no-usage-statistics"
           "--executable-path"
           "${pkgs.chromium}/bin/chromium"
