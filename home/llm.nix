@@ -53,6 +53,9 @@ in
           "${pkgs.chromium}/bin/chromium"
         ];
       };
+      nixos = {
+        command = "${pkgs.mcp-nixos}/bin/mcp-nixos";
+      };
     };
   };
 }
