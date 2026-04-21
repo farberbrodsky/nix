@@ -14,6 +14,12 @@ let
     rev = "e8cc5baf9329ccb491bfa200e82eacbac83b1ead";
     hash = "sha256-ahuJDSIpUW2Zl5SbhyWXwMLFCYIjPygQPSfFeISXdHc=";
   };
+  oh-pi = pkgs.fetchFromGitHub {
+    owner = "ifiokjr";
+    repo = "oh-pi";
+    rev = "e431647671f88534e6d23576d4e495cf99eda06a";
+    hash = "sha256-ydTCWMins5mC7n7/MdpVz3N5Kt+x2FFtkOQgWLNlltk=";
+  };
 in
 {
   programs.pi-coding-agent = {
@@ -33,6 +39,7 @@ in
       pdf.source = anthropic-skills + "/skills/pdf";
       modern-python.source = trailofbits-skills + "/plugins/modern-python/skills/modern-python";
       skill-extractor.source = builtins.toString ./skills/skill-extractor;
+      web-search.source = oh-pi + "/packages/skills/skills/web-search";
     };
   };
   home.file.".pi/agent/mcp.json".source = jsonFormat.generate "pi-mcp" {
