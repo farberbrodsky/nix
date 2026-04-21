@@ -18,8 +18,10 @@
         p: with p; [
           basedpyright
           ruff
+          nil
         ]
       ))
+      pkgs.extra-node.pi-acp
     ];
     userSettings = {
       telemetry = {
@@ -32,6 +34,12 @@
         mode = "light";
         light = "Gruvbox Light";
         dark = "Gruvbox Dark";
+      };
+      agent_servers = {
+        pi = {
+          type = "custom";
+          command = "pi-acp";
+        };
       };
     };
   };
