@@ -70,7 +70,13 @@ in
     };
 
     skills = lib.mkOption {
-      type = lib.types.either (lib.types.attrsOf (lib.types.either lib.types.lines (lib.types.either (lib.types.submodule { options.source = lib.mkOption { type = lib.types.str; }; }) lib.types.path))) lib.types.path;
+      type = lib.types.either (lib.types.attrsOf (
+        lib.types.either lib.types.lines (
+          lib.types.either (lib.types.submodule {
+            options.source = lib.mkOption { type = lib.types.str; };
+          }) lib.types.path
+        )
+      )) lib.types.path;
       default = { };
       example = lib.literalExpression ''
         {
@@ -119,9 +125,7 @@ in
 
   config = lib.mkIf cfg.enable (
     lib.mkMerge [
-      {
-        programs.pi-coding-agent.settings.npmCommand = lib.mkIf (cfg.npmCommand != null) cfg.npmCommand;
-      }
+      { programs.pi-coding-agent.settings.npmCommand = lib.mkIf (cfg.npmCommand != null) cfg.npmCommand; }
       {
         # fd and ripgrep assumed to exist by pi. See: https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/src/utils/tools-manager.ts
         home = {
@@ -135,12 +139,8 @@ in
           };
         };
       }
-      (lib.mkIf cfg.offline {
-        home.sessionVariables.PI_OFFLINE = "1";
-      })
-      (lib.mkIf cfg.skipVersionCheck {
-        home.sessionVariables.PI_SKIP_VERSION_CHECK = "1";
-      })
+      (lib.mkIf cfg.offline { home.sessionVariables.PI_OFFLINE = "1"; })
+      (lib.mkIf cfg.skipVersionCheck { home.sessionVariables.PI_SKIP_VERSION_CHECK = "1"; })
       {
         assertions = [
           {
