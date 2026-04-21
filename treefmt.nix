@@ -11,7 +11,10 @@
     };
   };
 
-  settings.excludes = [ "flake.lock" ];
+  settings.excludes = [
+    "flake.lock"
+    "pkgs/node/*"
+  ];
 
   settings.formatter = {
     deadnix = {
