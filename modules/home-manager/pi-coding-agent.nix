@@ -121,6 +121,35 @@ in
         symlinked to {file}`~/.pi/agent/skills/`.
       '';
     };
+
+    promptTemplates = lib.mkOption {
+      type = lib.types.either (lib.types.attrsOf (lib.types.either lib.types.lines lib.types.path)) lib.types.path;
+      default = { };
+      example = lib.literalExpression ''
+        {
+          review = ./prompts/review.md;
+          refactor = '''
+            Refactor the following code for better readability and performance:
+            {{context}}
+          ''';
+        }
+      '';
+      description = ''
+        Custom prompt templates for pi-coding-agent.
+
+        This option can be either:
+        - An attribute set defining prompt templates
+        - A path to a directory containing prompt templates (.md files)
+
+        If an attribute set is used, the attribute name becomes the
+        command name, and the value is either:
+        - Inline content as a string (creates `~/.pi/agent/prompts/<name>.md`)
+        - A path to a file (creates `~/.pi/agent/prompts/<name>.md`)
+
+        If a path is used, it is expected to contain .md files. The directory is
+        symlinked to {file}`~/.pi/agent/prompts/`.
+      '';
+    };
   };
 
   config = lib.mkIf cfg.enable (
@@ -146,6 +175,10 @@ in
           {
             assertion = !lib.isPath cfg.skills || lib.pathIsDirectory cfg.skills;
             message = "`programs.pi-coding-agent.skills` must be a directory when set to a path";
+          }
+          {
+            assertion = !lib.isPath cfg.promptTemplates || lib.pathIsDirectory cfg.promptTemplates;
+            message = "`programs.pi-coding-agent.promptTemplates` must be a directory when set to a path";
           }
         ];
       }
@@ -176,6 +209,23 @@ in
                   if lib.isPath v then { source = v; } else { text = v; }
                 )
             ) cfg.skills;
+      })
+      (lib.mkIf (cfg.promptTemplates != { }) {
+        home.file =
+          if lib.isPath cfg.promptTemplates then
+            {
+              ".pi/agent/prompts" = {
+                source = cfg.promptTemplates;
+                recursive = true;
+              };
+            }
+          else
+            lib.mapAttrs' (
+              n: v:
+              lib.nameValuePair ".pi/agent/prompts/${n}.md" (
+                if lib.isPath v then { source = v; } else { text = v; }
+              )
+            ) cfg.promptTemplates;
       })
     ]
   );
