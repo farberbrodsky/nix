@@ -41,6 +41,9 @@ in
       skill-extractor.source = builtins.toString ./skills/skill-extractor;
       web-search.source = oh-pi + "/packages/skills/skills/web-search";
     };
+    promptTemplates = {
+      commit = builtins.readFile (oh-pi + "/packages/prompts/prompts/commit.md");
+    };
   };
   home.file.".pi/agent/mcp.json".source = jsonFormat.generate "pi-mcp" {
     mcpServers = {
