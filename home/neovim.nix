@@ -32,7 +32,10 @@
       };
     };
 
-    # Search plugins with: `nix search nixneovimplugins pluginname`
+    # You can search plugins with:
+    # 1. `nix search nixpkgs "vimPlugins\..*pluginname"`, for pkgs.vimPlugins
+    # 2. `nix search nixneovimplugins pluginname`, for pkgs.vimExtraPlugins (this is the prefix for results in nixneovimplugins)
+    # Usually, prioritize the regular vimPlugins.
     plugins =
       with pkgs.vimPlugins;
       let
