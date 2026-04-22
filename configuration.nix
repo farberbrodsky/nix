@@ -18,6 +18,7 @@
     ./system/desktop.nix
     ./system/fonts.nix
     ./system/gaming.nix
+    ./system/flake-utils.nix
     inputs.impermanence.nixosModules.impermanence
   ];
 
@@ -33,6 +34,11 @@
     "nix-command"
     "flakes"
   ];
+
+  # from flake-utils.nix
+  nix.generateNixPathFromInputs = true;
+  nix.generateRegistryFromInputs = true;
+  nix.linkInputs = true;
 
   environment.systemPackages = with pkgs; [
     vim

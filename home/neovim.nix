@@ -32,6 +32,7 @@
       };
     };
 
+    # Search plugins with: `nix search nixneovimplugins pluginname`
     plugins =
       with pkgs.vimPlugins;
       let
