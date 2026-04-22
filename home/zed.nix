@@ -38,7 +38,6 @@
       };
     }
     (lib.mkIf config.misha.shell.llms.enable {
-      extraPackages = with pkgs; [ extra-node.pi-acp ];
       userSettings = {
         agent_servers = {
           pi = {
