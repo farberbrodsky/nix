@@ -27,7 +27,63 @@ let
   };
 in
 lib.mkIf config.misha.shell.llms.enable {
-  home.packages = with pkgs; [ extra-node.pi-acp ];
+  home.packages = with pkgs; [
+    extra-node.pi-acp
+    # Scripts
+    (writeShellApplication {
+      name = "pi-commit";
+      text = ''
+        t="$(mktemp)"
+        { (cat <<"EOF"
+        Non-interactively generate a commit message for the following changes.
+        Your output is piped to `git commit -F -`, so it directly becomes the commit message.
+        The block describing the commit message starts when you write ```commit, and continues until the end of your response.
+        Follow conventional commits format:
+        ```commit
+        type(scope): description
+
+        [optional body]
+        ```
+
+        Types: feat, fix, refactor, docs, test, chore, perf, ci, style, build
+
+        - Try to keep the subject line under 72 characters
+        - Use imperative mood ("add" not "added")
+        - Body explains WHY, not WHAT (the diff shows what)
+
+        ------
+        EOF
+        git diff --cached) | pi --thinking low --no-extensions --no-skills --provider openrouter --model openrouter/free --no-session --tools read,grep,find,ls -p | tee "$t"; } || { rm -f "$t"; exit 1; }
+        python3 - "$t" <<"EOF"
+        import sys
+        from pathlib import Path
+        import subprocess
+        p = Path(sys.argv[1])
+        lines = p.read_text().splitlines()
+
+        try:
+            lines = lines[lines.index("```commit")+1:]
+        except ValueError:
+            sys.exit(1)
+
+        try:
+            lines = lines[:lines.index("```")]
+        except ValueError:
+            pass
+
+        while not lines[-1].strip():
+            lines.pop()
+
+        commit_message = "\n".join(lines) + "\n"
+        p = subprocess.Popen(["git", "commit", "-F", "-"], stdin=subprocess.PIPE)
+        _ = p.communicate(commit_message.encode("utf-8"))
+        sys.exit(p.returncode)
+        EOF
+        git show --stat HEAD
+      '';
+      runtimeInputs = [ python3 git ];
+    })
+  ];
   programs.pi-coding-agent = {
     enable = true;
     settings = {
