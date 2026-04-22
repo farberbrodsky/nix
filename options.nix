@@ -47,6 +47,8 @@
       desktopApps.inkscape.enable = desktopPersonalDefault "inkscape";
       desktopApps.keepassxc.enable = desktopPersonalDefault "keepassxc";
 
+      shell.llms.enable = desktopDefault "llms";
+
       syncthing.enable = desktopPersonalDefault "syncthing";
 
       system.btrfsImpermanence.enable = mkEnableOption "btrfs impermanence";

@@ -1,4 +1,9 @@
-{ pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   jsonFormat = pkgs.formats.json { };
@@ -21,7 +26,7 @@ let
     hash = "sha256-ydTCWMins5mC7n7/MdpVz3N5Kt+x2FFtkOQgWLNlltk=";
   };
 in
-{
+lib.mkIf config.misha.shell.llms.enable {
   programs.pi-coding-agent = {
     enable = true;
     settings = {
