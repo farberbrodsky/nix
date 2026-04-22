@@ -27,9 +27,7 @@ let
   };
 in
 lib.mkIf config.misha.shell.llms.enable {
-  home.packages = with pkgs; [
-    extra-node.pi-acp
-  ];
+  home.packages = with pkgs; [ extra-node.pi-acp ];
   programs.pi-coding-agent = {
     enable = true;
     settings = {

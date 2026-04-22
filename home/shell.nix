@@ -12,6 +12,7 @@
     nodejs
     zoxide
     nurl
+    python3Packages.markitdown
   ];
   programs.bash.enable = true;
   programs.bash.shellAliases."cfg" = "cd /persist/nix/";
