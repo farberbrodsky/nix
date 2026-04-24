@@ -102,6 +102,7 @@ lib.mkIf config.misha.shell.llms.enable {
       modern-python.source = trailofbits-skills + "/plugins/modern-python/skills/modern-python";
       skill-extractor.source = builtins.toString ./skills/skill-extractor;
       web-search.source = oh-pi + "/packages/skills/skills/web-search";
+      web-fetch.source = oh-pi + "/packages/skills/skills/web-fetch";
     };
     promptTemplates = {
       commit = builtins.readFile (oh-pi + "/packages/prompts/prompts/commit.md");
