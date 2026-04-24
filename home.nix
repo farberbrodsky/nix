@@ -18,6 +18,7 @@
     ./home/vscode.nix
     ./home/zed.nix
     ./home/llm.nix
+    ./home/zathura.nix
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
     inputs.self.homeManagerModules.workstyle
     inputs.self.homeManagerModules.pi-coding-agent

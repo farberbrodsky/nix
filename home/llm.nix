@@ -81,7 +81,10 @@ lib.mkIf config.misha.shell.llms.enable {
         EOF
         git show --stat HEAD
       '';
-      runtimeInputs = [ python3 git ];
+      runtimeInputs = [
+        python3
+        git
+      ];
     })
   ];
   programs.pi-coding-agent = {
