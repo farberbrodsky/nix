@@ -94,6 +94,12 @@
       nix build /home/misha/code/updog
       exec /home/misha/code/updog/result/bin/updog group nix-complete-no-commit -f /home/misha/code/updog/updates.toml
     '')
+    (writeShellScriptBin "M-clean" ''
+      set -euo pipefail
+      sudo nix-env --delete-generations --profile /nix/var/nix/profiles/system +4
+      nix-env --delete-generations --profile ~/.local/state/nix/profiles/home-manager +4
+      nix-store --gc
+    '')
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
