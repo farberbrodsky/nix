@@ -1,8 +1,8 @@
 { pkgs, lib, ... }:
 
 {
-  # nix language server
-  home.packages = [ pkgs.nixd ];
+  # language servers
+  home.packages = [ pkgs.nixd pkgs.clang-tools pkgs.shellcheck pkgs.shfmt ];
 
   programs.neovim = {
     enable = true;
@@ -75,6 +75,8 @@
         nvim-autopairs
         vim-nix
         gruvbox-nvim
+        coc-clangd
+        coc-sh
       ];
   };
 }
