@@ -330,7 +330,7 @@ in
         "--selection-size-limit"
         "1048576"
       ];
-      systemdTargets = [ "sway-session.target "];
+      systemdTargets = [ "sway-session.target" ];
     };
   };
 }

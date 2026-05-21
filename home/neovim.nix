@@ -2,7 +2,12 @@
 
 {
   # language servers
-  home.packages = [ pkgs.nixd pkgs.clang-tools pkgs.shellcheck pkgs.shfmt ];
+  home.packages = [
+    pkgs.nixd
+    pkgs.clang-tools
+    pkgs.shellcheck
+    pkgs.shfmt
+  ];
 
   programs.neovim = {
     enable = true;
