@@ -77,6 +77,7 @@
         gruvbox-nvim
         coc-clangd
         coc-sh
+        coc-pyright
       ];
   };
 }
