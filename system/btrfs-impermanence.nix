@@ -49,6 +49,7 @@
       "/var/lib/containers"
       "/var/lib/cni"
       "/var/lib/flatpak"
+      "/var/cache/tuigreet"
     ];
     files = [ "/etc/machine-id" ];
   };
