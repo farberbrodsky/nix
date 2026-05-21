@@ -320,5 +320,17 @@ in
         }
       '';
     };
+
+    services.wl-clip-persist = {
+      enable = true;
+      extraOptions = [
+        "--ignore-event-on-error"
+        "--all-mime-type-regex"
+        "(?i)^(?!x-kde-passwordManagerHint).+"
+        "--selection-size-limit"
+        "1048576"
+      ];
+      systemdTargets = [ "sway-session.target "];
+    };
   };
 }
