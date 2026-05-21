@@ -17,6 +17,14 @@
       desktop.enable = mkEnableOption "desktop";
       desktop.laptop.enable = mkEnableOption "laptop";
 
+      # Whether to do auto-login. Intended for systems with disk encryption.
+      desktop.autologin.enable = mkEnableOption "autologin";
+      # Username for auto-login
+      desktop.autologin.user = mkOption {
+        default = "misha";
+        type = lib.types.str;
+      };
+
       # Things that require personal credentials
       desktop.personal.enable = mkEnableOption "desktop";
 

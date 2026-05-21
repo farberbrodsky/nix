@@ -15,16 +15,27 @@
   };
   security.polkit.enable = true;
 
-  services.greetd = {
-    enable = true;
-    useTextGreeter = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd sway";
-        user = "greeter";
+  services.greetd = lib.mkMerge [
+    { enable = true; }
+    (lib.mkIf config.misha.desktop.autologin.enable {
+      settings = rec {
+        initial_session = {
+          command = "sway";
+          inherit (config.misha.desktop.autologin) user;
+        };
+        default_session = initial_session;
       };
-    };
-  };
+    })
+    (lib.mkIf (!config.misha.desktop.autologin.enable) {
+      useTextGreeter = true;
+      settings = {
+        default_session = {
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd sway";
+          user = "greeter";
+        };
+      };
+    })
+  ];
   users.users.greeter = { };
 
   # Enable touchpad support (enabled default in most desktopManager).
