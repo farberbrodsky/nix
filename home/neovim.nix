@@ -83,6 +83,10 @@
         coc-clangd
         coc-sh
         coc-pyright
+        {
+          plugin = demicolon-nvim;
+          optional = true;
+        }
       ];
   };
 }

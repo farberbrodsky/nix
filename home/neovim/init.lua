@@ -88,28 +88,25 @@ vim.cmd.packadd("nvim-treesitter-textobjects")
 -- Surround
 require("nvim-surround").setup({})
 
--- Useful function
-local ts_repeat_move = require "nvim-treesitter-textobjects.repeatable_move"
+-- Repeatable motions
 
--- removed from mainline nvim-treesitter-textobjects. I am reimplementing something similar but may be wrong!!!
-local function make_repeatable_move_pair(forward_move_fn, backward_move_fn)
-    local general_repeatable_move_fn = function(opts, ...)
-        if opts.forward then
-            forward_move_fn(...)
-        else
-            backward_move_fn(...)
-        end
-    end
+vim.cmd.packadd("demicolon.nvim")
 
-    local repeatable = ts_repeat_move.make_repeatable_move(general_repeatable_move_fn)
-    local forward_fn = function(...)
-        repeatable({ forward = true }, ...)
-    end
-    local backward_fn = function(...)
-        repeatable({ forward = false }, ...)
-    end
-    return forward_fn, backward_fn
-end
+require("demicolon").setup({
+    keymaps = {
+        -- Create t/T/f/F key mappings
+        horizontal_motions = true,
+        -- Create ; and , key mappings. Set it to 'stateless', 'stateful', or false to
+        -- not create any mappings. 'stateless' means that ;/, move right/left.
+        -- 'stateful' means that ;/, will remember the direction of the original
+        -- jump, and `,` inverts that direction (Neovim's default behaviour).
+        repeat_motions = 'stateless',
+        -- Keys that shouldn't be repeatable (because they aren't motions), excluding the prefix `]`/`[`
+        -- If you have custom motions that use one of these, make sure to remove that key from here
+        -- removed: 'f'
+        disabled_keys = { 'p', 'I', 'A', 'i' },
+    }
+})
 
 -- Navigation keybindings
 -- CTRL-H,J,K,L move between windows
@@ -220,9 +217,8 @@ vim.keymap.set("i", "<c-space>", "coc#refresh()", {silent = true, expr = true})
 do
     local function next_diagnostic() vim.api.nvim_command("call CocAction('diagnosticNext')") end
     local function prev_diagnostic() vim.api.nvim_command("call CocAction('diagnosticPrevious')") end
-    local next_diagnostic_repeat, prev_diagnostic_repeat = make_repeatable_move_pair(next_diagnostic, prev_diagnostic)
-    vim.keymap.set({'n', 'x', 'o'}, NEXT_DIAGNOSTIC, next_diagnostic_repeat)
-    vim.keymap.set({'n', 'x', 'o'}, PREV_DIAGNOSTIC, prev_diagnostic_repeat)
+    vim.keymap.set({'n', 'x', 'o'}, NEXT_DIAGNOSTIC, next_diagnostic)
+    vim.keymap.set({'n', 'x', 'o'}, PREV_DIAGNOSTIC, prev_diagnostic)
 end
 
 -- GoTo code navigation
@@ -417,15 +413,6 @@ require'nvim-treesitter'.setup {
   -- }
 }
 
--- Make these repeatable with ; and ,
-vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
-vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
--- Keep f,F,t,T repeatable
-vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f_expr, { expr = true })
-vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F_expr, { expr = true })
-vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t_expr, { expr = true })
-vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = true })
-
 -- Append Argument - go to the end of the argument, insert a comma in insert mode
 vim.keymap.set('n', APPEND_NEXT_ARGUMENT, 'via<Esc>a, ', { remap = true, silent = true })
 vim.keymap.set('n', APPEND_PREV_ARGUMENT, 'viao<Esc>i, <Left><Left>', { remap = true, silent = true })
@@ -484,9 +471,6 @@ vim.g.lion_map_left  = ALIGN_LEFT
 vim.g.tcomment_opleader1 = TCOMMENT_LEADER
 
 -- gitsigns.nvim
-local next_hunk_repeat, prev_hunk_repeat = make_repeatable_move_pair(function() vim.call('feedkeys', ']c', 'n') end, function() vim.call('feedkeys', '[c', 'n') end)
-vim.keymap.set({'n', 'x', 'o'}, NEXT_CHANGE, next_hunk_repeat)
-vim.keymap.set({'n', 'x', 'o'}, PREV_CHANGE, prev_hunk_repeat)
 require('gitsigns').setup {
   signs = {
     add          = { text = '│' },
@@ -553,9 +537,8 @@ require('gitsigns').setup {
       end
     end
 
-    local next_hunk_repeat, prev_hunk_repeat = make_repeatable_move_pair(next_hunk, prev_hunk)
-    map({'n', 'x', 'o'}, NEXT_CHANGE, next_hunk_repeat)
-    map({'n', 'x', 'o'}, PREV_CHANGE, prev_hunk_repeat)
+    map({'n', 'x', 'o'}, NEXT_CHANGE, next_hunk)
+    map({'n', 'x', 'o'}, PREV_CHANGE, prev_hunk)
 
     -- Actions
     map({'n', 'v'}, GITSIGNS_STAGE_HUNK, ':Gitsigns stage_hunk<CR>', { silent = true })
