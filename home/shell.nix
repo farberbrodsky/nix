@@ -13,9 +13,13 @@
     zoxide
     nurl
     python3Packages.markitdown
+    eza
   ];
   programs.bash.enable = true;
-  programs.bash.shellAliases."cfg" = "cd /persist/nix/";
+  programs.bash.shellAliases = {
+    "cfg" = "cd /persist/nix/";
+    "l" = "eza";
+  };
   programs.bash.initExtra = ''
     eval "$(zoxide init bash)"
   ''
