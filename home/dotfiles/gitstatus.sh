@@ -39,7 +39,7 @@ fi
 gitstatus=$( LC_ALL=C git --no-optional-locks status ${_ignore_submodules} --untracked-files="${__GIT_PROMPT_SHOW_UNTRACKED_FILES:-normal}" --porcelain --branch )
 
 # if the status is fatal, exit now
-[[ ! "${?}" ]] && exit 0
+[[ $? -ne 0 ]] && exit 0
 
 git_dir="$(git rev-parse --git-dir 2>/dev/null)"
 [[ -z "${git_dir:+x}" ]] && exit 0
@@ -185,7 +185,7 @@ if [[ -z "${upstream:+x}" ]] ; then
   upstream='^'
 fi
 
-UPSTREAM_TRIMMED=`echo $upstream |xargs`
+UPSTREAM_TRIMMED=$(xargs <<< "$upstream")
 
 printf "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n" \
   "${branch}${state}" \
