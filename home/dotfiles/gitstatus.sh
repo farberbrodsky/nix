@@ -14,6 +14,10 @@ __git_prompt_read() {
 }
 
 _gitstatus() {
+    local git_dir
+    git_dir="$(git rev-parse --git-dir 2>/dev/null)"
+    [[ -z "${git_dir:+x}" ]] && return 1
+
     _GIT_STATUS_FIELDS=()
     local _ignore_submodules
     if [[ "${__GIT_PROMPT_IGNORE_SUBMODULES:-0}" == "1" ]]; then
@@ -36,10 +40,6 @@ _gitstatus() {
 
     # if the status is fatal, bail out
     [[ $? -ne 0 ]] && return 1
-
-    local git_dir
-    git_dir="$(git rev-parse --git-dir 2>/dev/null)"
-    [[ -z "${git_dir:+x}" ]] && return 1
 
     local state="" step="" total=""
     if [[ -d "${git_dir}/rebase-merge" ]]; then
