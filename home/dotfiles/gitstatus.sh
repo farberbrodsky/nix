@@ -6,7 +6,15 @@
 #   [4] staged  [5] conflicts  [6] changed  [7] untracked
 #   [8] stashed  [9] clean  [10] detached_head
 
+# Helper for reading rebase progress files safely
+__git_prompt_read() {
+    local f="${1}"
+    shift
+    [[ -r "${f}" ]] && read -r "${@}" <"${f}"
+}
+
 _gitstatus() {
+    _GIT_STATUS_FIELDS=()
     local _ignore_submodules
     if [[ "${__GIT_PROMPT_IGNORE_SUBMODULES:-0}" == "1" ]]; then
         _ignore_submodules="--ignore-submodules"
@@ -28,12 +36,6 @@ _gitstatus() {
     local git_dir
     git_dir="$(git rev-parse --git-dir 2>/dev/null)"
     [[ -z "${git_dir:+x}" ]] && return 0
-
-    __git_prompt_read() {
-        local f="${1}"
-        shift
-        [[ -r "${f}" ]] && read -r "${@}" <"${f}"
-    }
 
     local state="" step="" total=""
     if [[ -d "${git_dir}/rebase-merge" ]]; then
@@ -109,16 +111,16 @@ _gitstatus() {
 
     local branch="" remote="" upstream="" detached_head=0
     IFS="^" read -ra branch_fields <<< "${branch_line/\#\# }"
-    branch="${branch_fields[@]:0:1}"
+    branch="${branch_fields[0]}"
 
     if [[ "${branch}" == *"Initial commit on"* ]]; then
         IFS=" " read -ra fields <<< "${branch}"
-        branch="${fields[@]:3:1}"
+        branch="${fields[3]}"
         remote="_NO_REMOTE_TRACKING_"
         remote_url='.'
     elif [[ "${branch}" == *"No commits yet on"* ]]; then
         IFS=" " read -ra fields <<< "${branch}"
-        branch="${fields[@]:4:1}"
+        branch="${fields[4]}"
         remote="_NO_REMOTE_TRACKING_"
         remote_url='.'
     elif [[ "${branch}" == *"no branch"* ]]; then
@@ -137,7 +139,7 @@ _gitstatus() {
             remote_url='.'
         else
             IFS="[,]" read -ra remote_fields <<< "${branch_fields[1]}"
-            upstream="${remote_fields[@]:0:1}"
+            upstream="${remote_fields[0]}"
             local ahead="" behind=""
             for remote_field in "${remote_fields[@]}"; do
                 if [[ "${remote_field}" == "ahead "* ]]; then
