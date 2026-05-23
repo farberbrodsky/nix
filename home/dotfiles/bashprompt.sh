@@ -68,6 +68,9 @@ _chpwd() {
         fi
     fi
     if [ "$use_git" = "0" ]; then
+        # reset last worktree but block git prompt
+        _git_last_worktree=""
+        _git_blocked="1"
         case $PWD in
             "$HOME"/*/*/*/*)
                 HPWD="${_GRAY_COLOR}~/...${_PATH_COLOR}/${PWD#"${PWD%/*/*/*}/"}"
