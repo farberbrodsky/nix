@@ -28,7 +28,7 @@ _gitstatus() {
     fi
 
     local gitstatus
-    gitstatus=$( timeout 3 LC_ALL=C git --no-optional-locks status ${_ignore_submodules} --untracked-files="${__GIT_PROMPT_SHOW_UNTRACKED_FILES:-normal}" --porcelain --branch )
+    gitstatus=$( LC_ALL=C timeout 3 git --no-optional-locks status ${_ignore_submodules} --untracked-files="${__GIT_PROMPT_SHOW_UNTRACKED_FILES:-normal}" --porcelain --branch )
     if [[ $? -eq 124 ]]; then
         _git_blocked=1
         return 1
