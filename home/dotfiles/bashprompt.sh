@@ -88,6 +88,7 @@ z() { __zoxide_z "$@" && _chpwd; }
 _chpwd
 
 # Git module
+source "$HOME/.gitstatus.sh"
 _git_show=""
 if command -v git >/dev/null 2>&1; then
     _git_prompt() {
@@ -107,23 +108,20 @@ if command -v git >/dev/null 2>&1; then
                 echo "$value"
             }
 
-            local -a git_status_fields
-            while IFS= read -r line; do
-                git_status_fields+=("${line}");
-            done < <(bash "$HOME/.gitstatus.sh" 2>/dev/null);
+            _gitstatus
 
             local git_branch_state git_remote _git_remote_url _git_upstream_command git_staged git_conflicts git_changed git_untracked git_stashed git_clean _git_detached_head
-            git_branch_state="$(_replaceSymbols "${git_status_fields[0]}")"
-            git_remote="$(_replaceSymbols "${git_status_fields[1]}")"
-            _git_remote_url="$(_replaceSymbols "${git_status_fields[2]}")"
-            _git_upstream_trimmed="${git_status_fields[3]}"
-            git_staged="${git_status_fields[4]}"
-            git_conflicts="${git_status_fields[5]}"
-            git_changed="${git_status_fields[6]}"
-            git_untracked="${git_status_fields[7]}"
-            git_stashed="${git_status_fields[8]}"
-            git_clean="${git_status_fields[9]}"
-            _git_detached_head="${git_status_fields[10]}"
+            git_branch_state="$(_replaceSymbols "${_GIT_STATUS_FIELDS[0]}")"
+            git_remote="$(_replaceSymbols "${_GIT_STATUS_FIELDS[1]}")"
+            _git_remote_url="$(_replaceSymbols "${_GIT_STATUS_FIELDS[2]}")"
+            _git_upstream_trimmed="${_GIT_STATUS_FIELDS[3]}"
+            git_staged="${_GIT_STATUS_FIELDS[4]}"
+            git_conflicts="${_GIT_STATUS_FIELDS[5]}"
+            git_changed="${_GIT_STATUS_FIELDS[6]}"
+            git_untracked="${_GIT_STATUS_FIELDS[7]}"
+            git_stashed="${_GIT_STATUS_FIELDS[8]}"
+            git_clean="${_GIT_STATUS_FIELDS[9]}"
+            _git_detached_head="${_GIT_STATUS_FIELDS[10]}"
 
             # list of symbols
             local git_symbols=""
