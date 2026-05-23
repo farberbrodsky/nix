@@ -48,6 +48,11 @@ _chpwd() {
         worktree_dir="$(git rev-parse --show-toplevel 2>/dev/null)"
         # shellcheck disable=SC2181
         if [ "$?" = "0" ] && [ -n "$worktree_dir" ]; then
+            # unblock git when worktree changes
+            if [ "$worktree_dir" != "$_git_last_worktree" ]; then
+                _git_last_worktree="$worktree_dir"
+                _git_blocked=""
+            fi
             local path_absdir
             path_absdir="$(realpath "$PWD")"
             case "$path_absdir/" in
@@ -92,6 +97,10 @@ source "$HOME/.gitstatus.sh"
 _git_show=""
 if command -v git >/dev/null 2>&1; then
     _git_prompt() {
+        if [ -n "${_git_blocked:-}" ]; then
+            _git_show=""
+            return
+        fi
         local git_dir
         git_dir="$(git rev-parse --git-dir 2>/dev/null)"
         if [ -z "$git_dir" ]; then
