@@ -91,8 +91,11 @@ lib.mkIf config.misha.shell.llms.enable {
     enable = true;
     settings = {
       theme = "light";
-      defaultProvider = "google-antigravity";
-      defaultModel = "gemini-3-flash";
+      defaultProvider = "openrouter";
+      enabledModels = [
+        "deepseek/deepseek-v4-flash"
+        "deepseek/deepseek-v4-pro"
+      ];
       defaultThinkingLevel = "medium";
       packages = [
         "npm:pi-subagents"
