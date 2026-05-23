@@ -101,74 +101,68 @@ if command -v git >/dev/null 2>&1; then
             _git_show=""
             return
         fi
-        local git_dir
-        git_dir="$(git rev-parse --git-dir 2>/dev/null)"
-        if [ -z "$git_dir" ]; then
-            _git_show=""
-        else
-            _replaceSymbols() {
-                # replace _AHEAD_, _BEHIND_, _NO_REMOTE_TRACKING_ and _PRETAG_
-                local value="$1"
-                local value="${value//_AHEAD_/↑}"
-                local value="${value//_BEHIND_/↓}"
-                local value="${value//_NO_REMOTE_TRACKING_/L}"
-                local value="${value//_PRETAG_/}"
-                local value="${value//_PREHASH_/:}"
-                echo "$value"
-            }
+        _replaceSymbols() {
+            # replace _AHEAD_, _BEHIND_, _NO_REMOTE_TRACKING_ and _PRETAG_
+            local value="$1"
+            local value="${value//_AHEAD_/↑}"
+            local value="${value//_BEHIND_/↓}"
+            local value="${value//_NO_REMOTE_TRACKING_/L}"
+            local value="${value//_PRETAG_/}"
+            local value="${value//_PREHASH_/:}"
+            echo "$value"
+        }
 
-            _gitstatus
+        _gitstatus || { _git_show=""; return; }
 
-            local git_branch_state git_remote _git_remote_url _git_upstream_command git_staged git_conflicts git_changed git_untracked git_stashed git_clean _git_detached_head
-            git_branch_state="$(_replaceSymbols "${_GIT_STATUS_FIELDS[0]}")"
-            git_remote="$(_replaceSymbols "${_GIT_STATUS_FIELDS[1]}")"
-            _git_remote_url="$(_replaceSymbols "${_GIT_STATUS_FIELDS[2]}")"
-            _git_upstream_trimmed="${_GIT_STATUS_FIELDS[3]}"
-            git_staged="${_GIT_STATUS_FIELDS[4]}"
-            git_conflicts="${_GIT_STATUS_FIELDS[5]}"
-            git_changed="${_GIT_STATUS_FIELDS[6]}"
-            git_untracked="${_GIT_STATUS_FIELDS[7]}"
-            git_stashed="${_GIT_STATUS_FIELDS[8]}"
-            git_clean="${_GIT_STATUS_FIELDS[9]}"
-            _git_detached_head="${_GIT_STATUS_FIELDS[10]}"
+        local git_branch_state git_remote _git_remote_url _git_upstream_command git_staged git_conflicts git_changed git_untracked git_stashed git_clean _git_detached_head
+        git_branch_state="$(_replaceSymbols "${_GIT_STATUS_FIELDS[0]}")"
+        git_remote="$(_replaceSymbols "${_GIT_STATUS_FIELDS[1]}")"
+        _git_remote_url="$(_replaceSymbols "${_GIT_STATUS_FIELDS[2]}")"
+        _git_upstream_trimmed="${_GIT_STATUS_FIELDS[3]}"
+        git_staged="${_GIT_STATUS_FIELDS[4]}"
+        git_conflicts="${_GIT_STATUS_FIELDS[5]}"
+        git_changed="${_GIT_STATUS_FIELDS[6]}"
+        git_untracked="${_GIT_STATUS_FIELDS[7]}"
+        git_stashed="${_GIT_STATUS_FIELDS[8]}"
+        git_clean="${_GIT_STATUS_FIELDS[9]}"
+        _git_detached_head="${_GIT_STATUS_FIELDS[10]}"
 
-            # list of symbols
-            local git_symbols=""
-            if [ "$git_staged" != "0" ]; then
-                # staged files
-                git_symbols="$git_symbols${_ADD_COLOR}●$git_staged${_GIT_COLOR}"
-            fi
-            if [ "$git_conflicts" != "0" ]; then
-                # merge conflicts
-                git_symbols="$git_symbols${_REMOVE_COLOR}✖$git_conflicts${_GIT_COLOR}"
-            fi
-            if [ "$git_changed" != "0" ]; then
-                # changed unstaged files
-                git_symbols="$git_symbols${_ADD_COLOR}✚$git_changed${_GIT_COLOR}"
-            fi
-            if [ "$git_untracked" != "0" ]; then
-                # untracked files
-                git_symbols="$git_symbols${_UNTRACKED_COLOR}…$git_untracked${_GIT_COLOR}"
-            fi
-            if [ "$git_stashed" != "0" ]; then
-                # stash entries
-                git_symbols="$git_symbols⚑$git_stashed"
-            fi
-            if [ "$git_clean" != "0" ]; then
-                git_symbols="$git_symbols${_CLEAN_COLOR}✔${_GIT_COLOR}"
-            fi
-
-            # put in parentheses
-            if [ -n "$git_symbols" ]; then
-                local git_symbols=" ($git_symbols)"
-            fi
-
-            _git_show=" ${_GIT_COLOR}${git_branch_state}"
-            if [ "$git_remote" != "." ]; then
-                 _git_show="$_git_show remote ${git_remote}"
-            fi
-            _git_show="${_git_show}${git_symbols}${_PROMPT_COLOR}"
+        # list of symbols
+        local git_symbols=""
+        if [ "$git_staged" != "0" ]; then
+            # staged files
+            git_symbols="$git_symbols${_ADD_COLOR}●$git_staged${_GIT_COLOR}"
         fi
+        if [ "$git_conflicts" != "0" ]; then
+            # merge conflicts
+            git_symbols="$git_symbols${_REMOVE_COLOR}✖$git_conflicts${_GIT_COLOR}"
+        fi
+        if [ "$git_changed" != "0" ]; then
+            # changed unstaged files
+            git_symbols="$git_symbols${_ADD_COLOR}✚$git_changed${_GIT_COLOR}"
+        fi
+        if [ "$git_untracked" != "0" ]; then
+            # untracked files
+            git_symbols="$git_symbols${_UNTRACKED_COLOR}…$git_untracked${_GIT_COLOR}"
+        fi
+        if [ "$git_stashed" != "0" ]; then
+            # stash entries
+            git_symbols="$git_symbols⚑$git_stashed"
+        fi
+        if [ "$git_clean" != "0" ]; then
+            git_symbols="$git_symbols${_CLEAN_COLOR}✔${_GIT_COLOR}"
+        fi
+
+        # put in parentheses
+        if [ -n "$git_symbols" ]; then
+            local git_symbols=" ($git_symbols)"
+        fi
+
+        _git_show=" ${_GIT_COLOR}${git_branch_state}"
+        if [ "$git_remote" != "." ]; then
+             _git_show="$_git_show remote ${git_remote}"
+        fi
+        _git_show="${_git_show}${git_symbols}${_PROMPT_COLOR}"
     }
     PROMPT_COMMAND+=("_git_prompt")
 fi

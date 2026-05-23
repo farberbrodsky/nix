@@ -31,15 +31,15 @@ _gitstatus() {
     gitstatus=$( timeout 3 LC_ALL=C git --no-optional-locks status ${_ignore_submodules} --untracked-files="${__GIT_PROMPT_SHOW_UNTRACKED_FILES:-normal}" --porcelain --branch )
     if [[ $? -eq 124 ]]; then
         _git_blocked=1
-        return 0
+        return 1
     fi
 
     # if the status is fatal, bail out
-    [[ $? -ne 0 ]] && return 0
+    [[ $? -ne 0 ]] && return 1
 
     local git_dir
     git_dir="$(git rev-parse --git-dir 2>/dev/null)"
-    [[ -z "${git_dir:+x}" ]] && return 0
+    [[ -z "${git_dir:+x}" ]] && return 1
 
     local state="" step="" total=""
     if [[ -d "${git_dir}/rebase-merge" ]]; then
