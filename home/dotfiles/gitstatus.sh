@@ -146,8 +146,8 @@ _gitstatus() {
                     ahead="_AHEAD_${remote_field:6}"
                 fi
                 if [[ "${remote_field}" == "behind "* ]] || [[ "${remote_field}" == " behind "* ]]; then
-                    behind="_BEHIND_${remote_field:7}"
-                    behind="_BEHIND_${behind# }"
+                    local num_behind="${remote_field:7}"
+                    behind="_BEHIND_${num_behind# }"
                 fi
             done
             remote="${behind}${ahead}"

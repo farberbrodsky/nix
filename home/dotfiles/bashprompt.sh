@@ -220,6 +220,8 @@ _timer_stop() {
     else
         _timer_show=""
     fi
+    # must run last - happens at the end of this file
+    # _timer_ready="1"
 }
 
 PROMPT_COMMAND+=("_timer_stop")
@@ -247,6 +249,10 @@ _update_ps1() {
 }
 PROMPT_COMMAND+=("_update_ps1")
 
-# timer_ready must be set during PROMPT_COMMAND so the DEBUG trap picks it up before the next command.
-# Order within PROMPT_COMMAND doesn't matter — DEBUG does not fire during prompt evaluation.
-PROMPT_COMMAND+=("_timer_ready=1")
+# hack to set _timer_ready after EVERYTHING including kitty shell integration
+_add_update_ps1() {
+    PROMPT_COMMAND=("${PROMPT_COMMAND[@]/_add_update_ps1/true}")
+    PROMPT_COMMAND+=("_timer_ready=1")
+}
+# shellcheck disable=SC2178,SC2128
+PROMPT_COMMAND+=("_add_update_ps1")
