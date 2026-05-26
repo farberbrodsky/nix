@@ -116,19 +116,6 @@
         "type": "github"
       }
     },
-    "my-sync": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1779546694,
-        "narHash": "sha256-XcLsdzTpSYvxURK0FYyBzpA4RwOY4va71oG4aidXKn0=",
-        "path": "/home/misha/Sync/sync.nix",
-        "type": "path"
-      },
-      "original": {
-        "path": "/home/misha/Sync/sync.nix",
-        "type": "path"
-      }
-    },
     "nix-flatpak": {
       "locked": {
         "lastModified": 1767800179,
@@ -243,11 +230,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779819213,
-        "narHash": "sha256-ojDir4gJ3sMT5DGsZ3QD4/67es+QW9XVLjytnqb+FHg=",
+        "lastModified": 1779820287,
+        "narHash": "sha256-60CmolwNpkNeLOTa8pV20bPzy/iI3cLOk0TNTWjRYyI=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "3803255eaf62402b751f8fcc0211244baab53465",
+        "rev": "b0b588262f254eac430bb6f5a074798e92832cd9",
         "type": "github"
       },
       "original": {
@@ -307,7 +294,6 @@
       "inputs": {
         "home-manager": "home-manager",
         "impermanence": "impermanence",
-        "my-sync": "my-sync",
         "nix-flatpak": "nix-flatpak",
         "nixneovimplugins": "nixneovimplugins",
         "nixpkgs": "nixpkgs_3",

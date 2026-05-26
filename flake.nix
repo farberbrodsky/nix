@@ -21,8 +21,6 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    my-sync.url = "path:/home/misha/Sync/sync.nix";
-    my-sync.flake = false;
   };
 
   outputs =
