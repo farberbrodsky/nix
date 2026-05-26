@@ -37,6 +37,9 @@ let
   mediaPlay = "${pkgs.playerctl}/bin/playerctl play";
   mediaPause = "${pkgs.playerctl}/bin/playerctl pause";
   mediaPlayPause = "${pkgs.playerctl}/bin/playerctl play-pause";
+  clearNotifications = "makoctl dismiss -a";
+  brightnessDown = "${pkgs.brightnessctl}/bin/brightnessctl -n1 s -- \"-5%\"";
+  brightnessUp = "${pkgs.brightnessctl}/bin/brightnessctl -n1 s -- \"+5%\"";
   ex = c: "exec --no-startup-id ${c}";
 in
 {
@@ -165,12 +168,14 @@ in
             "${modifier}+minus" = "scratchpad show";
             "${modifier}+a" = "focus parent";
 
+            "${modifier}+c" = "${ex clearNotifications}";
+
             # through keycodes:
             # "${modifier}+Shift+greater" = "move workspace to output right";
             # "${modifier}+Shift+less" = "move workspace to output left";
 
-            "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl -n1 s -- \"-5%\"";
-            "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl -n1 s -- \"+5%\"";
+            "XF86MonBrightnessDown" = "${ex brightnessDown}";
+            "XF86MonBrightnessUp" = "${ex brightnessUp}";
 
             # not sure wireplumber is the best for this but eh
             "XF86AudioLowerVolume" = "${ex volumeDown}";
