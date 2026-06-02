@@ -28,10 +28,10 @@ in
   pi-acp = nodeEnv.buildNodePackage {
     name = "pi-acp";
     packageName = "pi-acp";
-    version = "0.0.26";
+    version = "0.0.27";
     src = fetchurl {
-      url = "https://registry.npmjs.org/pi-acp/-/pi-acp-0.0.26.tgz";
-      sha512 = "RaldAyZJ6pjVjMGHvxuwCDHqv5JD7OPoTUOwdhOK5oshrqZl+kC4XzuuFCauAma6kvfWCJXb0MBqTPne4YWrzA==";
+      url = "https://registry.npmjs.org/pi-acp/-/pi-acp-0.0.27.tgz";
+      sha512 = "uEqgqTOSfd+EuTqVlLAfHhY0OWcd5jgjXxLweNHuUoddRbhDcZCy7vgccC6z3Z+v7zcUxm2jXo66NyOHXt1tsQ==";
     };
     dependencies = [
       sources."@agentclientprotocol/sdk-0.12.0"
@@ -50,10 +50,10 @@ in
   chrome-devtools-mcp = nodeEnv.buildNodePackage {
     name = "chrome-devtools-mcp";
     packageName = "chrome-devtools-mcp";
-    version = "0.22.0";
+    version = "1.1.1";
     src = fetchurl {
-      url = "https://registry.npmjs.org/chrome-devtools-mcp/-/chrome-devtools-mcp-0.22.0.tgz";
-      sha512 = "WpmJhmFf37I2qQHU4oJC7cEyGkmLdrn9I5aE7LQPQ7m8YXeTz3cyXwVyhKloKzKY57htMG3VkuAI7t9dGcohSw==";
+      url = "https://registry.npmjs.org/chrome-devtools-mcp/-/chrome-devtools-mcp-1.1.1.tgz";
+      sha512 = "Fs/ASXAkQqvYCbJjHIx/pnShjyIoZoPxdg4J3wjaA9FLkRb2ngGnisu2AGcBIXdw5qrPkOuV/cOlGOonpsE1qw==";
     };
     buildInputs = globalBuildInputs;
     meta = {
