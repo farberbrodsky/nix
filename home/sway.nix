@@ -40,12 +40,13 @@ let
   clearNotifications = "makoctl dismiss -a";
   brightnessDown = "${pkgs.brightnessctl}/bin/brightnessctl -n1 s -- \"-5%\"";
   brightnessUp = "${pkgs.brightnessctl}/bin/brightnessctl -n1 s -- \"+5%\"";
+  screenshot = "flameshot gui";
   ex = c: "exec --no-startup-id ${c}";
 in
 {
   imports = [ ./sway/swaylock.nix ];
   config = lib.mkIf config.misha.desktop.enable {
-    home.packages = with pkgs; [ way-displays ];
+    home.packages = with pkgs; [ way-displays flameshot ];
     misha.desktop.keyboardShortcutsMod = "Mod4";
 
     wayland.windowManager.sway = {
@@ -190,6 +191,7 @@ in
             "${modifier}+p" = "${ex mediaPlayPause}";
             "${modifier}+bracketleft" = "${ex mediaPrev}";
             "${modifier}+bracketright" = "${ex mediaNext}";
+            "${modifier}+Shift+s" = "${ex screenshot}";
 
             "${modifier}+shift+m" = "[class=\"Spotify\"] scratchpad show";
 

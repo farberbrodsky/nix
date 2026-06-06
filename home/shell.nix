@@ -14,6 +14,8 @@
     nurl
     python3Packages.markitdown
     eza
+    squashfsTools
+    btop
   ];
   programs.bash.enable = true;
   programs.bash.shellAliases = {
