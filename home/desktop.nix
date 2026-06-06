@@ -16,9 +16,11 @@
       name = "gruvbox-gtk-theme";
     };
     iconTheme = {
-      package = pkgs.gruvbox-plus-icons-with-light;
+      package = pkgs.gruvbox-plus-icons;
       name = "Gruvbox-Plus-Light";
     };
+    gtk4.theme = config.gtk.theme;
+    gtk4.iconTheme = config.gtk.theme;
     font.package = pkgs.google-fonts;
     font.name = "Roboto";
   };
@@ -103,7 +105,7 @@
       vlc
       # theme
       (gruvbox-kvantum.override { variant = "Gruvbox_Light_Blue"; })
-      gruvbox-plus-icons-with-light
+      gruvbox-plus-icons
       libsForQt5.qtstyleplugin-kvantum
       qt6Packages.qtstyleplugin-kvantum
     ]

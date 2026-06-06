@@ -117,8 +117,10 @@ lib.mkIf config.misha.shell.llms.enable {
   home.file.".pi/agent/mcp.json".source = jsonFormat.generate "pi-mcp" {
     mcpServers = {
       chrome-devtools = {
-        command = "${pkgs.extra-node.chrome-devtools-mcp}/bin/chrome-devtools-mcp";
+        command = "${pkgs.nodejs}/bin/npx";
         args = [
+          "-y"
+          "chrome-devtools-mcp@latest"
           "--no-usage-statistics"
           "--executable-path"
           "${pkgs.chromium}/bin/chromium"

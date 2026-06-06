@@ -20,7 +20,6 @@
     ./home/llm.nix
     ./home/zathura.nix
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
-    inputs.self.homeManagerModules.workstyle
     inputs.self.homeManagerModules.pi-coding-agent
   ];
 
@@ -82,14 +81,6 @@
     (writeShellScriptBin "M-optnix-nixos" ''
       exec optnix -s nixos "$@"
     '')
-    (writeShellApplication {
-      name = "M-update-node";
-      text = ''
-        cd /persist/nix/pkgs/node
-        exec node2nix -i ./node-packages.json -o node-packages.nix
-      '';
-      runtimeInputs = [ node2nix ];
-    })
     (writeShellScriptBin "M-up" ''
       nix build /home/misha/code/updog
       exec /home/misha/code/updog/result/bin/updog group nix-complete-no-commit -f /home/misha/code/updog/updates.toml

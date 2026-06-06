@@ -9,6 +9,7 @@
   # adapted from https://github.com/drupol/infra. thank you!
   programs.firefox = lib.mkIf config.misha.desktop.enable {
     enable = true;
+    configPath = "${config.xdg.configHome}/mozilla/firefox";
     nativeMessagingHosts =
       with pkgs;
       lib.lists.optional config.misha.desktopApps.keepassxc.enable keepassxc;

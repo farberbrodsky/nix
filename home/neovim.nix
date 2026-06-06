@@ -13,8 +13,10 @@
     enable = true;
     viAlias = true;
     vimAlias = true;
+    withRuby = false;
+    withPython3 = true;
 
-    extraLuaConfig = lib.fileContents neovim/init.lua;
+    initLua = lib.fileContents neovim/init.lua;
 
     coc = {
       enable = true;

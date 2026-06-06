@@ -2,11 +2,5 @@
 # You can build them using 'nix build .#example'
 pkgs: {
   # example = pkgs.callPackage ./example { };
-  gruvbox-plus-icons-with-light = pkgs.callPackage ./gruvbox-plus-icons.nix { };
-  pi-coding-agent = pkgs.callPackage ./pi-coding-agent.nix { };
-  extra-node = import ./node {
-    inherit pkgs;
-    inherit (pkgs) system;
-    inherit (pkgs) nodejs;
-  };
+  extra-node = import ./node pkgs;
 }
