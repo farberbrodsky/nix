@@ -1,6 +1,5 @@
 # See: https://nixos.wiki/wiki/Overlays
-{ inputs, ... }:
-{
+{ inputs, ... }: {
   # This one brings our custom packages from the 'pkgs' directory
   additions = final: _prev: import ../pkgs final.pkgs;
 

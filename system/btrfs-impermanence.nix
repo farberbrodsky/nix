@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 
 (lib.mkIf config.misha.system.btrfsImpermanence.enable {
   assertions = [
@@ -21,14 +26,14 @@
         # StandardError = "journal+console";
       };
       # This service is required for boot to succeed
-      requiredBy = ["initrd.target"];
+      requiredBy = [ "initrd.target" ];
       # Should complete before any file systems are mounted
-      before = ["sysroot.mount"];
+      before = [ "sysroot.mount" ];
 
       # Wait until the root device is available
       # If you're altering a different device, specify its device unit explicitly.
       # see: systemd-escape(1)
-      requires = ["initrd-root-device.target"];
+      requires = [ "initrd-root-device.target" ];
       after = [
         "initrd-root-device.target"
         # Allow hibernation to resume before trying to alter any data

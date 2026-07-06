@@ -1,5 +1,3 @@
 { config, lib, ... }:
 
-{
-  programs.chromium = lib.mkIf config.misha.desktopApps.chromium.enable { enable = true; };
-}
+{ programs.chromium = lib.mkIf config.misha.desktopApps.chromium.enable { enable = true; }; }
