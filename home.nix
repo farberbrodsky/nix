@@ -8,6 +8,7 @@
     ./home/firefox.nix
     ./home/flatpak.nix
     ./home/git.nix
+    ./home/keyboard-shortcuts.nix
     ./home/kitty.nix
     ./home/neovim.nix
     ./home/optnix.nix
