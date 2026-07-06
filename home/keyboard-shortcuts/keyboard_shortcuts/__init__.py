@@ -71,8 +71,9 @@ def drill(data: dict | str, testing: bool) -> None:
     """Recursively navigate a nested dict via menu selections.
 
     - Keys of a dict become menu items (sorted).
+    - If all values are strings (a leaf category with key→desc pairs),
+      show formatted "desc :: key" lines and print the keybinding on selection.
     - If the selected value is a dict, recurse.
-    - If the selected value is a string (a leaf / keybinding), display it.
     - Returns when the user cancels at any level.
     """
     if isinstance(data, str):
@@ -82,6 +83,17 @@ def drill(data: dict | str, testing: bool) -> None:
     if not data:
         return
 
+    # Leaf category: values are strings, format as "desc :: key"
+    if all(isinstance(v, str) for v in data.values()):
+        options = sorted(f"{desc} :: {key}" for key, desc in data.items())
+        chosen = menu(options, testing=testing)
+        if chosen is None:
+            return
+        # Extract the keybinding (after " :: ")
+        # print(chosen.split(" :: ", 1)[1] if " :: " in chosen else chosen)
+        return
+
+    # Category level: show category names
     options = sorted(data.keys())
     chosen = menu(options, testing=testing)
     if chosen is None:

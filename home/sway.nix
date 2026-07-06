@@ -42,6 +42,24 @@ let
   brightnessUp = "${pkgs.brightnessctl}/bin/brightnessctl -n1 s -- \"+5%\"";
   screenshot = "flameshot gui";
   ex = c: "exec --no-startup-id ${c}";
+  swayKeys = [
+    {
+      key = "mod+m";
+      desc = "volume up";
+      bind = "${ex "${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"}";
+    }
+  ];
+  swayKeyMap = lib.listToAttrs (map (e: lib.attrsets.nameValuePair e.key e.desc) swayKeys);
+  swayKeysToBind = lib.listToAttrs (
+    map (e: lib.attrsets.nameValuePair (builtins.replaceStrings [ "mod+" ] [ "Mod4+" ] e.key) e.bind) (
+      builtins.filter (e: !(e ? keycode)) swayKeys
+    )
+  );
+  swayKeysToKeycodeBind = lib.listToAttrs (
+    map (
+      e: lib.attrsets.nameValuePair (builtins.replaceStrings [ "mod+" ] [ "Mod4+" ] e.keycode) e.bind
+    ) (builtins.filter (e: e ? keycode) swayKeys)
+  );
 in
 {
   imports = [ ./sway/swaylock.nix ];
@@ -51,6 +69,7 @@ in
       flameshot
     ];
     misha.desktop.keyboardShortcutsMod = "Mod4";
+    misha.keys.sway = swayKeyMap;
 
     wayland.windowManager.sway = {
       enable = true;
@@ -185,7 +204,6 @@ in
             "XF86AudioLowerVolume" = "${ex volumeDown}";
             "XF86AudioRaiseVolume" = "${ex volumeUp}";
             "${modifier}+n" = "${ex volumeDown}";
-            "${modifier}+m" = "${ex volumeUp}";
 
             "XF86AudioNext" = "${ex mediaNext}";
             "XF86AudioPrev" = "${ex mediaPrev}";
@@ -204,11 +222,13 @@ in
           }
 
           (lib.attrsets.mapAttrs (_k: v: "exec ${v}") config.misha.desktop.keyboardShortcuts)
+          swayKeysToBind
         ];
         keycodebindings = {
           "${modifier}+Shift+60" = "move workspace to output right";
           "${modifier}+Shift+59" = "move workspace to output right";
-        };
+        }
+        // swayKeysToKeycodeBind;
         window.commands = [
           {
             command = "move scratchpad";

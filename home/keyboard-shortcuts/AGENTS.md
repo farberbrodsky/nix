@@ -19,22 +19,22 @@ Edit `keyboard-shortcuts.nix`, add entries under the `keys` attribute set:
 ```nix
 keys = {
   sway = {
-    "volume up"   = "mod+m";
-    "volume down" = "mod+n";
+    "mod+m"   = "volume up";
+    "mod+n" = "volume down";
   };
   firefox = {
-    "open devtools" = "ctrl+shift+i";
+    "ctrl+shift+i" = "open devtools";
   };
 };
 ```
 
-Top-level keys are **categories** (sway, firefox, terminal, etc). Each maps **description → keybinding**.
+Top-level keys are **categories** (sway, firefox, terminal, etc). Each maps **keybinding → description**.
 
 After editing: run `nix fmt` from `/persist/nix`, notify user to apply with `M-hm switch`.
 
 ## JSON Schema
 
-The generated `~/.config/mishakeys.json` is `{ category: { description: keybinding } }`.
+The generated `~/.config/mishakeys.json` is `{ category: { keybinding: description } }`.
 
 The launcher reads this at runtime. Never edit it directly — it's overwritten on rebuild.
 
@@ -43,9 +43,9 @@ The launcher reads this at runtime. Never edit it directly — it's overwritten 
 Installed as `mishakeys`. Behaviour:
 
 1. Read `~/.config/mishakeys.json`.
-2. Build menu lines: `"category: description (keybinding)"`.
+2. Build menu lines: `"description :: keybinding"`.
 3. Pipe into `wofi --dmenu` (fallback to `dmenu` if wofi absent).
-4. On selection, extract the keybinding from the line and copy it to clipboard via `wl-copy` (fallback to `xclip`).
+4. On selection, extract the keybinding (after ` :: `) and print it to stdout.
 5. Graceful error handling if file missing, malformed, or launcher/clipboard tool absent.
 6. **stdlib only** — no external PyPI deps. `wofi` and `wl-clipboard` are provided as Nix build inputs.
 
