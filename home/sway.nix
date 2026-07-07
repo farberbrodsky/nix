@@ -44,9 +44,62 @@ let
   ex = c: "exec --no-startup-id ${c}";
   swayKeys = [
     {
+      key = "mod+n";
+      desc = "volume down";
+      bind = "${ex volumeDown}";
+    }
+    {
       key = "mod+m";
       desc = "volume up";
-      bind = "${ex "${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"}";
+      bind = "${ex volumeUp}";
+    }
+    {
+      key = "mod+p";
+      desc = "play/pause";
+      bind = "${ex mediaPlayPause}";
+    }
+    {
+      key = "mod+bracketleft";
+      desc = "previous track";
+      bind = "${ex mediaPrev}";
+    }
+    {
+      key = "mod+bracketright";
+      desc = "next track";
+      bind = "${ex mediaNext}";
+    }
+    {
+      key = "mod+c";
+      desc = "clear notifications";
+      bind = "${ex clearNotifications}";
+    }
+    {
+      key = "mod+Shift+<";
+      keycode = "mod+Shift+60";
+      desc = "move workspace to output left";
+      bind = "move workspace to output left";
+    }
+    {
+      key = "mod+Shift+>";
+      keycode = "mod+Shift+59";
+      desc = "move workspace to output right";
+      bind = "move workspace to output right";
+    }
+    {
+      key = "mod+Shift+s";
+      desc = "screenshot";
+      bind = "${ex screenshot}";
+    }
+    {
+      key = "mod+Shift+m";
+      desc = "show spotify";
+      bind = "[class=\"Spotify\"] scratchpad show";
+    }
+    {
+      key = "mod+Shift+/";
+      keycode = "mod+Shift+61";
+      desc = "show this menu";
+      bind = "${ex "mishakeys"}";
     }
   ];
   swayKeyMap = lib.listToAttrs (map (e: lib.attrsets.nameValuePair e.key e.desc) swayKeys);
@@ -191,30 +244,17 @@ in
             "${modifier}+minus" = "scratchpad show";
             "${modifier}+a" = "focus parent";
 
-            "${modifier}+c" = "${ex clearNotifications}";
-
-            # through keycodes:
-            # "${modifier}+Shift+greater" = "move workspace to output right";
-            # "${modifier}+Shift+less" = "move workspace to output left";
-
             "XF86MonBrightnessDown" = "${ex brightnessDown}";
             "XF86MonBrightnessUp" = "${ex brightnessUp}";
 
             # not sure wireplumber is the best for this but eh
             "XF86AudioLowerVolume" = "${ex volumeDown}";
             "XF86AudioRaiseVolume" = "${ex volumeUp}";
-            "${modifier}+n" = "${ex volumeDown}";
 
             "XF86AudioNext" = "${ex mediaNext}";
             "XF86AudioPrev" = "${ex mediaPrev}";
             "XF86AudioPlay" = "${ex mediaPlay}";
             "XF86AudioPause" = "${ex mediaPause}";
-            "${modifier}+p" = "${ex mediaPlayPause}";
-            "${modifier}+bracketleft" = "${ex mediaPrev}";
-            "${modifier}+bracketright" = "${ex mediaNext}";
-            "${modifier}+Shift+s" = "${ex screenshot}";
-
-            "${modifier}+shift+m" = "[class=\"Spotify\"] scratchpad show";
 
             "${modifier}+Shift+r" = "reload";
             "${modifier}+Shift+e" =
@@ -224,11 +264,7 @@ in
           (lib.attrsets.mapAttrs (_k: v: "exec ${v}") config.misha.desktop.keyboardShortcuts)
           swayKeysToBind
         ];
-        keycodebindings = {
-          "${modifier}+Shift+60" = "move workspace to output right";
-          "${modifier}+Shift+59" = "move workspace to output right";
-        }
-        // swayKeysToKeycodeBind;
+        keycodebindings = swayKeysToKeycodeBind;
         window.commands = [
           {
             command = "move scratchpad";
