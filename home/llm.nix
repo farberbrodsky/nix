@@ -95,6 +95,7 @@ lib.mkIf config.misha.shell.llms.enable {
       enabledModels = [
         "deepseek/deepseek-v4-flash"
         "deepseek/deepseek-v4-pro"
+        "llama.cpp/unsloth/gemma-4-12B-it-qat-GGUF:UD-Q4_K_XL"
       ];
       defaultThinkingLevel = "medium";
       packages = [
