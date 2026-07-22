@@ -3,6 +3,7 @@ local CREATE_TERMINAL = '<C-t>'
 local TOGGLE_NERDTREE = '<C-f>'
 local TOGGLE_LINE_NUMBERS = '<C-n>'
 local QUIT_ALL = '<C-\\>'
+local DETACH = '<C-d>'
 
 local GOTO_DEFINITION      = 'gd'
 local GOTO_TYPE_DEFINITION = 'gy'
@@ -10,7 +11,7 @@ local GOTO_IMPLEMENTATION  = 'gi'
 local GOTO_REFERENCES      = 'gr'
 
 local COC_OUTLINE                     = 'go'
-local COC_TELESCOPE_WORKSPACE_SYMBOLS = 'gt'
+local COC_TELESCOPE_WORKSPACE_SYMBOLS = 'gw'
 local COC_INCOMING_HIERARCHY          = 'ghi'
 local COC_OUTGOING_HIERARCHY          = 'gho'
 local COC_SWITCH_SOURCE_HEADER        = 'gs'
@@ -146,6 +147,9 @@ end)
 
 -- Quit all with Ctrl-\
 vim.keymap.set('n', QUIT_ALL, ':qa<CR>')
+
+-- Detach with Ctrl-D
+vim.keymap.set('n', DETACH, function() if vim.endswith(vim.v.servername, "/nvim-daemon") then vim.cmd 'detach' end end)
 
 -- Tab vim settings
 vim.opt.tabstop = 4

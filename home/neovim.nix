@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   # language servers
@@ -7,7 +12,31 @@
     pkgs.clang-tools
     pkgs.shellcheck
     pkgs.shfmt
+    (pkgs.writeShellScriptBin "nv" ''
+      if [ "$#" == "0" ]; then
+        exec nvim --server /run/user/${toString config.misha.uid}/nvim-daemon --remote-ui
+      else
+        exec nvim --server /run/user/${toString config.misha.uid}/nvim-daemon --remote-tab "$@"
+      fi
+    '')
   ];
+
+  # global neovim instance
+  systemd.user.services.nvim-daemon = {
+    Unit = {
+      Description = "Misha's Neovim Daemon Service";
+    };
+    Service = {
+      Type = "simple";
+      ExecStart = "${config.programs.neovim.package}/bin/nvim --headless --listen %t/nvim-daemon";
+      Restart = "always";
+      RestartSec = "5";
+      WorkingDirectory = "%h";
+    };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+  };
 
   programs.neovim = {
     enable = true;
