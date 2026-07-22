@@ -76,7 +76,7 @@
     # packages = with pkgs; [
     #   tree
     # ];
-    uid = 1000;
+    uid = config.misha.uid;
     group = "misha";
     subGidRanges = [
       {

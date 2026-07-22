@@ -13,6 +13,11 @@
       desktopPersonalDefault = my-utils.mkDefaultEnableOption config.misha.desktop.personal.enable;
     in
     {
+      uid = mkOption {
+        default = 1000;
+        type = lib.types.int;
+      };
+
       # Normal desktop stuff
       desktop.enable = mkEnableOption "desktop";
       desktop.laptop.enable = mkEnableOption "laptop";
