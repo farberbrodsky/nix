@@ -33,4 +33,13 @@
     enableBashIntegration = true;
     nix-direnv.enable = true;
   };
+  programs.lazyworktree = {
+    enable = true;
+    settings = {
+      worktree_dir = "~/worktrees";
+      auto_refresh = true;
+      icon_set = "nerd-font-v3";
+      theme = "gruvbox-light";
+    };
+  };
 }
