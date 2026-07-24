@@ -103,7 +103,7 @@
         }
         rainbow-delimiters-nvim
         nerdtree
-        vim-devicons
+        nvim-web-devicons
         vim-lion
         tcomment_vim
         telescope-coc-nvim
@@ -118,6 +118,7 @@
           plugin = demicolon-nvim;
           optional = true;
         }
+        diffview-nvim
       ];
   };
 }

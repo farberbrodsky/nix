@@ -107,7 +107,7 @@ lib.mkIf config.misha.shell.llms.enable {
       skill-creator.source = anthropic-skills + "/skills/skill-creator";
       pdf.source = anthropic-skills + "/skills/pdf";
       modern-python.source = trailofbits-skills + "/plugins/modern-python/skills/modern-python";
-      skill-extractor.source = builtins.toString ./skills/skill-extractor;
+      skill-extractor.source = toString ./skills/skill-extractor;
       web-search.source = oh-pi + "/packages/skills/skills/web-search";
       web-fetch.source = oh-pi + "/packages/skills/skills/web-fetch";
     };
