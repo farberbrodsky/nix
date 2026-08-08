@@ -16,6 +16,7 @@
     eza
     squashfsTools
     btop
+    bubblewrap
   ];
   programs.bash.enable = true;
   programs.bash.shellAliases = {
