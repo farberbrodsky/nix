@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   home.packages = with pkgs; [
@@ -9,7 +9,6 @@
     python3
     jq
     tmux
-    nodejs
     zoxide
     nurl
     python3Packages.markitdown
@@ -17,6 +16,7 @@
     squashfsTools
     btop
     bubblewrap
+    gcc
   ];
   programs.bash.enable = true;
   programs.bash.shellAliases = {
@@ -41,6 +41,14 @@
       auto_refresh = true;
       icon_set = "nerd-font-v3";
       theme = "gruvbox-light";
+    };
+  };
+  programs.npm = {
+    # includes nodejs
+    enable = true;
+    settings = {
+      color = true;
+      prefix = "${config.home.homeDirectory}/.npm-global";
     };
   };
 }

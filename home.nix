@@ -23,6 +23,7 @@
     ./home/zathura.nix
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
     inputs.self.homeManagerModules.pi-coding-agent
+    inputs.self.homeManagerModules.dolphin-fix
   ];
 
   nixpkgs = {

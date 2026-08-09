@@ -90,7 +90,11 @@
     "x-scheme-handler/unknown"
   ] config.misha.desktop.default.browser;
 
-  xdg.mimeApps.defaultApplicationPackages = with pkgs; [ kdePackages.ark ];
+  xdg.mimeApps.defaultApplicationPackages = with pkgs; [
+    kdePackages.ark
+    feh
+    vlc
+  ];
 
   home.packages =
     with pkgs;
@@ -103,6 +107,7 @@
       pavucontrol
       libnotify # notify-send, probably used by way-displays
       vlc
+      feh
       # theme
       (gruvbox-kvantum.override { variant = "Gruvbox_Light_Blue"; })
       gruvbox-plus-icons
