@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  my-utils,
+  lib,
+  ...
+}:
 
 {
   programs.zathura = lib.mkIf config.misha.desktop.enable {
@@ -10,7 +15,7 @@
       selection-clipboard = "clipboard";
     };
   };
-  xdg.mimeApps.defaultApplicationPackages = lib.mkIf config.misha.desktop.enable [
-    config.programs.zathura.package
-  ];
+  xdg.mimeApps.defaultApplications = lib.mkIf config.misha.desktop.enable (
+    my-utils.repeatedAttribute [ "application/pdf" "application/postscript" ] "org.pwmt.zathura.desktop"
+  );
 }
