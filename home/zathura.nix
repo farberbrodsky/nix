@@ -10,4 +10,7 @@
       selection-clipboard = "clipboard";
     };
   };
+  xdg.mimeApps.defaultApplicationPackages = lib.mkIf config.misha.desktop.enable [
+    config.programs.zathura.package
+  ];
 }
