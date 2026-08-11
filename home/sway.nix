@@ -51,8 +51,18 @@ let
     read -r app < "$HOME/.cache/sway-focused-app" 2>/dev/null || true
     case "$app" in
       org.kde.dolphin) exec ${pkgs.wtype}/bin/wtype -M ctrl -k Return -m ctrl ;;
-      kitty) exec ${pkgs.wtype}/bin/wtype -M ctrl -M alt -M shift -k n -m shift -m ctrl ;;
+      kitty) exec ${pkgs.wtype}/bin/wtype -M ctrl -M alt -M shift -k n -m shift -m alt -m ctrl ;;
       *) exec ${pkgs.kitty}/bin/kitty ;;
+    esac
+  '';
+  # similar, but for dolphin in the current directory
+  filesHere = pkgs.writeShellScript "files-here" ''
+    app=""
+    read -r app < "$HOME/.cache/sway-focused-app" 2>/dev/null || true
+    case "$app" in
+      org.kde.dolphin) exec ${pkgs.wtype}/bin/wtype -M ctrl -k n -m ctrl ;;
+      kitty) exec ${pkgs.wtype}/bin/wtype -M ctrl -M alt -M shift -k z -m shift -m alt -m ctrl ;;
+      *) exec ${pkgs.kdePackages.dolphin}/bin/dolphin ;;
     esac
   '';
   swayKeys = [
@@ -113,6 +123,11 @@ let
       keycode = "mod+Shift+61";
       desc = "show this menu";
       bind = "${ex "mishakeys"}";
+    }
+    {
+      key = "mod+z";
+      desc = "open file manager";
+      bind = "exec ${filesHere}";
     }
   ];
   swayKeyMap = lib.listToAttrs (map (e: lib.attrsets.nameValuePair e.key e.desc) swayKeys);
