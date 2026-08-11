@@ -102,6 +102,19 @@
     TerminalApplication=kitty
   '';
 
+  # Dolphin keyboard shortcuts: version="0" loses the version race against
+  # Dolphin's built-in dolphinui.rc, so these ActionProperties are merged on
+  # top of the current defaults (no full UI snapshot needed).
+  xdg.dataFile."kxmlgui5/dolphin/dolphinui.rc".text = ''
+    <?xml version='1.0'?>
+    <!DOCTYPE gui SYSTEM 'kpartgui.dtd'>
+    <gui name="dolphin" version="0">
+      <ActionProperties scheme="Default">
+        <Action name="open_terminal_here" shortcut="Ctrl+Return"/>
+      </ActionProperties>
+    </gui>
+  '';
+
   home.packages =
     with pkgs;
     [
