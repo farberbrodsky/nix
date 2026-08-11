@@ -42,6 +42,19 @@ let
   brightnessUp = "${pkgs.brightnessctl}/bin/brightnessctl -n1 s -- \"+5%\"";
   screenshot = "flameshot gui";
   ex = c: "exec --no-startup-id ${c}";
+  # Context-aware Mod+Return in the same directory as the current window:
+  # - "open terminal here" for dolphin (using the binding made for the "open_terminal_here" action)
+  # - "Ctrl+Alt+Shift+N" for kitty (configured in kitty.conf)
+  # - launch kitty otherwise
+  terminalHere = pkgs.writeShellScript "terminal-here" ''
+    app=""
+    read -r app < "$HOME/.cache/sway-focused-app" 2>/dev/null || true
+    case "$app" in
+      org.kde.dolphin) exec ${pkgs.wtype}/bin/wtype -M ctrl -k Return -m ctrl ;;
+      kitty) exec ${pkgs.wtype}/bin/wtype -M ctrl -M alt -M shift -k n -m shift -m ctrl ;;
+      *) exec ${pkgs.kitty}/bin/kitty ;;
+    esac
+  '';
   swayKeys = [
     {
       key = "mod+n";
@@ -120,6 +133,7 @@ in
     home.packages = with pkgs; [
       way-displays
       flameshot
+      wtype # synthetic key injection (virtual-keyboard protocol) for context-aware bindings
     ];
     misha.desktop.keyboardShortcutsMod = "Mod4";
     misha.keys.sway = swayKeyMap;
@@ -229,7 +243,7 @@ in
           )
 
           {
-            "${modifier}+Return" = "exec ${terminal}";
+            "${modifier}+Return" = "exec ${terminalHere}";
             "${modifier}+Shift+c" = "kill";
             "${modifier}+d" = "exec ${menu}";
 
@@ -271,6 +285,26 @@ in
             criteria.class = "Spotify";
           }
         ];
+      };
+    };
+
+    systemd.user.services.sway-focus-watch = {
+      Unit = {
+        Description = "Track focused sway window for Mod+Return dispatch";
+        PartOf = [ "sway-session.target" ];
+      };
+      Service = {
+        Type = "simple";
+        ExecStart = "${pkgs.python3}/bin/python3 -u ${
+          pkgs.replaceVars ./sway/focus-watch.py {
+            swaymsg = "${pkgs.sway}/bin/swaymsg";
+          }
+        }";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      Install = {
+        WantedBy = [ "sway-session.target" ];
       };
     };
 
