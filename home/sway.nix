@@ -251,6 +251,7 @@ in
             "${modifier}+s" = "split v";
             "${modifier}+f" = "fullscreen toggle";
             "${modifier}+w" = "layout tabbed";
+            "${modifier}+t" = "split none; split v; layout tabbed";
             "${modifier}+e" = "layout toggle split";
             "${modifier}+Shift+space" = "floating toggle";
             "${modifier}+space" = "focus mode_toggle";
