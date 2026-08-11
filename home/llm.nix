@@ -89,6 +89,7 @@ lib.mkIf config.misha.shell.llms.enable {
   ];
   programs.pi-coding-agent = {
     enable = true;
+    package = null;
     settings = {
       theme = "light";
       defaultProvider = "openrouter";

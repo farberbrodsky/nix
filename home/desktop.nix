@@ -96,6 +96,12 @@
     vlc
   ];
 
+  # KDE globals
+  xdg.configFile."kdeglobals".text = ''
+    [General]
+    TerminalApplication=kitty
+  '';
+
   home.packages =
     with pkgs;
     [
