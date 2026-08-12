@@ -92,6 +92,7 @@
       set -euo pipefail
       sudo nix-env --delete-generations --profile /nix/var/nix/profiles/system +4
       nix-env --delete-generations --profile ~/.local/state/nix/profiles/home-manager +4
+      nix-env --delete-generations --profile ~/.local/state/nix/profiles/profile +4
       nix-store --gc
     '')
   ];
