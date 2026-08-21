@@ -259,6 +259,7 @@ in
 
           {
             "${modifier}+Return" = "exec ${terminalHere}";
+            "${modifier}+Shift+Return" = "exec ${pkgs.kitty}/bin/kitty";
             "${modifier}+Shift+c" = "kill";
             "${modifier}+d" = "exec ${menu}";
 
