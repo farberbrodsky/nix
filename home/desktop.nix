@@ -127,6 +127,7 @@
       libnotify # notify-send, probably used by way-displays
       vlc
       feh
+      freeplane
       # theme
       (gruvbox-kvantum.override { variant = "Gruvbox_Light_Blue"; })
       gruvbox-plus-icons
