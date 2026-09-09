@@ -36,6 +36,8 @@
       # Gamer moment
       desktop.gaming.enable = mkEnableOption "gaming";
 
+      desktop.office.enable = mkEnableOption "office";
+
       # To add keyboard shortcuts to sway
       desktop.keyboardShortcutsMod = mkOption {
         type = lib.types.str;

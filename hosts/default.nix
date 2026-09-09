@@ -15,6 +15,7 @@
       desktop.laptop.enable = true;
       desktop.personal.enable = true;
       desktop.gaming.enable = true;
+      desktop.office.enable = true;
       system.btrfsImpermanence.enable = true;
       system.btrfsImpermanence.mainUser.hashedPasswordFile = "/persist/passwords/misha";
       shell.llms.enable = true;

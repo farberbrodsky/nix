@@ -9,7 +9,7 @@
   services.flatpak = {
     enable = true;
   };
-  services.flatpak.packages = lib.optional config.misha.desktop.gaming.enable "com.heroicgameslauncher.hgl";
+  services.flatpak.packages = (lib.optional config.misha.desktop.gaming.enable "com.heroicgameslauncher.hgl") ++ (lib.optional config.misha.desktop.office.enable "org.libreoffice.LibreOffice");
   home.packages = [ pkgs.flatpak ];
   xdg.systemDirs.data = [ "$HOME/.local/share/flatpak/exports/share" ];
 })
