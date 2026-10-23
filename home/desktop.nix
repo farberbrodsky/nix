@@ -128,6 +128,7 @@
       vlc
       feh
       freeplane
+      qbittorrent
       # theme
       (gruvbox-kvantum.override { variant = "Gruvbox_Light_Blue"; })
       gruvbox-plus-icons

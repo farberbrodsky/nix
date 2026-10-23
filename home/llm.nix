@@ -94,9 +94,7 @@ lib.mkIf config.misha.shell.llms.enable {
       theme = "light";
       defaultProvider = "openrouter";
       enabledModels = [
-        "deepseek-v4-flash"
-        "deepseek/deepseek-v4-flash-latest"
-        "deepseek/deepseek-v4-pro"
+        "deepseek-flash-latest"
         "llama.cpp/unsloth/gemma-4-12B-it-qat-GGUF:UD-Q4_K_XL"
       ];
       defaultThinkingLevel = "medium";
