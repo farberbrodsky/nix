@@ -127,9 +127,10 @@ lib.mkIf config.misha.shell.llms.enable {
           "${pkgs.chromium}/bin/chromium"
         ];
       };
-      nixos = {
-        command = "${pkgs.mcp-nixos}/bin/mcp-nixos";
-      };
+      # temporary build failures due to fastmcp
+      # nixos = {
+      #   command = "${pkgs.mcp-nixos}/bin/mcp-nixos";
+      # };
     };
   };
 }
