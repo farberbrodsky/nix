@@ -7,6 +7,7 @@
     ./home/desktop.nix
     ./home/firefox.nix
     ./home/flatpak.nix
+    ./home/games.nix
     ./home/git.nix
     ./home/keyboard-shortcuts.nix
     ./home/kitty.nix

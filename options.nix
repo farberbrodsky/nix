@@ -35,6 +35,7 @@
 
       # Gamer moment
       desktop.gaming.enable = mkEnableOption "gaming";
+      desktop.gaming.minecraft.enable = mkEnableOption "minecraft";
 
       desktop.office.enable = mkEnableOption "office";
 
