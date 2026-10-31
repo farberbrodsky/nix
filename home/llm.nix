@@ -100,7 +100,6 @@ lib.mkIf config.misha.shell.llms.enable {
       defaultThinkingLevel = "medium";
       packages = [
         "npm:pi-subagents"
-        "npm:pi-mcp-adapter"
       ];
     };
     skills = {
