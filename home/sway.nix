@@ -352,6 +352,8 @@ in
           [app-name="Spotify"]
           default-timeout=4000
           ignore-timeout=1
+          [app-name="flameshot" body="grim's screenshot component is implemented based on wlroots, it may not be used in GNOME or similar desktop environments"]
+          invisible=1
         '';
       };
 
@@ -448,6 +450,14 @@ in
         "1048576"
       ];
       systemdTargets = [ "sway-session.target" ];
+    };
+
+    # flameshot
+    xdg.configFile."flameshot/flameshot.ini".source = (pkgs.formats.ini { }).generate "flameshot.ini" {
+      General = {
+        savePath = "${config.home.homeDirectory}/Pictures";
+        useGrimAdapter = true;
+      };
     };
   };
 }
