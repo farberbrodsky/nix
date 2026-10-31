@@ -19,6 +19,7 @@
       desktop.office.enable = true;
       system.btrfsImpermanence.enable = true;
       system.btrfsImpermanence.mainUser.hashedPasswordFile = "/persist/passwords/misha";
+      system.nix-ld.enable = true;
       shell.llms.enable = true;
     };
   };
