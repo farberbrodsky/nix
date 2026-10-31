@@ -72,5 +72,7 @@
         default = null;
         type = lib.types.str;
       };
+
+      system.nix-ld.enable = mkEnableOption "nix-ld";
     };
 }

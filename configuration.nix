@@ -19,6 +19,7 @@
     ./system/fonts.nix
     ./system/gaming.nix
     ./system/flake-utils.nix
+    ./system/nix-ld.nix
     inputs.impermanence.nixosModules.impermanence
   ];
 
