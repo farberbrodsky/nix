@@ -24,7 +24,8 @@
     "l" = "eza";
   };
   programs.bash.initExtra = ''
-    export PATH="$PATH:$HOME/.npm-global/bin"
+    [ -d "$HOME/.npm-global/bin" ] && PATH="$PATH:$HOME/.npm-global/bin"
+    [ -d "$HOME/.local/bin" ] && PATH="$PATH:$HOME/.local/bin"
     eval "$(zoxide init bash)"
   ''
   + builtins.readFile ./dotfiles/bashprompt.sh;
