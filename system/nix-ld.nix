@@ -67,5 +67,6 @@
       libxcb
       libxkbfile
       libxshmfence
+      wayland
     ];
 })
