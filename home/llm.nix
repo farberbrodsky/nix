@@ -98,9 +98,7 @@ lib.mkIf config.misha.shell.llms.enable {
         "llama.cpp/unsloth/gemma-4-12B-it-qat-GGUF:UD-Q4_K_XL"
       ];
       defaultThinkingLevel = "medium";
-      packages = [
-        "npm:pi-subagents"
-      ];
+      packages = [ "npm:pi-subagents" ];
     };
     skills = {
       skill-creator.source = anthropic-skills + "/skills/skill-creator";
