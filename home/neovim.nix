@@ -8,6 +8,9 @@
 {
   # language servers
   home.packages = [
+    pkgs.rust-analyzer
+    pkgs.rustc
+    pkgs.cargo
     pkgs.nixd
     pkgs.clang-tools
     pkgs.shellcheck
@@ -63,6 +66,11 @@
             "command" = "zls";
             "filetypes" = [ "zig" ];
             "rootPatterns" = [ "build.zig" ];
+          };
+          "rust" = {
+            "command" = "rust-analyzer";
+            "filetypes" = [ "rust" ];
+            "rootPatterns" = [ "Cargo.toml" ];
           };
         };
       };
