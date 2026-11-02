@@ -17,6 +17,7 @@
     btop
     bubblewrap
     gcc
+    trash-cli
   ];
   programs.bash.enable = true;
   programs.bash.shellAliases = {
