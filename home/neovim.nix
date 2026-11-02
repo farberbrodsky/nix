@@ -5,16 +5,94 @@
   ...
 }:
 
+let
+  # Language servers and coc extensions, enabled through the matching
+  # `misha.shell.lsp.<name>` options. Keys are the names used by coc's
+  # `languageserver` setting where an explicit server config is needed.
+  lsps =
+    lib.optionalAttrs config.misha.shell.lsp.rust {
+      rust = {
+        packages = [ pkgs.rust-analyzer ];
+        formatOnSave = true;
+        coc = {
+          command = "rust-analyzer";
+          filetypes = [ "rust" ];
+          rootPatterns = [ "Cargo.toml" ];
+        };
+      };
+    }
+    // lib.optionalAttrs config.misha.shell.lsp.java {
+      java = {
+        packages = [ pkgs.jdt-language-server ];
+        coc = {
+          command = "jdtls";
+          filetypes = [ "java" ];
+          rootPatterns = [ "build.gradle" ];
+        };
+      };
+    }
+    // lib.optionalAttrs config.misha.shell.lsp.nix {
+      nix = {
+        packages = [ pkgs.nixd ];
+        coc = {
+          command = "nixd";
+          filetypes = [ "nix" ];
+          rootPatterns = [ "flake.nix" ];
+        };
+      };
+    }
+    // lib.optionalAttrs config.misha.shell.lsp.clangd {
+      clangd = {
+        packages = [ pkgs.clang-tools ];
+        vimPlugins = [ pkgs.vimPlugins.coc-clangd ];
+      };
+    }
+    // lib.optionalAttrs config.misha.shell.lsp.shell {
+      sh = {
+        packages = [
+          pkgs.shellcheck
+          pkgs.shfmt
+        ];
+        vimPlugins = [ pkgs.vimPlugins.coc-sh ];
+      };
+    }
+    // lib.optionalAttrs config.misha.shell.lsp.zig {
+      zig = {
+        # zls is versioned per project, so it is deliberately not installed
+        # here; `command = "zls"` resolves whatever the project provides on PATH.
+        coc = {
+          command = "zls";
+          filetypes = [ "zig" ];
+          rootPatterns = [ "build.zig" ];
+        };
+      };
+    }
+    // lib.optionalAttrs config.misha.shell.lsp.python {
+      python = {
+        vimPlugins = [ pkgs.vimPlugins.coc-pyright ];
+      };
+    };
+
+  enabledLsps = lib.attrValues lsps;
+
+  # Vim plugins (coc extensions) that accompany a language server.
+  vimPlugins = lib.concatMap (lsp: lsp.vimPlugins or [ ]) enabledLsps;
+  cocLanguageServers = lib.listToAttrs (
+    lib.concatMap (name: lib.optional (lsps.${name} ? coc) (lib.nameValuePair name lsps.${name}.coc)) (
+      lib.attrNames lsps
+    )
+  );
+
+  formatOnSaveFiletypes = lib.concatMap (
+    lsp: if lsp.formatOnSave or false then lsp.coc.filetypes else [ ]
+  ) enabledLsps;
+in
+
 {
   # language servers
   home.packages = [
-    pkgs.rust-analyzer
     pkgs.rustc
     pkgs.cargo
-    pkgs.nixd
-    pkgs.clang-tools
-    pkgs.shellcheck
-    pkgs.shfmt
     (pkgs.writeShellScriptBin "nv" ''
       if [ "$#" == "0" ]; then
         exec nvim --server /run/user/${toString config.misha.uid}/nvim-daemon --remote-ui
@@ -22,7 +100,8 @@
         exec nvim --server /run/user/${toString config.misha.uid}/nvim-daemon --remote-tab "$@"
       fi
     '')
-  ];
+  ]
+  ++ lib.concatMap (lsp: lsp.packages or [ ]) enabledLsps;
 
   # global neovim instance
   systemd.user.services.nvim-daemon = {
@@ -53,26 +132,10 @@
     coc = {
       enable = true;
       settings = {
-        "coc.preferences.formatOnSaveFiletypes" = [ "rust" ];
+        "coc.preferences.formatOnSaveFiletypes" = formatOnSaveFiletypes;
         "coc.preferences.hoverTarget" = "preview";
         "eslint.autoFixOnSave" = true;
-        "languageserver" = {
-          "nix" = {
-            "command" = "nixd";
-            "filetypes" = [ "nix" ];
-            "rootPatterns" = [ "flake.nix" ];
-          };
-          "zig" = {
-            "command" = "zls";
-            "filetypes" = [ "zig" ];
-            "rootPatterns" = [ "build.zig" ];
-          };
-          "rust" = {
-            "command" = "rust-analyzer";
-            "filetypes" = [ "rust" ];
-            "rootPatterns" = [ "Cargo.toml" ];
-          };
-        };
+        "languageserver" = cocLanguageServers;
       };
     };
 
@@ -119,14 +182,12 @@
         nvim-autopairs
         vim-nix
         gruvbox-nvim
-        coc-clangd
-        coc-sh
-        coc-pyright
         {
           plugin = demicolon-nvim;
           optional = true;
         }
         diffview-nvim
-      ];
+      ]
+      ++ vimPlugins;
   };
 }

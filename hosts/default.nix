@@ -21,6 +21,15 @@
       system.btrfsImpermanence.mainUser.hashedPasswordFile = "/persist/passwords/misha";
       system.nix-ld.enable = true;
       shell.llms.enable = true;
+      shell.lsp = {
+        rust = true;
+        java = true;
+        nix = true;
+        clangd = true;
+        shell = true;
+        zig = true;
+        python = true;
+      };
     };
   };
 }

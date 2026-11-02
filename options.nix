@@ -74,5 +74,13 @@
       };
 
       system.nix-ld.enable = mkEnableOption "nix-ld";
+
+      shell.lsp.rust = mkEnableOption "rust LSP";
+      shell.lsp.java = mkEnableOption "java LSP";
+      shell.lsp.nix = mkEnableOption "nix LSP";
+      shell.lsp.clangd = mkEnableOption "clangd LSP";
+      shell.lsp.shell = mkEnableOption "shellcheck/shfmt LSP";
+      shell.lsp.zig = mkEnableOption "zig LSP (uses the project's zls, does not install it)";
+      shell.lsp.python = mkEnableOption "python LSP";
     };
 }
