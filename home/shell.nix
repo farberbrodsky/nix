@@ -18,6 +18,7 @@
     bubblewrap
     gcc
     trash-cli
+    zip
   ];
   programs.bash.enable = true;
   programs.bash.shellAliases = {
