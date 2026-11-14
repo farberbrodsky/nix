@@ -20,6 +20,8 @@
       system.btrfsImpermanence.enable = true;
       system.btrfsImpermanence.mainUser.hashedPasswordFile = "/persist/passwords/misha";
       system.nix-ld.enable = true;
+      system.libvirt.enable = true;
+      system.libvirt.virt-manager.enable = true;
       shell.llms.enable = true;
       shell.lsp = {
         rust = true;

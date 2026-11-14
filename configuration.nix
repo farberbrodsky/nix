@@ -20,6 +20,7 @@
     ./system/gaming.nix
     ./system/flake-utils.nix
     ./system/nix-ld.nix
+    ./system/virtualization.nix
     inputs.impermanence.nixosModules.impermanence
   ];
 
@@ -71,9 +72,12 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
+  # Enable ‘sudo’ for the user.
+  misha.system.user.extraGroups = [ "wheel" ];
+
   users.users.misha = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = config.misha.system.user.extraGroups;
     # packages = with pkgs; [
     #   tree
     # ];

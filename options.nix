@@ -73,7 +73,14 @@
         type = lib.types.str;
       };
 
+      system.user.extraGroups = mkOption {
+        default = [ ];
+        type = lib.types.listOf lib.types.str;
+      };
+
       system.nix-ld.enable = mkEnableOption "nix-ld";
+      system.libvirt.enable = mkEnableOption "libvirtd";
+      system.libvirt.virt-manager.enable = mkEnableOption "virt-manager";
 
       shell.lsp.rust = mkEnableOption "rust LSP";
       shell.lsp.java = mkEnableOption "java LSP";
