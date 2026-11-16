@@ -94,6 +94,7 @@
       "/var/lib/cni"
       "/var/lib/flatpak"
       "/var/cache/tuigreet"
+      "/var/lib/libvirt"
     ];
     files = [ "/etc/machine-id" ];
   };
