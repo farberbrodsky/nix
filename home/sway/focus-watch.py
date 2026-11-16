@@ -40,23 +40,26 @@ def first_focused(node):
     return None
 
 
-def main():
-    # Seed with the current focused view so state survives daemon restarts.
+def focused_from_tree():
     try:
         tree = json.loads(
             subprocess.run([SWAYMSG, "-t", "get_tree"], capture_output=True, check=True).stdout
         )
-        focused = first_focused(tree)
-        if focused is not None:
-            write(app_id(focused))
+        return first_focused(tree)
     except Exception:
-        pass
+        return None
 
-    # Stream window events; subscribe exits if sway restarts, so loop forever.
+
+def main():
+    focused = focused_from_tree()
+    focus_id = focused.get("id") if focused is not None else None
+    if focused is not None:
+        write(app_id(focused))
+
     while True:
         try:
             proc = subprocess.Popen(
-                [SWAYMSG, "-m", "-t", "subscribe", '["window"]'],
+                [SWAYMSG, "-m", "-t", "subscribe", '["window","workspace"]'],
                 stdout=subprocess.PIPE,
                 text=True,
             )
@@ -65,8 +68,33 @@ def main():
                     event = json.loads(line)
                 except json.JSONDecodeError:
                     continue
-                if event.get("change") == "focus":
-                    write(app_id(event.get("container") or {}))
+                change = event.get("change")
+                container = event.get("container")
+                if container is not None:
+                    if change == "focus":
+                        focus_id = container.get("id")
+                        write(app_id(container))
+                    elif change in ("close", "move") and container.get("id") == focus_id:
+                        focused = focused_from_tree()
+                        if (
+                            change == "close"
+                            and focused is not None
+                            and focused.get("id") == container.get("id")
+                        ):
+                            focused = None
+                        focus_id = focused.get("id") if focused is not None else None
+                        write(app_id(focused or {}))
+                    continue
+
+                current = event.get("current")
+                if (
+                    change == "focus"
+                    and current is not None
+                    and current.get("type") == "workspace"
+                ):
+                    focused = first_focused(current)
+                    focus_id = focused.get("id") if focused is not None else None
+                    write(app_id(focused or {}))
             proc.wait()
         except FileNotFoundError:
             pass
