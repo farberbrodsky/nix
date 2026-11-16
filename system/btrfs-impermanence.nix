@@ -96,6 +96,9 @@
       "/var/cache/tuigreet"
       "/var/lib/libvirt"
     ];
-    files = [ "/etc/machine-id" ];
+    files = [
+      "/etc/machine-id"
+      "/var/lib/systemd/credential.secret"
+    ];
   };
 })
